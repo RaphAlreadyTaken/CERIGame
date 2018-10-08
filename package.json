@@ -1,0 +1,21 @@
+{
+  "name": "mean",
+  "version": "1.0.0",
+  "description": "architecture pour MEAN",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "connect-mongodb-session": "^2.0.3",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "mongodb": "^3.1.6",
+    "pg": "^7.4.3",
+    "socket.io": "^2.1.1"
+  }
+}
