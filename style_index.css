@@ -1,0 +1,12 @@
+
+body
+{
+    color: red;
+    text-align: center;
+}
+
+form
+{
+    display: inline-block;
+    line-height: 1cm;
+}
