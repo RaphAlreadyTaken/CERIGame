@@ -14,9 +14,16 @@ var login = require('./routes/login');  //Import fichier login.js
 /******** Trucs à utiliser
  *
  ********/
+app.use(express.static(path.join(__dirname, './'))); //Ajout répertoire app dans "path" de l'app
 app.use(express.static(path.join(__dirname, '../css'))); //Ajout répertoire css dans "path" de l'app
 app.use('/', index);    //Utilise la variable index (importation index.js)
 app.use('/login', login) //Utilise la variable login (importation login.js)
+
+/******** Application
+ *
+ ********/
+angular.module('CERIGame', [])
+.controller('login_controller');
 
 /******** Export
  *
