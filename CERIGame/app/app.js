@@ -9,7 +9,7 @@ const path = require('path');       //Import path
  ********/
 var app = express(); //Création objet Express
 var index = require('./routes/index');  //Import fichier index.js
-var login = require('./directives/login');  //Import fichier login.js
+var login = require('./routes/login');  //Import fichier login.js
 
 /******** Trucs à utiliser
  *
