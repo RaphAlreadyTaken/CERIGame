@@ -4,8 +4,10 @@
         <link rel='stylesheet' type='text/CSS' href='/styleIndex.css'>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-route.js"></script>
-        <script type="script/javascript" src="/app.js"></script>
-        <script type="script/javascript" src="/controllers/loginController.js"></script>
+        <script src="/services/authService.js"></script>
+        <script src="/services/sessionService.js"></script>
+        <script src="/controllers/loginController.js"></script>
+        <script src="/app.js"></script>
     </head>
     <body ng-app="app" ng-controller="loginController">
         <form action='/login' method='GET'>
