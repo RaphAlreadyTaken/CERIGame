@@ -19,12 +19,12 @@ router.get('/', function (request, response, next)
     response.send('You are logged in');	//Réponse serveur =  message vers navigateur
     
     // vérification des informations de login auprès de la base postgresql
-    sql = "select * from fredouil.users;";
+    sql = "select * from fredouil.users where identifiant like '" + log + "';";
     // instance de connexion avec toutes les informations de la BD
     var pool = new pgClient.Pool(
         {
             user: 'uapv1603044', 
-            host: '127.0.0.1', 
+            host: '192.168.2.130', 
             database: 'etd', 
             password: 'LZJIMq', 
             port: 5432 
@@ -42,8 +42,31 @@ router.get('/', function (request, response, next)
         {
             console.log('Connection established with pg db server');
         }
-    // Exécution de la requête SQL et traitement du résultat
+
+        // Exécution de la requête SQL et traitement du résultat
+        client.query(sql, function(err, result)
+        {
+            if(err)
+            {
+                console.log('Erreur d’exécution de la requete' + err.stack);
+            }
+            else if((result.rows[0] != null) && (result.rows[0].password == request.body.pwd))
+            {
+                // request.session.isConnected = true;
+                responseData.data=result.rows[0].lastname;
+                responseData.statusMsg = 'Connexion réussie : bonjour' + result.rows[0].firstname;
+            }
+            else
+            {
+                console.log('Connexion échouée : informations de connexion incorrecte');
+                responseData.statusMsg='Connexion échouée : informations de connexion incorrecte';
+            }
+            response.send(responseData);
+        })
+
+        client.release(); // connexion libérée    
     })
+    
 });
 
 /******** Export
