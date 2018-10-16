@@ -16,7 +16,7 @@ router.get('/', function (request, response, next)
     var log = request.query.login;		//Récupération variable "login" de la requête GET
 	var pass = request.query.password;	//Récupération variable "password" de la requête GET
     console.log('Parameters: login -> ' + log + ", password -> " + pass)	//Affichage console serveur
-    response.send('You are logged in');	//Réponse serveur =  message vers navigateur
+    // response.send('You are logged in');	//Réponse serveur =  message vers navigateur
     
     // vérification des informations de login auprès de la base postgresql
     sql = "select * from fredouil.users where identifiant like '" + log + "';";
@@ -46,22 +46,25 @@ router.get('/', function (request, response, next)
         // Exécution de la requête SQL et traitement du résultat
         client.query(sql, function(err, result)
         {
+            console.log("result: " + result.rows[0]);
             if(err)
             {
                 console.log('Erreur d’exécution de la requete' + err.stack);
             }
-            else if((result.rows[0] != null) && (result.rows[0].password == request.body.pwd))
+            else if((result.rows[0] != null))
             {
+                
+                var responseData = {};
                 // request.session.isConnected = true;
-                responseData.data=result.rows[0].lastname;
-                responseData.statusMsg = 'Connexion réussie : bonjour' + result.rows[0].firstname;
+                responseData.data=result.rows[0].nom;
+                responseData.statusMsg = 'Connexion réussie : bonjour ' + result.rows[0].prenom;
             }
             else
             {
                 console.log('Connexion échouée : informations de connexion incorrecte');
                 responseData.statusMsg='Connexion échouée : informations de connexion incorrecte';
             }
-            response.send(responseData);
+            response.send(responseData.statusMsg);
         })
 
         client.release(); // connexion libérée    
