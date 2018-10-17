@@ -3,6 +3,7 @@
 ********/
 const express = require('express'); //Import Express
 const pgClient = require('pg'); // définit le middleware pg
+const sha1 = require('sha1');
 
 /******** Declaration des variables
  *
@@ -46,17 +47,16 @@ router.get('/', function (request, response, next)
         // Exécution de la requête SQL et traitement du résultat
         client.query(sql, function(err, result)
         {
-            console.log("result: " + result.rows[0]);
+            var responseData = {};
+
             if(err)
             {
                 console.log('Erreur d’exécution de la requete' + err.stack);
             }
-            else if((result.rows[0] != null))
-            {
-                
-                var responseData = {};
+            else if((result.rows[0] != null) && (result.rows[0].motpasse == sha1(pass))) //Verification utilisateur trouvé et mdp
+            {         
                 // request.session.isConnected = true;
-                responseData.data=result.rows[0].nom;
+                // responseData.data=result.rows[0].nom;
                 responseData.statusMsg = 'Connexion réussie : bonjour ' + result.rows[0].prenom;
             }
             else
