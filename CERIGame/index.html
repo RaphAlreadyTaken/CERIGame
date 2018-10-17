@@ -5,15 +5,18 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-route.js"></script>
         <script src="/services/authService.js"></script>
+        <script src="/services/localStorageService.js"></script>
         <script src="/services/sessionService.js"></script>
         <script src="/controllers/loginController.js"></script>
         <script src="/app.js"></script>
     </head>
     <body ng-app="app" ng-controller="loginController">
-        <form action='/login' method='GET'>
-            Login <input type='text' name='login'><br>
-            Password <input type='password' name='password'><br>
-            <input type='submit' value='Authenticate'>
+        <form name="form" ng-submit="login()" role="form">
+            <label for="login">Login</label>
+            <input type="text" name="login" ng-model="login">
+            <label for="password">Password</label>
+            <input type="password" name="password" ng-model="password">
+            <button type="submit" ng-disabled="form.$invalid">Authenticate</button>
         </form>
     </body>
 </html>

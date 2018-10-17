@@ -10,6 +10,11 @@ function loginController($scope, auth)
 
     $scope.login = function()
     {
-        auth.logIn($scope.username)
-    }
+        auth.logIn($scope.username, $scope.password)
+        .then(function(data)
+        {
+            alert('isLoggedIn: ' + auth.isLoggedIn());
+            $scope.bandeauDisplay('Connexion réussie');
+        })
+    };
 };
