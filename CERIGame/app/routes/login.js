@@ -14,8 +14,8 @@ var router = express.Router(); //Création objet Router
 //Instructions serveur à effectuer lors d'une requête GET avec action "/login"
 router.post('/', function (request, response, next) 
 {
-    var log = request.query.login;		//Récupération variable "login" de la requête GET
-	var pass = request.query.password;	//Récupération variable "password" de la requête GET
+    var log = request.body.login;		//Récupération variable "login" de la requête GET
+	var pass = request.body.password;	//Récupération variable "password" de la requête GET
     console.log('Parameters: login -> ' + log + ", password -> " + pass)	//Affichage console serveur
     // response.send('You are logged in');	//Réponse serveur =  message vers navigateur
     
@@ -54,9 +54,10 @@ router.post('/', function (request, response, next)
                 console.log('Erreur d’exécution de la requete' + err.stack);
             }
             else if((result.rows[0] != null) && (result.rows[0].motpasse == sha1(pass))) //Verification utilisateur trouvé et mdp
-            {         
+            {
                 // request.session.isConnected = true;
                 // responseData.data=result.rows[0].nom;
+                session.setUser();
                 responseData.statusMsg = 'Connexion réussie : bonjour ' + result.rows[0].prenom;
             }
             else
@@ -64,6 +65,7 @@ router.post('/', function (request, response, next)
                 console.log('Connexion échouée : informations de connexion incorrecte');
                 responseData.statusMsg='Connexion échouée : informations de connexion incorrecte';
             }
+
             response.send(responseData.statusMsg);
         })
 

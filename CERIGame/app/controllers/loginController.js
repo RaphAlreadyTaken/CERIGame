@@ -17,4 +17,9 @@ function loginController($scope, auth)
             //$scope.bandeauDisplay('Connexion réussie');
         });
     };
+
+    $scope.createUser = function()
+    {
+        session.setUser()
+    }
 };
