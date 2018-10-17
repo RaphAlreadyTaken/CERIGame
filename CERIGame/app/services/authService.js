@@ -22,6 +22,8 @@ function authService($http, session)
 	 */
 	this.logIn = function(login, password)
 	{
+		alert(login + ' (' + typeof(login) + ') => ' + password + ' (' + typeof(password) + ')');
+
 		return $http
 			.post('http://localhost:3131/login', {'login': login, 'password': password})
 			.then(function(response)

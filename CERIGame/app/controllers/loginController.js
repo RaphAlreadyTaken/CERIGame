@@ -5,16 +5,16 @@
  */
 function loginController($scope, auth)
 {
-    $scope.username = null;
+    $scope.login = null;
     $scope.password = null;
 
-    $scope.login = function()
+    $scope.formLogin = function()
     {
-        auth.logIn($scope.username, $scope.password)
+        auth.logIn($scope.login, $scope.password)
         .then(function(data)
         {
             alert('isLoggedIn: ' + auth.isLoggedIn());
-            $scope.bandeauDisplay('Connexion réussie');
-        })
+            //$scope.bandeauDisplay('Connexion réussie');
+        });
     };
 };

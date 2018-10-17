@@ -12,7 +12,7 @@ var router = express.Router(); //Création objet Router
 
 
 //Instructions serveur à effectuer lors d'une requête GET avec action "/login"
-router.get('/', function (request, response, next) 
+router.post('/', function (request, response, next) 
 {
     var log = request.query.login;		//Récupération variable "login" de la requête GET
 	var pass = request.query.password;	//Récupération variable "password" de la requête GET
