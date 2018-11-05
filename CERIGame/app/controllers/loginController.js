@@ -1,7 +1,7 @@
 /**
  * Contrôleur de connexion
  * @param {?} $scope - Variable de contexte
- * @param {*} auth - service authentification
+ * @param {*} auth - Service authentification
  */
 function loginController($scope, auth)
 {
@@ -13,13 +13,7 @@ function loginController($scope, auth)
         auth.logIn($scope.login, $scope.password)
         .then(function(data)
         {
-            alert('isLoggedIn: ' + auth.isLoggedIn());
             //$scope.bandeauDisplay('Connexion réussie');
         });
     };
-
-    $scope.createUser = function()
-    {
-        session.setUser()
-    }
 };

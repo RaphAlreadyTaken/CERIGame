@@ -22,18 +22,17 @@ function authService($http, session)
 	 */
 	this.logIn = function(login, password)
 	{
-		alert(login + ' (' + typeof(login) + ') => ' + password + ' (' + typeof(password) + ')');
-
 		return $http
 			.post('http://localhost:3131/login', {'login': login, 'password': password})
 			.then(function(response)
 			{
-				if (response.data.statusResp)
+				if (response.data.statusResp === true)
 				{
-					console.log('Utilisateur connecté: ' + response.data.statusResp + ', ' + response.data.statusMsg +  ', ' + JSON.stringify(response.data.data));
+					session.setUser();
+					console.log('Utilisateur connecté: ' + response.data.statusResp + ', ' + response.data.statusMsg +  ', ' + JSON.stringify(response.data));
 				}
 
-				return response.data;
+				return response;
 			});
 	};
 

@@ -11,7 +11,7 @@ const sha1 = require('sha1');
 var router = express.Router(); //Création objet Router
 
 
-//Instructions serveur à effectuer lors d'une requête GET avec action "/login"
+//Instructions serveur à effectuer lors d'une requête POST avec action "/login"
 router.post('/', function (request, response, next) 
 {
     var log = request.body.login;		//Récupération variable "login" de la requête GET
@@ -55,10 +55,10 @@ router.post('/', function (request, response, next)
             }
             else if((result.rows[0] != null) && (result.rows[0].motpasse == sha1(pass))) //Verification utilisateur trouvé et mdp
             {
-                // request.session.isConnected = true;
-                // responseData.data=result.rows[0].nom;
-                session.setUser();
+                console.log('Connexion réussie');
+                responseData.statusResp = true;
                 responseData.statusMsg = 'Connexion réussie : bonjour ' + result.rows[0].prenom;
+                responseData.data=result.rows[0].nom;
             }
             else
             {
@@ -66,7 +66,7 @@ router.post('/', function (request, response, next)
                 responseData.statusMsg='Connexion échouée : informations de connexion incorrecte';
             }
 
-            response.send(responseData.statusMsg);
+            response.send(responseData);
         })
 
         client.release(); // connexion libérée    
