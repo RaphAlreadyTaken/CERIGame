@@ -1,8 +1,8 @@
 /******** Application
  *
  ********/
-var app = angular.module('app', []);
+var app = angular.module('app', ["ngRoute"]);
 app.controller('loginController', loginController);
 app.service('auth', authService);
 app.service('session', sessionService);
-app.service('localStorage', localStorageService);
+app.service('sessionStorage', sessionStorageService);

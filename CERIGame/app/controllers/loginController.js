@@ -13,7 +13,15 @@ function loginController($scope, auth)
         auth.logIn($scope.login, $scope.password)
         .then(function(data)
         {
-            //$scope.bandeauDisplay('Connexion réussie');
+            if (auth.isLoggedIn())
+            {
+                $scope.logged = true;
+                console.log(auth.isLoggedIn());
+            }
+            else
+            {
+                $scope.logged = false;
+            }
         });
     };
 };

@@ -11,7 +11,7 @@ function authService($http, session)
 	 */
 	this.isLoggedIn = function()
 	{
-		return session.getUser() !== null;
+		return (session.getUser() !== null && session.getUser() !== undefined);
 	};
 
 	/**
@@ -28,7 +28,7 @@ function authService($http, session)
 			{
 				if (response.data.statusResp === true)
 				{
-					session.setUser();
+					session.setUser(response.data.data);
 					console.log('Utilisateur connecté: ' + response.data.statusResp + ', ' + response.data.statusMsg +  ', ' + JSON.stringify(response.data));
 				}
 

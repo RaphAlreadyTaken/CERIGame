@@ -14,8 +14,8 @@ var router = express.Router(); //Création objet Router
 //Instructions serveur à effectuer lors d'une requête POST avec action "/login"
 router.post('/', function (request, response, next) 
 {
-    var log = request.body.login;		//Récupération variable "login" de la requête GET
-	var pass = request.body.password;	//Récupération variable "password" de la requête GET
+    var log = request.body.login;		//Récupération variable "login" de la requête POST
+	var pass = request.body.password;	//Récupération variable "password" de la requête POST
     console.log('Parameters: login -> ' + log + ", password -> " + pass)	//Affichage console serveur
     // response.send('You are logged in');	//Réponse serveur =  message vers navigateur
     
@@ -51,19 +51,20 @@ router.post('/', function (request, response, next)
 
             if(err)
             {
-                console.log('Erreur d’exécution de la requete' + err.stack);
+                console.log('Erreur d’exécution de la requête' + err.stack);
             }
             else if((result.rows[0] != null) && (result.rows[0].motpasse == sha1(pass))) //Verification utilisateur trouvé et mdp
             {
                 console.log('Connexion réussie');
                 responseData.statusResp = true;
                 responseData.statusMsg = 'Connexion réussie : bonjour ' + result.rows[0].prenom;
-                responseData.data=result.rows[0].nom;
+                var data =  {nom: result.rows[0].nom, prenom: result.rows[0].prenom, date: new Date()};
+                responseData.data = data;
             }
             else
             {
-                console.log('Connexion échouée : informations de connexion incorrecte');
-                responseData.statusMsg='Connexion échouée : informations de connexion incorrecte';
+                console.log('Connexion échouée : informations de connexion incorrectes');
+                responseData.statusMsg='Connexion échouée : informations de connexion incorrectes';
             }
 
             response.send(responseData);
