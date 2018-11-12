@@ -4,8 +4,8 @@
 const express = require('express'); //Import Express
 const path = require('path');       //Import path
 const bodyParser = require('body-parser');
-//const session = require('express-session');
-// const MongoDBStore = require('connect-mongodb-session')(session);
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 // const MongoClient = require('mongodb').MongoClient;
 
 /******** Declaration des variables
@@ -21,18 +21,18 @@ var login = require('./CERIGame/app/routes/login');  //Import fichier login.js
  ********/
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json({limit: '10mb'}));
-// app.use(session(
-// {
-// 	secret: 'bobby bob',
-// 	saveUninitialized: false,
-// 	resave: false,
-// 	store: new MongoDBStore(
-// 	{
-// 		uri: "mongodb://?",	//Adresse à déterminer
-// 		collection: 'mySessions',
-// 		touchAfter: 24 * 3600
-// 	})
-// }));
+app.use(session(
+{
+	secret: 'bobby bob',
+	saveUninitialized: false,
+	resave: false,
+	store: new MongoDBStore(
+	{
+		uri: "mongodb://127.0.0.1:27017/db",	//Adresse à déterminer
+		collection: 'mySessions_3131',
+		touchAfter: 24 * 3600
+	})
+}));
 app.use(express.static(path.join(__dirname, './CERIGame/app'))); //Ajout répertoire app dans "path" de l'app
 app.use(express.static(path.join(__dirname, './CERIGame/css'))); //Ajout répertoire css dans "path" de l'app
 app.use('/', index);    //Utilise la variable index (importation index.js)

@@ -30,6 +30,7 @@ function authService($http, session)
 				{
 					session.setUser(response.data.data);
 					console.log('Utilisateur connecté: ' + response.data.statusResp + ', ' + response.data.statusMsg +  ', ' + JSON.stringify(response.data));
+					console.log('Contenu session mongodb: ' + session.connected);
 				}
 
 				return response;

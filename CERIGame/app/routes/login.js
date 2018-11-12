@@ -60,6 +60,9 @@ router.post('/', function (request, response, next)
                 responseData.statusMsg = 'Connexion réussie : bonjour ' + result.rows[0].prenom;
                 var data =  {nom: result.rows[0].nom, prenom: result.rows[0].prenom, date: new Date()};
                 responseData.data = data;
+
+                request.session.connected = true;
+                request.session.name = result.rows[0].prenom;
             }
             else
             {
