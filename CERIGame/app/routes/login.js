@@ -57,12 +57,14 @@ router.post('/', function (request, response, next)
             {
                 console.log('Connexion réussie');
                 responseData.statusResp = true;
+                dateNow = new Date();
                 responseData.statusMsg = 'Connexion réussie : bonjour ' + result.rows[0].prenom;
-                var data =  {nom: result.rows[0].nom, prenom: result.rows[0].prenom, date: new Date()};
+                var data =  {nom: result.rows[0].nom, prenom: result.rows[0].prenom, date: dateNow};
                 responseData.data = data;
 
-                request.session.connected = true;
                 request.session.name = result.rows[0].prenom;
+                request.session.surname = result.rows[0].nom;
+                request.session.date = dateNow;
             }
             else
             {
