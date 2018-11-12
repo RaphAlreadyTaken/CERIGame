@@ -41,15 +41,10 @@ function authService($http, session)
 	 * Déconnecte un utilisateur
 	 * @returns {Promise} Réponse serveur
 	 */
-	this.logOut = function()
+	this.logOut = function($scope)
 	{
-		return $http
-			.get('http://localhost:3131/logout')
-			.then(function(response)
-			{
-				console.log('Utilisateur déconnecté');
-				session.destroy();
-				return response.data;
-			});
+		console.log('Utilisateur déconnecté');
+		$scope.logged = false;
+		window.localStorage.setItem("logged", false);
 	};
 };

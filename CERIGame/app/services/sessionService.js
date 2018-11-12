@@ -23,8 +23,6 @@ function sessionService($log, localStorage)
      */
     this.setUser = function(user)
     {
-        alert("User created");
-        console.log("User created");
         this.user = user;
         localStorage.setItem('sessionUser', JSON.stringify(user));
         console.log(localStorage);

@@ -5,9 +5,8 @@
  */
 function loginController($scope, auth)
 {
-
     //Crado
-    if (window.localStorage.sessionUser)
+    if (window.localStorage.getItem("logged", true))
     {
         $scope.logged = true;
     }
@@ -31,5 +30,10 @@ function loginController($scope, auth)
                 $scope.logged = false;
             }
         });
+    };
+
+    $scope.logOut = function()
+    {
+        auth.logOut($scope);
     };
 };
