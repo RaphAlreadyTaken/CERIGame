@@ -5,6 +5,14 @@
  */
 function loginController($scope, auth)
 {
+
+    //Crado
+    if (window.localStorage.sessionUser)
+    {
+        $scope.logged = true;
+    }
+    //Fin crado
+
     $scope.login = null;
     $scope.password = null;
 

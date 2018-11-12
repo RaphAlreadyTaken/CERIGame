@@ -2,9 +2,9 @@
  * Service session
  * @param {?} $log - ?
  * @param {Object} localStorage - Objet stockage local
- * @return {Object|sessionService}
+ * @return {Object|localService}
  */
-function sessionService($log, sessionStorage)
+function sessionService($log, localStorage)
 {
     this.exists = false;
 
@@ -26,8 +26,8 @@ function sessionService($log, sessionStorage)
         alert("User created");
         console.log("User created");
         this.user = user;
-        sessionStorage.setItem('sessionUser', JSON.stringify(user));
-        console.log(sessionStorage);
+        localStorage.setItem('sessionUser', JSON.stringify(user));
+        console.log(localStorage);
         this.exists = true;
     };
 }

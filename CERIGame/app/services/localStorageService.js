@@ -4,14 +4,14 @@
  * @param {?} $window - Navigateur
  * @returns {Object} - Stockage session local
  */
-function sessionStorageService($window)
+function localStorageService($window)
 {
-	if ($window.sessionStorage)
+	if ($window.localStorage)
 	{
-		return $window.sessionStorage;
+		return $window.localStorage;
 	}
 
 	throw new Error('Session storage support needed');
 };
 
-sessionStorageService.$inject = ['$window'];
+localStorageService.$inject = ['$window'];
