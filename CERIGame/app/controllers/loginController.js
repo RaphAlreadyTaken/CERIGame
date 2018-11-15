@@ -5,12 +5,10 @@
  */
 function loginController($scope, auth)
 {
-    //Crado
-    if (window.localStorage.getItem("logged", true))
+    if (auth.isLoggedIn())
     {
         $scope.logged = true;
     }
-    //Fin crado
 
     $scope.login = null;
     $scope.password = null;

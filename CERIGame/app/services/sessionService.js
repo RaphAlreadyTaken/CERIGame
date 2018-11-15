@@ -6,8 +6,6 @@
  */
 function sessionService($log, localStorage)
 {
-    this.exists = false;
-
     /**
      * Getter utilisateur
      * @returns {Object} Utilisateur
@@ -26,6 +24,5 @@ function sessionService($log, localStorage)
         this.user = user;
         localStorage.setItem('sessionUser', JSON.stringify(user));
         console.log(localStorage);
-        this.exists = true;
     };
 }

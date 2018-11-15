@@ -55,16 +55,21 @@ router.post('/', function (request, response, next)
             }
             else if((result.rows[0] != null) && (result.rows[0].motpasse == sha1(pass))) //Verification utilisateur trouvé et mdp
             {
+                request.session.connected = true;
+                request.session.nom = result.rows[0].nom;
+                request.session.prenom = result.rows[0].prenom;
+                request.session.date = new Date();
+                console.log("mongo: " + request.session.id);
+                
                 console.log('Connexion réussie');
                 responseData.statusResp = true;
-                dateNow = new Date();
                 responseData.statusMsg = 'Connexion réussie : bonjour ' + result.rows[0].prenom;
-                var data =  {nom: result.rows[0].nom, prenom: result.rows[0].prenom, date: dateNow};
-                responseData.data = data;
-
-                request.session.name = result.rows[0].prenom;
-                request.session.surname = result.rows[0].nom;
-                request.session.date = dateNow;
+                
+                responseData.data = {};
+                responseData.data['id'] = request.session.id;
+                responseData.data['nom'] = request.session.nom;
+                responseData.data['prenom'] = request.session.prenom;
+                responseData.data['date'] = request.session.date;
             }
             else
             {
@@ -77,7 +82,6 @@ router.post('/', function (request, response, next)
 
         client.release(); // connexion libérée    
     })
-    
 });
 
 /******** Export

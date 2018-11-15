@@ -28,7 +28,7 @@ app.use(session(
 	resave: false,
 	store: new MongoDBStore(
 	{
-		uri: "mongodb://127.0.0.1:27017/db",	//Adresse à déterminer
+		uri: "mongodb://127.0.0.1:27017/db",	//Mettre adresse pedago pour accès distant
 		collection: 'mySessions_3131',
 		touchAfter: 24 * 3600
 	})
