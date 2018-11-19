@@ -11,6 +11,7 @@ function authService($http, session)
 	 */
 	this.isLoggedIn = function()
 	{
+		console.log("user: %o", session.getUser());
 		return (session.getUser() !== null && session.getUser() !== undefined);
 	};
 
@@ -29,7 +30,9 @@ function authService($http, session)
 				if (response.data.statusResp === true)
 				{
 					session.setUser(response.data.data);
-					console.log('Utilisateur connecté: ' + response.data.statusResp + ', ' + response.data.statusMsg +  ', ' + JSON.stringify(response.data.data));
+					console.log('Utilisateur connecté: ' + response.data.statusResp + ', ' + response.data.statusMsg);
+					console.log('user session from auth: %o', session.getUser());
+					console.log('id session: ' + session.id);
 				}
 
 				return response;
@@ -46,7 +49,7 @@ function authService($http, session)
 			.get('http://localhost:3131/logout')
 			.then(function(response)
 			{
-				console.log('Utilisateur déconnecté: ' + response);
+				console.log('Utilisateur déconnecté: %o', response);
 				$scope.logged = false;
 			});
 	};

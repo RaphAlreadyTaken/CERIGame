@@ -6,13 +6,15 @@
  */
 function sessionService($log, localStorage)
 {
+    this.user = JSON.parse(window.localStorage.getItem('sessionUser'));
+
     /**
      * Getter utilisateur
      * @returns {Object} Utilisateur
      */
     this.getUser = function()
     {
-        return this.user;
+        return this.sessionUser;
     };
 
     /**
@@ -24,11 +26,5 @@ function sessionService($log, localStorage)
         this.user = user;
         localStorage.setItem('sessionUser', JSON.stringify(user));
         console.log(localStorage);
-        console.log("user: %o", user);
     };
-
-    this.end = function()
-    {
-        this.destroy();
-    }
 }

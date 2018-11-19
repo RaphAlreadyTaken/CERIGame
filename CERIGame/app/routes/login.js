@@ -58,6 +58,8 @@ router.post('/', function (request, response, next)
                 }
                 else if((result.rows[0] != null) && (result.rows[0].motpasse == sha1(pass))) //Verification utilisateur trouvé et mdp
                 {
+                    console.log("Session express: %o", request.session);
+
                     request.session.connected = true;
                     request.session.nom = result.rows[0].nom;
                     request.session.prenom = result.rows[0].prenom;

@@ -16,7 +16,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 var app = express(); //Création objet Express
 var index = require('./CERIGame/app/routes/index');  //Import fichier index.js
 var login = require('./CERIGame/app/routes/login');  //Import fichier login.js
-var logout = require('./CERIGame/app/routes/logout');  //Import fichier login.js
+var logout = require('./CERIGame/app/routes/logout');  //Import fichier logout.js
 //var dsnMongoDB = "mongodb://?";	//Adresse à déterminer
 
 /******** Trucs à utiliser
@@ -34,7 +34,8 @@ app.use(session(
 		uri: "mongodb://127.0.0.1:27017/db",	//Mettre adresse pedago pour accès distant
 		collection: 'mySessions_3131',
 		touchAfter: 24 * 3600
-	})
+	}),
+	cookie: {maxAge: 24 * 3600 * 1000}
 }));
 app.use(express.static(path.join(__dirname, './CERIGame/app'))); //Ajout répertoire app dans "path" de l'app
 app.use(express.static(path.join(__dirname, './CERIGame/css'))); //Ajout répertoire css dans "path" de l'app

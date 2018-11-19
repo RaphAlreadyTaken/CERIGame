@@ -5,9 +5,10 @@
  */
 function loginController($scope, auth)
 {
+    $scope.logged = false;
+
     if (auth.isLoggedIn())
     {
-        alert("Vous êtes connecté, espèce de con");
         $scope.logged = true;
     }
 
@@ -23,6 +24,8 @@ function loginController($scope, auth)
 
     $scope.formLogin = function()
     {
+        alert("Appel contrôleur: " + auth.isLoggedIn());
+
         auth.logIn($scope.login, $scope.password, $scope.ls)
         .then(function(data)
         {
