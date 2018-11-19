@@ -1,4 +1,3 @@
-
 /**
  * Service stockage (session)
  * @param {?} $window - Navigateur

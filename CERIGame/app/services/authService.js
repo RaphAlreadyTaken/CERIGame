@@ -20,16 +20,16 @@ function authService($http, session)
 	 * @param {String} password - Mot de passe
 	 * @returns {Promise} Réponse serveur
 	 */
-	this.logIn = function(login, password)
+	this.logIn = function(login, password, ls)
 	{
 		return $http
-			.post('http://localhost:3131/login', {'login': login, 'password': password})
+			.post('http://localhost:3131/login', {'login': login, 'password': password, 'ls' : ls})
 			.then(function(response)
 			{
 				if (response.data.statusResp === true)
 				{
 					session.setUser(response.data.data);
-					console.log('Utilisateur connecté: ' + response.data.statusResp + ', ' + response.data.statusMsg +  ', ' + JSON.stringify(response.data));
+					console.log('Utilisateur connecté: ' + response.data.statusResp + ', ' + response.data.statusMsg +  ', ' + JSON.stringify(response.data.data));
 				}
 
 				return response;
@@ -42,7 +42,12 @@ function authService($http, session)
 	 */
 	this.logOut = function($scope)
 	{
-		console.log('Utilisateur déconnecté');
-		$scope.logged = false;
+		return $http
+			.get('http://localhost:3131/logout')
+			.then(function(response)
+			{
+				console.log('Utilisateur déconnecté: ' + response);
+				$scope.logged = false;
+			});
 	};
 };
