@@ -11,10 +11,9 @@ const express = require('express'); //Import Express
 var router = express.Router(); //Création objet Router
 
 //Instructions serveur à effectuer lors d'une requête POST avec action "/login"
-router.get('/', function (request, response, next) 
+router.get('/', function (request, response) 
 {
-    request.session.connected = false;
-    console.log("logout called: " + request.session.connected);
+    console.log("check connected: " + request.session.connected);
     response.send(request.session.connected);
 });
 

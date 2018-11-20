@@ -5,44 +5,32 @@
  */
 function loginController($scope, auth)
 {
-    $scope.logged = false;
+    console.log("Checking controller");
 
-    if (auth.isLoggedIn())
-    {
-        $scope.logged = true;
-    }
+    $scope.logged = auth.isLoggedIn();
 
     $scope.login = null;
     $scope.password = null;
-
-    if (localStorage !== null)
-    {
-        $scope.ls = JSON.parse(localStorage.getItem("sessionUser"));
-    }
-
-    //console.log("local: " + $scope.ls['id']);
+    $scope.ls = null;
 
     $scope.formLogin = function()
     {
-        alert("Appel contrôleur: " + auth.isLoggedIn());
+        if (localStorage !== null)
+        {
+            $scope.ls = JSON.parse(localStorage.getItem("sessionUser"));
+            console.log("localStorage: %o", $scope.ls);
+        }
 
         auth.logIn($scope.login, $scope.password, $scope.ls)
         .then(function(data)
         {
-            if (auth.isLoggedIn())
-            {
-                $scope.logged = true;
-                console.log(auth.isLoggedIn());
-            }
-            else
-            {
-                $scope.logged = false;
-            }
+            $scope.logged = auth.isLoggedIn();
         });
     };
 
     $scope.logOut = function()
     {
         auth.logOut($scope);
+        $scope.logged = auth.isLoggedIn();
     };
 };

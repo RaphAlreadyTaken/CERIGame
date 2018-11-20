@@ -7,13 +7,25 @@ function authService($http, session)
 {
 	/**
 	 * Vérifie si l'utilisateur est connecté
-	 * @returns {boolean} Utilisateur existant
+	 * @returns {boolean} Utilisateur connecté
 	 */
 	this.isLoggedIn = function()
 	{
-		console.log("user: %o", session.getUser());
-		return (session.getUser() !== null && session.getUser() !== undefined);
+		return $http
+			.get('http://localhost:3131/checkLog')
+			.then(function(response)
+			{
+				console.log("Response logged: " + response.data);
+
+				if (response.data == true)
+				{
+					return true;
+				}
+				
+				return false;
+			});
 	};
+
 
 	/**
 	 * Connecte un utilisateur
@@ -24,33 +36,27 @@ function authService($http, session)
 	this.logIn = function(login, password, ls)
 	{
 		return $http
-			.post('http://localhost:3131/login', {'login': login, 'password': password, 'ls' : ls})
-			.then(function(response)
+		.post('http://localhost:3131/login', {'login': login, 'password': password, 'ls' : ls})
+		.then(function(response)
+		{
+			if (response.data.statusResp === true)
 			{
-				if (response.data.statusResp === true)
-				{
-					session.setUser(response.data.data);
-					console.log('Utilisateur connecté: ' + response.data.statusResp + ', ' + response.data.statusMsg);
-					console.log('user session from auth: %o', session.getUser());
-					console.log('id session: ' + session.id);
-				}
-
-				return response;
-			});
+				localStorage.setItem('sessionUser', JSON.stringify(response.data.data));
+				console.log('Utilisateur connecté: ' + response.data.statusResp + ', ' + response.data.statusMsg);
+			}
+			
+			return response;
+		});
 	};
+	
 
 	/**
 	 * Déconnecte un utilisateur
 	 * @returns {Promise} Réponse serveur
 	 */
-	this.logOut = function($scope)
+	this.logOut = function()
 	{
 		return $http
 			.get('http://localhost:3131/logout')
-			.then(function(response)
-			{
-				console.log('Utilisateur déconnecté: %o', response);
-				$scope.logged = false;
-			});
 	};
 };

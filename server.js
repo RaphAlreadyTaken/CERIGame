@@ -17,6 +17,7 @@ var app = express(); //Création objet Express
 var index = require('./CERIGame/app/routes/index');  //Import fichier index.js
 var login = require('./CERIGame/app/routes/login');  //Import fichier login.js
 var logout = require('./CERIGame/app/routes/logout');  //Import fichier logout.js
+var checkLog = require('./CERIGame/app/routes/checkLog');  //Import fichier checkLog.js
 //var dsnMongoDB = "mongodb://?";	//Adresse à déterminer
 
 /******** Trucs à utiliser
@@ -42,6 +43,7 @@ app.use(express.static(path.join(__dirname, './CERIGame/css'))); //Ajout répert
 app.use('/', index);    //Utilise la variable index (importation index.js)
 app.use('/login', login) //Utilise la variable login (importation login.js)
 app.use('/logout', logout)	//Utilise la variable logout (importation logout.js)
+app.use('/checkLog', checkLog)	//Utilise la variable checkLog (importation checkLog.js)
 
 /******** Configuration du serveur NodeJS - Port : 3131
  *

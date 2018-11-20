@@ -21,9 +21,9 @@
                 <input type="password" name="password" ng-model="password">
                 <button type="submit" ng-disabled="form.$invalid">Authenticate</button>
             </form>
-            <div ng-show="logged">
+            <div>
                 Utilisateur connecté. Bienvenue.
-                <button ng-click="logOut()" ng-show ="logged">Déconnexion</button>
+                <button ng-click="logOut()">Déconnexion</button>
             </div>
         </div>
     </body>
