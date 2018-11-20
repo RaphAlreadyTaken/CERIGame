@@ -81,24 +81,23 @@ router.post('/', function (request, response, next)
                         }
                         
                         request.session.connected = true;
-                        responseData.isConnected = true;   //Connexion ok (pour vérif au chargement de la page)
 
-                        console.log('Connexion réussie');
                         responseData.statusResp = true;
                         responseData.statusMsg = 'Connexion réussie : bonjour ' + result.rows[0].prenom;
+                        console.log(responseData.statusMsg);
                     }
                     else    //Utilisateur déjà connecté
                     {
-                        console.log('Connexion échouée : utilisateur déjà connecté');
                         responseData.statusResp = false;
                         responseData.statusMsg='Connexion échouée : utilisateur déjà connecté';
+                        console.log(responseData.statusMsg);
                     }       
             }
             else
             {
-                console.log('Connexion échouée : informations de connexion incorrectes');
                 responseData.statusResp = false;
                 responseData.statusMsg='Connexion échouée : informations de connexion incorrectes';
+                console.log(responseData.statusMsg);
             }
 
             response.send(responseData);

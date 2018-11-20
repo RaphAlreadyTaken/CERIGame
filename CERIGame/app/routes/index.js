@@ -16,7 +16,15 @@ var path = require('path'); //Import path
 router.get('/', function (request, response, next)
 {
 	console.log('Target: ' + __dirname + '/login.js');	//Fichier cible
-	response.sendFile(path.resolve('./CERIGame/index.html'));   //Réponse serveur = fichier cible
+
+	if (request.session.connected === false)
+	{
+		response.sendFile(path.resolve('./CERIGame/index.html'));   //Page login
+	}
+	else
+	{
+		response.sendFile(path.resolve('./CERIGame/test.html'));	//Page app
+	}
 });
 
 /******** Export

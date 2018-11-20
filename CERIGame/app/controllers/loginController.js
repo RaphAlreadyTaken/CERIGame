@@ -8,6 +8,7 @@ function loginController($scope, auth)
     console.log("Checking controller");
 
     $scope.logged = auth.isLoggedIn();
+    console.log("logged ds contrôleur: %o", $scope.logged);
 
     $scope.login = null;
     $scope.password = null;

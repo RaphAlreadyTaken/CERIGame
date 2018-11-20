@@ -5,26 +5,33 @@
  */
 function authService($http, session)
 {
+	session.connected = false;
+
 	/**
 	 * Vérifie si l'utilisateur est connecté
 	 * @returns {boolean} Utilisateur connecté
 	 */
 	this.isLoggedIn = function()
 	{
-		return $http
+		var logged = false;
+
+		$http
 			.get('http://localhost:3131/checkLog')
 			.then(function(response)
 			{
 				console.log("Response logged: " + response.data);
 
-				if (response.data == true)
-				{
-					return true;
-				}
-				
-				return false;
+				logged = response;
+
 			});
-	};
+
+		if (logged === true)
+		{
+			return true;
+		}
+		
+		return false;
+		};
 
 
 	/**
