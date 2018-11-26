@@ -14,7 +14,13 @@
     </head>
     <body ng-app="app">
         <div ng-controller="loginController">
-            Utilisateur connecté. Bienvenue.
+            Utilisateur connecté. Bienvenue.<br>
+            Dernière connexion:<br>
+            <script>
+                var userInfo = JSON.parse(localStorage.getItem("sessionUser"));
+                var lastConnect = new Date(userInfo["date"]);
+                document.write(lastConnect.getDate() + "/" + (lastConnect.getMonth() + 1) + "/" + lastConnect.getFullYear() + " à " + (lastConnect.getHours() + 1) + "h" + lastConnect.getMinutes());
+            </script><br>
             <button ng-click="logOut()">Déconnexion</button>
         </div>
     </body>
