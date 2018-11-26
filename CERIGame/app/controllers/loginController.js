@@ -10,6 +10,12 @@ function loginController($scope, auth)
     $scope.logged = auth.isLoggedIn();
     console.log("logged ds contrôleur: %o", $scope.logged);
 
+    if (auth.isLoggedIn() == true)
+    {
+        console.log("I want to change page");
+        $window.location.href = "https://www.thesoftdesign.com/";
+    }
+
     $scope.login = null;
     $scope.password = null;
     $scope.ls = null;
@@ -26,7 +32,7 @@ function loginController($scope, auth)
         .then(function(data)
         {
             $scope.logged = auth.isLoggedIn();
-        });
+        })
     };
 
     $scope.logOut = function()

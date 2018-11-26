@@ -4,6 +4,7 @@
 *
 ********/
 const express = require('express'); //Import Express
+var path = require('path'); //Import path
 
 /******** Declaration des variables
  *
@@ -15,7 +16,7 @@ router.get('/', function (request, response, next)
 {
     request.session.connected = false;
     console.log("logout called: " + request.session.connected);
-    response.send(request.session.connected);
+    response.sendFile(path.resolve('./CERIGame/login.html'));	//Page login;
 });
 
 /******** Export

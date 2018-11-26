@@ -59,7 +59,7 @@ router.post('/', function (request, response, next)
                 else if((result.rows[0] != null) && (result.rows[0].motpasse == sha1(pass))) //Verification utilisateur trouvé et mdp
                 {
                     console.log("LocalStorage passed to login: " + ls);
-                    if (request.session.connected === false)     //Nouvelle connexion
+                    if (request.session.connected === false || request.session.connected === undefined)     //Nouvelle connexion
                     {
                         responseData.data = {}; //Sous-array retour
     
@@ -91,7 +91,7 @@ router.post('/', function (request, response, next)
                         responseData.statusResp = false;
                         responseData.statusMsg='Connexion échouée : utilisateur déjà connecté';
                         console.log(responseData.statusMsg);
-                    }       
+                    }
             }
             else
             {

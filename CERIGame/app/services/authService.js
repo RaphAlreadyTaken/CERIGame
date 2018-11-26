@@ -3,7 +3,7 @@
  * @param {?} $http - requête http
  * @param {Object} session - objet session
  */
-function authService($http, session)
+function authService($http, $window, session)
 {
 	session.connected = false;
 
@@ -51,7 +51,8 @@ function authService($http, session)
 				localStorage.setItem('sessionUser', JSON.stringify(response.data.data));
 				console.log('Utilisateur connecté: ' + response.data.statusResp + ', ' + response.data.statusMsg);
 			}
-			
+
+			$window.location.reload();
 			return response;
 		});
 	};
@@ -64,6 +65,10 @@ function authService($http, session)
 	this.logOut = function()
 	{
 		return $http
-			.get('http://localhost:3131/logout')
+		.get('http://localhost:3131/logout')
+		.then(function()
+		{
+			$window.location.reload();
+		});
 	};
 };

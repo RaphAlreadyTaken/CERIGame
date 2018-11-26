@@ -17,13 +17,13 @@ router.get('/', function (request, response, next)
 {
 	console.log('Target: ' + __dirname + '/login.js');	//Fichier cible
 
-	if (request.session.connected === false)
+	if (request.session.connected === true)
 	{
 		response.sendFile(path.resolve('./CERIGame/index.html'));   //Page login
 	}
 	else
 	{
-		response.sendFile(path.resolve('./CERIGame/test.html'));	//Page app
+		response.sendFile(path.resolve('./CERIGame/login.html'));	//Page app
 	}
 });
 
