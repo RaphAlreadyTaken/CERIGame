@@ -13,7 +13,7 @@ var router = express.Router(); //Création objet Router
 //Instructions serveur à effectuer lors d'une requête POST avec action "/login"
 router.post('/', function (request, response)
 {
-    sql = "select statut from fredouil.users where id = " + resquest.body.id + ";";
+    sql = "select statut from fredouil.users where id = " + request.body.id + ";";
     
     var pool = new pgClient.Pool(
     {
