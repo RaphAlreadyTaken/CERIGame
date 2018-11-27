@@ -13,8 +13,8 @@
         <script src="/app.js"></script>
     </head>
     <body ng-app="app">
-        <div ng-controller="loginController">
-            Utilisateur connecté. Bienvenue.
+        <div ng-controller="loginController" class="skipLineWithBSn">
+            {{bandeau()}}
             <button ng-click="logOut()">Déconnexion</button>
         </div>
     </body>

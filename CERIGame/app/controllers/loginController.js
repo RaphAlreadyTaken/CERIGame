@@ -7,15 +7,6 @@ function loginController($scope, auth)
 {
     console.log("Checking controller");
 
-    $scope.logged = auth.isLoggedIn();
-    console.log("logged ds contrôleur: %o", $scope.logged);
-
-    if (auth.isLoggedIn() == true)
-    {
-        console.log("I want to change page");
-        $window.location.href = "https://www.thesoftdesign.com/";
-    }
-
     $scope.login = null;
     $scope.password = null;
     $scope.ls = null;
@@ -25,7 +16,6 @@ function loginController($scope, auth)
         if (localStorage !== null)
         {
             $scope.ls = JSON.parse(localStorage.getItem("sessionUser"));
-            console.log("localStorage: %o", $scope.ls);
         }
 
         auth.logIn($scope.login, $scope.password, $scope.ls)
@@ -39,5 +29,14 @@ function loginController($scope, auth)
     {
         auth.logOut($scope);
         $scope.logged = auth.isLoggedIn();
+    };
+
+    $scope.bandeau = function()
+    {
+        var userInfo = JSON.parse(localStorage.getItem("sessionUser"));
+        var lastConnect = new Date(userInfo["date"]);
+        var lastConnectReadable = lastConnect.getDate() + "/" + (lastConnect.getMonth() + 1) + "/" + lastConnect.getFullYear() + " à " + lastConnect.getHours() + "h" + lastConnect.getMinutes();
+        
+        return "Utilisateur connecté. Bienvenue.\nDernière connexion: " + lastConnectReadable + "\n";
     };
 };

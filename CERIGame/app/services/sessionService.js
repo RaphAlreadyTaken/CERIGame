@@ -24,7 +24,6 @@ function sessionService($log, localStorage)
     this.setUser = function(user)
     {
         this.user = user;
-        console.log('sessionUser: %o', user);
         localStorage.setItem('sessionUser', user);
     };
 }

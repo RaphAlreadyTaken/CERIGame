@@ -14,24 +14,16 @@ function authService($http, $window, session)
 	this.isLoggedIn = function()
 	{
 		var logged = false;
+		var userInfo = JSON.parse(localStorage.getItem("sessionUser"));
+		var userId = userInfo["id"];
 
-		$http
-			.get('http://localhost:3131/checkLog')
-			.then(function(response)
-			{
-				console.log("Response logged: " + response.data);
-
-				logged = response;
-
-			});
-
-		if (logged === true)
+		return $http
+		.post('http://localhost:3131/checkLog', {'id': userId})
+		.then(function(response)
 		{
-			return true;
-		}
-		
-		return false;
-		};
+			return response;
+		});
+	};
 
 
 	/**
@@ -64,8 +56,11 @@ function authService($http, $window, session)
 	 */
 	this.logOut = function()
 	{
+		var userInfo = JSON.parse(localStorage.getItem("sessionUser"));
+		var userId = userInfo["id"];
+
 		return $http
-		.get('http://localhost:3131/logout')
+		.post('http://localhost:3131/logout', {'id': userId})
 		.then(function()
 		{
 			$window.location.reload();
