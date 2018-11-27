@@ -26,72 +26,85 @@ router.post('/', function (request, response, next)
     sql = "select * from fredouil.users where identifiant like '" + log + "';";
     // instance de connexion avec toutes les informations de la BD
     var pool = new pgClient.Pool(
-        {
-            user: 'uapv1603044',
-            host: '192.168.2.130',
-            database: 'etd',
-            password: 'LZJIMq',
-            port: 5432
-        });
-        
-        // Connexion à la base => objet de connexion : client
-        // fonctionne également en promesse avec then et catch !
-        pool.connect(function(err, client, done) 
-        {
-            if(err) 
-            {
-                console.log('Error connecting to pg server' + err.stack);
-            }
-            else
-            {
-                console.log('Connection established with pg db server');
-            }
-            
-            // Exécution de la requête SQL et traitement du résultat
-            client.query(sql, function(err, result)
-            {
-                var responseData = {};  //Array retour
-                
-                if(err)
-                {
-                    console.log('Erreur d’exécution de la requête' + err.stack);
-                }
-                else if((result.rows[0] != null) && (result.rows[0].motpasse == sha1(pass))) //Verification utilisateur trouvé et mdp
-                {
-                    console.log("LocalStorage passed to login: " + ls);
-                    if (request.session.connected === false || request.session.connected === undefined)     //Nouvelle connexion
-                    {
-                        responseData.data = {}; //Sous-array retour
+    {
+        user: 'uapv1603044',
+        host: '192.168.2.130',
+        database: 'etd',
+        password: 'LZJIMq',
+        port: 5432
+    });
     
-                        if (ls !== null)    //Si localStorage existe
-                        {
-                            //Récupération date localStorage
-                            responseData.data['nom'] = ls['nom'];
-                            responseData.data['prenom'] = ls['prenom'];
-                            responseData.data['date'] = ls['date'];
-                            console.log("ls not null: %o", responseData.data);
-                        }
-                        else                //Si localStorage n'existe pas
-                        {
-                            //Stockage données session (pour création ultérieure du localStorage)
-                            responseData.data['nom'] = result.rows[0].nom;
-                            responseData.data['prenom'] = result.rows[0].prenom;
-                            responseData.data['date'] = new Date();
-                            console.log("ls null: %o", responseData.data);
-                        }
-                        
-                        request.session.connected = true;
+    // Connexion à la base => objet de connexion : client
+    // fonctionne également en promesse avec then et catch !
+    pool.connect(function(err, client, done) 
+    {
+        if(err) 
+        {
+            console.log('Error connecting to pg server' + err.stack);
+        }
+        else
+        {
+            console.log('Connection established with pg db server');
+        }
+        
+        // Exécution de la requête SQL et traitement du résultat
+        client.query(sql, function(err, result)
+        {
+            var responseData = {};  //Array retour
+            
+            if(err)
+            {
+                console.log('Erreur d’exécution de la requête' + err.stack);
+            }
+            else if((result.rows[0] != null) && (result.rows[0].motpasse == sha1(pass))) //Verification utilisateur trouvé et mdp
+            {
+                if (result.rows[0].statut == 0)     //Nouvelle connexion
+                {
+                    responseData.data = {}; //Sous-array retour
 
-                        responseData.statusResp = true;
-                        responseData.statusMsg = 'Connexion réussie : bonjour ' + result.rows[0].prenom;
-                        console.log(responseData.statusMsg);
-                    }
-                    else    //Utilisateur déjà connecté
+                    if (ls !== null)    //Si localStorage existe
                     {
-                        responseData.statusResp = false;
-                        responseData.statusMsg='Connexion échouée : utilisateur déjà connecté';
-                        console.log(responseData.statusMsg);
+                        //Récupération date localStorage
+                        responseData.data['nom'] = ls['nom'];
+                        responseData.data['prenom'] = ls['prenom'];
+                        responseData.data['date'] = ls['date'];
+                        responseData.data['id'] = ls['id'];
                     }
+                    else                //Si localStorage n'existe pas
+                    {
+                        //Stockage données session (pour création ultérieure du localStorage)
+                        responseData.data['nom'] = result.rows[0].nom;
+                        responseData.data['prenom'] = result.rows[0].prenom;
+                        responseData.data['date'] = new Date();
+                        responseData.data['id'] = result.rows[0].id;
+                    }
+                    
+                    sql = "update fredouil.users set statut = 1 where id = " + result.rows[0].id + ";";
+
+                    client.query(sql, function(err, result)
+                    {
+                        if(err)
+                        {
+                            console.log('Erreur d’exécution de la requête' + err.stack);
+                        }
+                        else
+                        {
+                            console.log("Statut connecté mis à jour: " + 1);
+                        }
+                    });
+
+                    request.session.connected = true;
+
+                    responseData.statusResp = true;
+                    responseData.statusMsg = 'Connexion réussie : bonjour ' + result.rows[0].prenom;
+                    console.log(responseData.statusMsg);
+                }
+                else    //Utilisateur déjà connecté
+                {
+                    responseData.statusResp = false;
+                    responseData.statusMsg='Connexion échouée : utilisateur déjà connecté';
+                    console.log(responseData.statusMsg);
+                }
             }
             else
             {

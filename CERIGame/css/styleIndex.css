@@ -9,3 +9,8 @@ form
     display: inline-block;
     line-height: 1cm;
 }
+
+.skipLineWithBSn
+{
+    white-space: pre-line;
+}
