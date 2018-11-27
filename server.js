@@ -8,7 +8,7 @@ const path = require('path');       //Import path
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
-// const MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 
 /******** Declaration des variables
  *
@@ -18,7 +18,7 @@ var index = require('./CERIGame/app/routes/index');  //Import fichier index.js
 var login = require('./CERIGame/app/routes/login');  //Import fichier login.js
 var logout = require('./CERIGame/app/routes/logout');  //Import fichier logout.js
 var checkLog = require('./CERIGame/app/routes/checkLog');  //Import fichier checkLog.js
-//var dsnMongoDB = "mongodb://?";	//Adresse à déterminer
+var dsnMongoDB = "mongodb://127.0.0.1:27017/db";	//Connexion base mongodb
 
 /******** Trucs à utiliser
  *
@@ -44,6 +44,28 @@ app.use('/', index);    //Utilise la variable index (importation index.js)
 app.use('/login', login) //Utilise la variable login (importation login.js)
 app.use('/logout', logout)	//Utilise la variable logout (importation logout.js)
 app.use('/checkLog', checkLog)	//Utilise la variable checkLog (importation checkLog.js)
+
+
+//JE SAIS PAS Où EST CE QUE CA VA
+// app.get('/db/quizz/:p1/:p2', (request, response) => 
+// {
+// 	var p1 = request.params.p1;
+// 	var p2 = request.params.p2;
+// 	// Connexion MongoDB
+// 	MongoClient.connect(dsnMongoDB, { useNewUrlParser: true }, function(err, mongoClient) 
+// 	{
+// 		if(err) 
+// 		{
+// 			return console.log('erreur connexion base de données'); 
+// 		}
+// 		if(mongoClient) 
+// 		{
+// 			// Exécution des requêtes
+		
+// 		}
+// 	});
+// });
+
 
 /******** Configuration du serveur NodeJS - Port : 3131
  *
