@@ -4,6 +4,7 @@
 *
 ********/
 const express = require('express'); //Import Express
+const pgClient = require('pg'); // définit le middleware pg
 
 /******** Declaration des variables
  *
