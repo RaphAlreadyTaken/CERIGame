@@ -14,7 +14,9 @@
     </head>
     <body ng-app="app">
         <div ng-controller="loginController" class="skipLineWithBSn">
-            {{bandeau()}}
+            <div id="bandeau">
+                {{bandeau()}}
+            </div>
             <button ng-click="logOut()">Déconnexion</button>
         </div>
     </body>
