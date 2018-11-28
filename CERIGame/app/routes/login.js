@@ -61,23 +61,12 @@ router.post('/', function (request, response, next)
                 if (result.rows[0].statut == 0)     //Nouvelle connexion
                 {
                     responseData.data = {}; //Sous-array retour
-
-                    if (ls !== null)    //Si localStorage existe
-                    {
-                        //Récupération date localStorage
-                        responseData.data['nom'] = ls['nom'];
-                        responseData.data['prenom'] = ls['prenom'];
-                        responseData.data['date'] = ls['date'];
-                        responseData.data['id'] = ls['id'];
-                    }
-                    else                //Si localStorage n'existe pas
-                    {
-                        //Stockage données session (pour création ultérieure du localStorage)
-                        responseData.data['nom'] = result.rows[0].nom;
-                        responseData.data['prenom'] = result.rows[0].prenom;
-                        responseData.data['date'] = new Date();
-                        responseData.data['id'] = result.rows[0].id;
-                    }
+                
+                    //Stockage données session (pour création ultérieure du localStorage)
+                    responseData.data['nom'] = result.rows[0].nom;
+                    responseData.data['prenom'] = result.rows[0].prenom;
+                    responseData.data['date'] = new Date();
+                    responseData.data['id'] = result.rows[0].id;
                     
                     sql = "update fredouil.users set statut = 1 where id = " + result.rows[0].id + ";";
 

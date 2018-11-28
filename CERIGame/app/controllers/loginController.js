@@ -37,6 +37,7 @@ function loginController($scope, auth)
         var lastConnect = new Date(userInfo["date"]);
         var lastConnectReadable = lastConnect.getDate() + "/" + (lastConnect.getMonth() + 1) + "/" + lastConnect.getFullYear() + " à " + lastConnect.getHours() + "h" + lastConnect.getMinutes();
         
+        //document.getElementById("bandeau").innerHTML = lastConnectReadable;   //Alternative
         return "Utilisateur connecté. Bienvenue.\nDernière connexion: " + lastConnectReadable + "\n";
     };
 };
