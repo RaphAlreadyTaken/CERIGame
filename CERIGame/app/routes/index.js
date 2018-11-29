@@ -4,7 +4,6 @@
 *
 ********/
 const express = require('express'); //Import Express
-const session = require('express-session');
 
 /******** Declaration des variables
  *

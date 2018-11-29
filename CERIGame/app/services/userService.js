@@ -23,7 +23,7 @@ function userService($http)
 	 * Récupère tous les utilisateurs
 	 * @returns {Promise} Réponse serveur (utilisateurs)
 	 */
-    this.getAllUsers = function(id)
+    this.getAvailableUsers = function(id)
     {
         return $http
         .get('http://localhost:3131/getAllUsers')

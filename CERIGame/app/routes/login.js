@@ -69,7 +69,7 @@ router.post('/', function (request, response, next)
                     
                     sql = "update fredouil.users set statut = 1 where id = " + result.rows[0].id + ";";
 
-                    client.query(sql, function(err, result)
+                    client.query(sql, function(err)
                     {
                         if(err)
                         {

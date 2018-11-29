@@ -1,6 +1,7 @@
 /**
  * Service d'authentification
  * @param {?} $http - requête http
+ * @param {?} $window - navigateur
  * @param {Object} session - objet session
  */
 function authService($http, $window, session)
@@ -13,7 +14,6 @@ function authService($http, $window, session)
 	 */
 	this.isLoggedIn = function()
 	{
-		var logged = false;
 		var userInfo = JSON.parse(localStorage.getItem("sessionUser"));
 		var userId = userInfo["id"];
 

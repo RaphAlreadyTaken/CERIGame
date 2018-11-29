@@ -4,57 +4,55 @@
 *
 ********/
 const express = require('express'); //Import Express
+const pgClient = require('pg'); // définit le middleware pg
 
 /******** Declaration des variables
  *
  ********/
 var router = express.Router(); //Création objet Router
-var path = require('path'); //Import path
 
 //Instructions serveur à effectuer lors d'une requête POST avec action "/getUser"
 router.post('/', function (request, response, next)
 {
+    var responseData = {};
+
     var pool = new pgClient.Pool(
+    {
+        user: 'uapv1603044',
+        host: '192.168.2.130',
+        database: 'etd',
+        password: 'LZJIMq',
+        port: 5432
+    });
+    
+    // Connexion à la base => objet de connexion : client
+    // fonctionne également en promesse avec then et catch !
+    pool.connect(function(err, client, done) 
+    {
+        if(err) 
         {
-            user: 'uapv1603044',
-            host: '192.168.2.130',
-            database: 'etd',
-            password: 'LZJIMq',
-            port: 5432
-        });
+            console.log('Error connecting to pg server' + err.stack);
+        }
+        else
+        {
+            console.log('Connection established with pg db server');
+        }
         
-        // Connexion à la base => objet de connexion : client
-        // fonctionne également en promesse avec then et catch !
-        pool.connect(function(err, client, done) 
+        sql = "select * from fredouil.users where id = " + request.body.id + ";";
+        
+        client.query(sql, function(err, result)
         {
-            if(err) 
+            if (err)
             {
-                console.log('Error connecting to pg server' + err.stack);
+                console.log('Erreur d’exécution de la requête' + err.stack);
             }
             else
             {
-                console.log('Connection established with pg db server');
+                response.send(result.rows[0]);
             }
-            
-            sql = "select * from fredouil.users where id = " + request.body.id;
-            
-            client.query(sql, function(err)
-            {
-                if (err)
-                {
-                    console.log('Erreur d’exécution de la requête' + err.stack);
-                }
-                else
-                {
-                    console.log("Utilisateur récupéré avec l'ID " + request.rows[0].id);
-                    responseData = request.rows[0];
-                }
-            });
-
-            client.release();
         });
-
-    response.send(responseData);
+        client.release();
+    })
 });
 
 /******** Export

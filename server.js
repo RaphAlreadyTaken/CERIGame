@@ -18,7 +18,8 @@ var index = require('./CERIGame/app/routes/index');  //Import fichier index.js
 var login = require('./CERIGame/app/routes/login');  //Import fichier login.js
 var logout = require('./CERIGame/app/routes/logout');  //Import fichier logout.js
 var checkLog = require('./CERIGame/app/routes/checkLog');  //Import fichier checkLog.js
-var getUser = require('./CERIGame/app/routes/getAllUsers');  //Import fichier getUser.js
+var getUser = require('./CERIGame/app/routes/getUser');  //Import fichier getUser.js
+var getAllUsers = require('./CERIGame/app/routes/getAllUsers');  //Import fichier getAllUsers.js
 var dsnMongoDB = "mongodb://127.0.0.1:27017/db";	//Connexion base mongodb ///Pas utilisé///
 
 /******** Trucs à utiliser
@@ -46,6 +47,7 @@ app.use('/login', login) //Utilise la variable login (importation login.js)
 app.use('/logout', logout)	//Utilise la variable logout (importation logout.js)
 app.use('/checkLog', checkLog)	//Utilise la variable checkLog (importation checkLog.js)
 app.use('/getUser', getUser)	//Utilise la variable getUser (importation getUser.js)
+app.use('/getAllUsers', getAllUsers)	//Utilise la variable getUser (importation getUser.js)
 
 
 //JE SAIS PAS Où EST CE QUE CA VA

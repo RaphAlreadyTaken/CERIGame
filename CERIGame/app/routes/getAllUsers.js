@@ -4,16 +4,18 @@
 *
 ********/
 const express = require('express'); //Import Express
+const pgClient = require('pg'); // définit le middleware pg
 
 /******** Declaration des variables
  *
  ********/
 var router = express.Router(); //Création objet Router
-var path = require('path'); //Import path
 
 //Instructions serveur à effectuer lors d'une requête GET avec action "/getAllUsers"
 router.get('/', function (request, response, next)
 {
+    var responseData = {};
+
     var pool = new pgClient.Pool(
         {
             user: 'uapv1603044',
@@ -36,9 +38,9 @@ router.get('/', function (request, response, next)
                 console.log('Connection established with pg db server');
             }
             
-            sql = "select * from fredouil.users";
+            sql = "select * from fredouil.users where statut = 1";
             
-            client.query(sql, function(err)
+            client.query(sql, function(err, result)
             {
                 if (err)
                 {
@@ -47,14 +49,12 @@ router.get('/', function (request, response, next)
                 else
                 {
                     console.log("Utilisateurs récupérés");
-                    responseData = request.rows;
+                    response.send(result.rows);
                 }
             });
 
             client.release();
         });
-
-    response.send(responseData);
 });
 
 /******** Export
