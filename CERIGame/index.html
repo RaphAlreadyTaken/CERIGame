@@ -9,15 +9,24 @@
         <script src="/services/authService.js"></script>
         <script src="/services/localStorageService.js"></script>
         <script src="/services/sessionService.js"></script>
+        <script src="/services/userService.js"></script>
         <script src="/controllers/loginController.js"></script>
+        <script src="/controllers/profilController.js"></script>
+        <script src="/controllers/quizzController.js"></script>
         <script src="/app.js"></script>
     </head>
     <body ng-app="app">
         <div ng-controller="loginController" class="skipLineWithBSn">
-            <div id="bandeau">
+            <div id="bandeau"  class="disappear floatAbove">
                 {{bandeau()}}
             </div>
-            <button ng-click="logOut()">Déconnexion</button>
+            <button ng-click="logOut()" class="toRight">Déconnexion</button>
         </div>
+
+        <div ng-controller="profilController">
+            <!--{{getProfil()}} Boucle infinie sur le browser--> 
+        </div>
+
+        <div ng-controller="quizzController"></div>
     </body>
 </html>

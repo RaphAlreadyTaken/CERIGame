@@ -17,7 +17,6 @@ router.post('/', function (request, response, next)
 {
     var log = request.body.login;		//Récupération variable "login" de la requête POST
     var pass = request.body.password;	//Récupération variable "password" de la requête POST
-    var ls = request.body.ls;
 
     // console.log('Parameters: login -> ' + log + ", password -> " + pass + ", id -> " + ls["id"] + ", date -> " + ls["date"])	//Affichage console serveur
     // response.send('You are logged in');	//Réponse serveur =  message vers navigateur

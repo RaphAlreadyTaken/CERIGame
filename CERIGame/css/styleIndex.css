@@ -14,3 +14,33 @@ form
 {
     white-space: pre-line;
 }
+
+.disappear
+{
+    opacity: 0;
+    animation-name: invisib;
+    animation-duration: 3s;
+
+}
+
+.floatAbove
+{
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+}
+
+.toRight
+{
+    float: right;
+}
+
+/*Animations*/
+
+@keyframes invisib
+{
+    0% {opacity: 0;}
+    33% {opacity: 1}
+    66% {opacity: 1}
+    100% {opacity: 0}
+}

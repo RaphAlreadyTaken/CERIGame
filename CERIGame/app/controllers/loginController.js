@@ -5,21 +5,15 @@
  */
 function loginController($scope, auth)
 {
-    console.log("Checking controller");
+    console.log("Checking login controller");
 
     $scope.login = null;
     $scope.password = null;
-    $scope.ls = null;
 
     $scope.formLogin = function()
     {
-        if (localStorage !== null)
-        {
-            $scope.ls = JSON.parse(localStorage.getItem("sessionUser"));
-        }
-
-        auth.logIn($scope.login, $scope.password, $scope.ls)
-        .then(function(data)
+        auth.logIn($scope.login, $scope.password)
+        .then(function()
         {
             $scope.logged = auth.isLoggedIn();
         })
@@ -37,7 +31,7 @@ function loginController($scope, auth)
         var lastConnect = new Date(userInfo["date"]);
         var lastConnectReadable = lastConnect.getDate() + "/" + (lastConnect.getMonth() + 1) + "/" + lastConnect.getFullYear() + " à " + lastConnect.getHours() + "h" + lastConnect.getMinutes();
         
-        //document.getElementById("bandeau").innerHTML = lastConnectReadable;   //Alternative
+        //document.getElementById("bandeau").innerHTML = "Utilisateur connecté. Bienvenue.\nDernière connexion: " + lastConnectReadable + "\n";   //Alternative
         return "Utilisateur connecté. Bienvenue.\nDernière connexion: " + lastConnectReadable + "\n";
     };
 };

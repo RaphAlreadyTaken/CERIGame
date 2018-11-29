@@ -11,7 +11,7 @@ const pgClient = require('pg'); // définit le middleware pg
  ********/
 var router = express.Router(); //Création objet Router
 
-//Instructions serveur à effectuer lors d'une requête POST avec action "/login"
+//Instructions serveur à effectuer lors d'une requête POST avec action "/checkLog"
 router.post('/', function (request, response)
 {
     sql = "select statut from fredouil.users where id = " + request.body.id + ";";

@@ -4,17 +4,16 @@
 *
 ********/
 const express = require('express'); //Import Express
-const pgClient = require('pg'); // définit le middleware pg
-var path = require('path'); //Import path
 
 /******** Declaration des variables
  *
  ********/
 var router = express.Router(); //Création objet Router
+var path = require('path'); //Import path
 
-//Instructions serveur à effectuer lors d'une requête POST avec action "/logout"
-router.post('/', function (request, response, next) 
-{    
+//Instructions serveur à effectuer lors d'une requête POST avec action "/getUser"
+router.post('/', function (request, response, next)
+{
     var pool = new pgClient.Pool(
         {
             user: 'uapv1603044',
@@ -37,7 +36,7 @@ router.post('/', function (request, response, next)
                 console.log('Connection established with pg db server');
             }
             
-            sql = "update fredouil.users set statut = 0 where id = " + request.body.id + ";";
+            sql = "select * from fredouil.users where id = " + request.body.id;
             
             client.query(sql, function(err)
             {
@@ -47,18 +46,18 @@ router.post('/', function (request, response, next)
                 }
                 else
                 {
-                    console.log("Statut connecté mis à jour: " + 0);
+                    console.log("Utilisateur récupéré avec l'ID " + request.rows[0].id);
+                    responseData = request.rows[0];
                 }
             });
 
             client.release();
         });
 
-    request.session.connected = false;
-    response.sendFile(path.resolve('./CERIGame/login.html'));	//Page login;
+    response.send(responseData);
 });
 
 /******** Export
  *
  ********/
-module.exports = router;    //L'objet router est transmis lorsque le fichier login.js est importé
+module.exports = router;    //L'objet router est transmis lorsque le fichier index.js est importé
