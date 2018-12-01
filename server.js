@@ -8,7 +8,7 @@ const path = require('path');       //Import path
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
-const MongoClient = require('mongodb').MongoClient;	///Pas utilisé///
+const MongoClient = require('mongodb').MongoClient;
 
 /******** Declaration des variables
  *
@@ -20,7 +20,8 @@ var logout = require('./CERIGame/app/routes/logout');  //Import fichier logout.j
 var checkLog = require('./CERIGame/app/routes/checkLog');  //Import fichier checkLog.js
 var getUser = require('./CERIGame/app/routes/getUser');  //Import fichier getUser.js
 var getAllUsers = require('./CERIGame/app/routes/getAllUsers');  //Import fichier getAllUsers.js
-var dsnMongoDB = "mongodb://127.0.0.1:27017/db";	//Connexion base mongodb ///Pas utilisé///
+var updateProfil = require('./CERIGame/app/routes/updateProfil');  //Import fichier updateProfil.js
+var dsnMongoDB = "mongodb://127.0.0.1:27017/db";	//Connexion base mongodb
 
 /******** Trucs à utiliser
  *
@@ -48,6 +49,7 @@ app.use('/logout', logout)	//Utilise la variable logout (importation logout.js)
 app.use('/checkLog', checkLog)	//Utilise la variable checkLog (importation checkLog.js)
 app.use('/getUser', getUser)	//Utilise la variable getUser (importation getUser.js)
 app.use('/getAllUsers', getAllUsers)	//Utilise la variable getUser (importation getUser.js)
+app.use('/updateProfil', updateProfil)	//Utilise la variable updateProfil (importation updateProfil.js)
 
 
 //JE SAIS PAS Où EST CE QUE CA VA

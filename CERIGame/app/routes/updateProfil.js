@@ -11,7 +11,7 @@ const pgClient = require('pg'); // définit le middleware pg
  ********/
 var router = express.Router(); //Création objet Router
 
-//Instructions serveur à effectuer lors d'une requête POST avec action "/getUser"
+//Instructions serveur à effectuer lors d'une requête POST avec action "/updateProfil"
 router.post('/', function (request, response, next)
 {
     var pool = new pgClient.Pool(
@@ -36,8 +36,19 @@ router.post('/', function (request, response, next)
             console.log('Connection established with pg db server');
         }
         
-        sql = "select * from fredouil.users where id = " + request.body.id + ";";
-        
+        var sql = "";
+
+        for (var arg in request.body)
+        {
+            if (arg !== 'id' && request.body[arg] !== null)
+            {
+                sql = "update fredouil.users set " + arg + " = '" + request.body[arg] + "' where id = " + request.body['id'] + ";";
+                console.log(sql);
+            }
+
+
+        }
+
         client.query(sql, function(err, result)
         {
             if (err)

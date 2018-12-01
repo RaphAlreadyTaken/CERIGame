@@ -10,6 +10,37 @@ form
     line-height: 1cm;
 }
 
+img
+{
+    max-width:100%;
+    max-height:100%;
+}
+
+/* Classes */
+.alignTxt
+{
+    font-family: Verdana, sans-serif;
+    font-size: 14px;
+    text-align: center;
+}
+
+.bandeau
+{
+    background-color: lightcoral;
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+}
+
+.bLBlue
+{
+    background-color:lightblue;
+}
+
+.bLGreen
+{
+    background-color:lightgreen;
+}
 
 .disappear
 {
@@ -19,27 +50,34 @@ form
     
 }
 
-/* Classes */
-.alignTxt
+.linkInteract
 {
-    text-align: center;
+    cursor: pointer;
 }
-.bandeau
+
+.linkInteract:hover
 {
-    background-color: lightcoral;
-    display: inline-block;
-    position: absolute;
-        left: 50%;
+    color: lightpink;
+}
+
+.noBorder
+{
+    border: none;
 }
 
 .profil
 {
-    background-color: lightblue;
+    max-width: 20%;
 }
 
 .skipLineWithBSn
 {
     white-space: pre-line;
+}
+
+.toCenter
+{
+    margin: auto;
 }
 
 .toLeft
@@ -52,9 +90,19 @@ form
     float: right;
 }
 
+.underlined
+{
+    text-decoration: underline;
+}
+
 .userList
 {
     background-color: lightgreen;
+}
+
+.xAlign
+{
+    display: inline;
 }
 
 /* Animations */

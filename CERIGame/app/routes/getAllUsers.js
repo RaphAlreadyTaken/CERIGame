@@ -14,8 +14,6 @@ var router = express.Router(); //Création objet Router
 //Instructions serveur à effectuer lors d'une requête GET avec action "/getAllUsers"
 router.get('/', function (request, response, next)
 {
-    var responseData = {};
-
     var pool = new pgClient.Pool(
         {
             user: 'uapv1603044',

@@ -23,19 +23,40 @@
             <button ng-click="logOut()" class="toRight">Déconnexion</button>
         </div>
 
-        <div ng-controller="userController" class="toLeft profil">
+        <div ng-controller="userController" class="toLeft profil bLBlue">
             <table class="alignTxt">
                 <tr>
-                    <td><img width="50%" ng-src="{{user.avatar}}"></img></td>
+                    <td><img ng-src="{{user.avatar}}"></img></td>
                 </tr>
                 <tr>
-                    <td>{{user.identifiant}}</td>
+                    <td ng-click="modNickname = true" class="linkInteract">
+                        <div ng-show="modNickname != true">
+                            {{user.identifiant}}
+                        </div>
+                        <div ng-show="modNickname == true">
+                            <input ng-model="newIdentifiant" ng-enter="modifProfil(user.id, null, newIdentifiant, null, null)" type="text" placeholder="{{user.identifiant}}" size="{{user.identifiant.length}}" class="alignTxt bLBlue noBorder">
+                        </div>     
+                    </td>
                 </tr>
                 <tr>
-                    <td>{{user.prenom}}</td>
+                    <td ng-click="modFirstname = true" class="linkInteract">
+                        <div ng-show="modFirstname != true">
+                            {{user.prenom}}
+                        </div>
+                        <div ng-show="modFirstname == true">
+                            <input ng-model="newPrenom" ng-enter="modifProfil(user.id, null, null, newPrenom, null)" type="text" placeholder="{{user.prenom}}" size="{{user.prenom.length}}" class="alignTxt bLBlue noBorder">
+                        </div>
+                    </td>
                 </tr>
                 <tr>
-                    <td>{{user.nom}}</td>
+                    <td ng-click="modLastname = true" class="linkInteract">
+                        <div ng-show="modLastname != true">
+                            {{user.nom}}
+                        </div>
+                        <div ng-show="modLastname == true">
+                            <input ng-model="newNom" ng-enter="modifProfil(user.id, null, null, newNom, null)" type="text" placeholder="{{user.nom}}" size="{{user.nom.length}}" class="alignTxt bLBlue noBorder">
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>{{user.statut}}</td>
@@ -43,10 +64,31 @@
             </table>
         </div>
 
-        <div ng-controller="userController" class="toRight userList">
-            <p>Utilisateurs connectés</p>
-            <div ng-repeat="user in userList">
-                    <a ng-click="getUserProfile(5)">{{user.identifiant}}</a>
+        <div ng-controller="userController">
+            <div class="toRight userList xAlign bLGreen">
+                <p>Utilisateurs connectés</p>
+                <div ng-repeat="user in userList">
+                        <a ng-click="getUserProfile(user.id); toggleProfilDisplay()" class="underlined linkInteract">{{user.identifiant}}</a>
+                </div>
+            </div>
+            <div ng-show="showProfil" class="profil toRight xAlign bLGreen">
+                <table class="alignTxt">
+                    <tr>
+                        <td><img ng-src="{{user.avatar}}"></img></td>
+                    </tr>
+                    <tr>
+                        <td>{{user.identifiant}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{user.prenom}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{user.nom}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{user.statut}}</td>
+                    </tr>
+                </table>
             </div>
         </div>
 

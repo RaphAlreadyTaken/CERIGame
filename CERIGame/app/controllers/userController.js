@@ -30,4 +30,14 @@ function userController($scope, user, localStorage)
         });
     };
     $scope.getAvailableUsers();
+
+    $scope.toggleProfilDisplay = function()
+    {
+        $scope.showProfil = !$scope.showProfil;
+    }
+
+    $scope.modifProfil = function(id, avatar, identifiant, prenom, nom)
+    {
+        user.updateProfil(id, avatar, identifiant, prenom, nom)
+    };
 };
