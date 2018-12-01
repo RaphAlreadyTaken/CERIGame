@@ -1,9 +1,9 @@
 /**
  * Contrôleur de quizz
  * @param {?} $scope - Variable de contexte
- * @param {*} user - Service utilisateur
+ * @param {*} quizz - Service quizz
  */
-function quizzController($scope, user)
+function quizzController($scope, quizz)
 {
     console.log("Checking quizz controller");
 
@@ -11,4 +11,9 @@ function quizzController($scope, user)
     {
         
     }
+    
+    $scope.obtainQuestions = function()
+    {
+        $scope.question = quizz.getQuestion();
+    };
 };

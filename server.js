@@ -21,7 +21,8 @@ var checkLog = require('./CERIGame/app/routes/checkLog');  //Import fichier chec
 var getUser = require('./CERIGame/app/routes/getUser');  //Import fichier getUser.js
 var getAllUsers = require('./CERIGame/app/routes/getAllUsers');  //Import fichier getAllUsers.js
 var updateProfil = require('./CERIGame/app/routes/updateProfil');  //Import fichier updateProfil.js
-var dsnMongoDB = "mongodb://127.0.0.1:27017/db";	//Connexion base mongodb
+var getQuestion = require('./CERIGame/app/routes/getQuestion');
+
 
 /******** Trucs à utiliser
  *
@@ -50,7 +51,7 @@ app.use('/checkLog', checkLog)	//Utilise la variable checkLog (importation check
 app.use('/getUser', getUser)	//Utilise la variable getUser (importation getUser.js)
 app.use('/getAllUsers', getAllUsers)	//Utilise la variable getUser (importation getUser.js)
 app.use('/updateProfil', updateProfil)	//Utilise la variable updateProfil (importation updateProfil.js)
-
+app.use('/getQuestion', getQuestion)
 
 //JE SAIS PAS Où EST CE QUE CA VA
 //A mettre dans chaque route qui demande une connexion à mongo (cf les cas pour postgresql)
@@ -69,6 +70,7 @@ app.use('/updateProfil', updateProfil)	//Utilise la variable updateProfil (impor
 // 		if(mongoClient) 
 // 		{
 // 			// Exécution des requêtes
+// db.quizz.find({thème: "Linux"}, {quizz: {$elemMatch: {id: 10}}});
 		
 // 		}
 // 	});

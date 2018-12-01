@@ -10,6 +10,7 @@
         <script src="/services/localStorageService.js"></script>
         <script src="/services/sessionService.js"></script>
         <script src="/services/userService.js"></script>
+        <script src="/services/quizzService.js"></script>
         <script src="/controllers/loginController.js"></script>
         <script src="/controllers/userController.js"></script>
         <script src="/controllers/quizzController.js"></script>
@@ -58,7 +59,7 @@
                             {{user.nom}}
                         </div>
                         <div ng-show="modLastname == true">
-                            <input class="alignTxt bLBlue noBorder" ng-blur="modifProfil(user.id, null, null, newNom, null); modLastname = false" ng-enter="modifProfil(user.id, null, null, newNom, null)" ng-model="newNom" placeholder="{{user.nom}}" size="{{newNom.length}}" type="text">
+                            <input class="alignTxt bLBlue noBorder" ng-blur="modifProfil(user.id, null, null, null, newNom); modLastname = false" ng-enter="modifProfil(user.id, null, null, newNom, null)" ng-model="newNom" placeholder="{{user.nom}}" size="{{newNom.length}}" type="text">
                         </div>
                     </td>
                 </tr>
@@ -102,7 +103,10 @@
         </div>
 
         <div ng-controller="quizzController">
-            {{}}
+            <input></input>
+            <input></input>
+            <button type="submit" ng-click="obtainQuestions(test)">test</button>
+            {{question}}
         </div>
     </body>
 </html>
