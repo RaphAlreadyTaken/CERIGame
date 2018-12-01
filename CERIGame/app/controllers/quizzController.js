@@ -6,4 +6,9 @@
 function quizzController($scope, user)
 {
     console.log("Checking quizz controller");
+
+    $scope.chronoQuizz = function()
+    {
+        
+    }
 };

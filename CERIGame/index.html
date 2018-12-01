@@ -26,35 +26,39 @@
         <div ng-controller="userController" class="toLeft profil bLBlue">
             <table class="alignTxt">
                 <tr>
-                    <td><img ng-src="{{user.avatar}}"></img></td>
+                    <td><img class="linkInteract" ng-blur="modAvatar = false" ng-click="modAvatar = true" ng-src="{{user.avatar}}"></img>
+                        <div ng-show="modAvatar == true">
+                            <input class="inputModifImg" ng-blur="modifProfil(user.id, newAvatar, null, null, null); modAvatar = false" ng-enter="modifProfil(user.id, newAvatar, null, null, null)" ng-model="newAvatar" placeholder="Lien vers nouvelle image..." type="text">
+                        </div>
+                    </td>
                 </tr>
                 <tr>
-                    <td ng-click="modNickname = true" class="linkInteract">
+                    <td class="linkInteract" ng-click="modNickname = true">
                         <div ng-show="modNickname != true">
                             {{user.identifiant}}
                         </div>
                         <div ng-show="modNickname == true">
-                            <input ng-model="newIdentifiant" ng-enter="modifProfil(user.id, null, newIdentifiant, null, null)" type="text" placeholder="{{user.identifiant}}" size="{{user.identifiant.length}}" class="alignTxt bLBlue noBorder">
+                            <input class="alignTxt bLBlue noBorder" ng-blur="modifProfil(user.id, null, newIdentifiant, null, null); modNickname = false" ng-enter="modifProfil(user.id, null, newIdentifiant, null, null)" ng-model="newIdentifiant" placeholder="{{user.identifiant}}" size="{{newIdentifiant.length}}"  type="text">
                         </div>     
                     </td>
                 </tr>
                 <tr>
-                    <td ng-click="modFirstname = true" class="linkInteract">
+                    <td class="linkInteract" ng-click="modFirstname = true">
                         <div ng-show="modFirstname != true">
                             {{user.prenom}}
                         </div>
                         <div ng-show="modFirstname == true">
-                            <input ng-model="newPrenom" ng-enter="modifProfil(user.id, null, null, newPrenom, null)" type="text" placeholder="{{user.prenom}}" size="{{user.prenom.length}}" class="alignTxt bLBlue noBorder">
+                            <input class="alignTxt bLBlue noBorder" ng-blur="modifProfil(user.id, null, null, newPrenom, null); modFirstname = false" ng-enter="modifProfil(user.id, null, null, newPrenom, null)" ng-model="newPrenom" placeholder="{{user.prenom}}" size="{{newPrenom.length}}" type="text">
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td ng-click="modLastname = true" class="linkInteract">
+                    <td class="linkInteract" ng-click="modLastname = true">
                         <div ng-show="modLastname != true">
                             {{user.nom}}
                         </div>
                         <div ng-show="modLastname == true">
-                            <input ng-model="newNom" ng-enter="modifProfil(user.id, null, null, newNom, null)" type="text" placeholder="{{user.nom}}" size="{{user.nom.length}}" class="alignTxt bLBlue noBorder">
+                            <input class="alignTxt bLBlue noBorder" ng-blur="modifProfil(user.id, null, null, newNom, null); modLastname = false" ng-enter="modifProfil(user.id, null, null, newNom, null)" ng-model="newNom" placeholder="{{user.nom}}" size="{{newNom.length}}" type="text">
                         </div>
                     </td>
                 </tr>
@@ -65,13 +69,13 @@
         </div>
 
         <div ng-controller="userController">
-            <div class="toRight userList xAlign bLGreen">
+            <div class="bLGreen toRight userList xAlign">
                 <p>Utilisateurs connectés</p>
                 <div ng-repeat="user in userList">
-                        <a ng-click="getUserProfile(user.id); toggleProfilDisplay()" class="underlined linkInteract">{{user.identifiant}}</a>
+                        <a class="underlined linkInteract" ng-click="getUserProfile(user.id); toggleProfilDisplay()">{{user.identifiant}}</a>
                 </div>
             </div>
-            <div ng-show="showProfil" class="profil toRight xAlign bLGreen">
+            <div ng-show="showProfil" class=" bLGreen profil toRight xAlign">
                 <table class="alignTxt">
                     <tr>
                         <td><img ng-src="{{user.avatar}}"></img></td>
@@ -88,10 +92,17 @@
                     <tr>
                         <td>{{user.statut}}</td>
                     </tr>
+                    <tr>
+                        <td>
+                            <button>Lancer un défi</button>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>
 
-        <div ng-controller="quizzController"></div>
+        <div ng-controller="quizzController">
+            {{}}
+        </div>
     </body>
 </html>
