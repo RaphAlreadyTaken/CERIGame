@@ -55,7 +55,7 @@
                             {{user.nom}}
                         </div>
                         <div ng-show="modLastname == true">
-                            <input ng-model="newNom" ng-enter="modifProfil(user.id, null, null, newNom, null)" type="text" placeholder="{{user.nom}}" size="{{user.nom.length}}" class="alignTxt bLBlue noBorder">
+                            <input ng-model="newNom" ng-enter="modifProfil(user.id, null, null, null, newNom)" type="text" placeholder="{{user.nom}}" size="{{user.nom.length}}" class="alignTxt bLBlue noBorder">
                         </div>
                     </td>
                 </tr>
@@ -94,7 +94,9 @@
         </div>
 
         <div ng-controller="quizzController">
-            <button type="submit" ng-click="obtainQuestions()">test</button>
+            <input></input>
+            <input></input>
+            <button type="submit" ng-click="obtainQuestions(test)">test</button>
             {{question}}
         </div>
     </body>
