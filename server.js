@@ -53,6 +53,8 @@ app.use('/updateProfil', updateProfil)	//Utilise la variable updateProfil (impor
 
 
 //JE SAIS PAS Où EST CE QUE CA VA
+//A mettre dans chaque route qui demande une connexion à mongo (cf les cas pour postgresql)
+//Alternativement, déclarer une fonction au niveau de l'app qui peut être réutilisée directement dans les fichiers routes (on pourrait aussi le faire pour postegres, pas essayé)
 // app.get('/db/quizz/:p1/:p2', (request, response) => 
 // {
 // 	var p1 = request.params.p1;
