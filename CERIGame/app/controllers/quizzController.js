@@ -6,4 +6,13 @@
 function quizzController($scope, user)
 {
     console.log("Checking quizz controller");
+
+    $scope.obtainQuestions = function()
+    {
+        // .logIn($scope.login, $scope.password)
+        // .then(function()
+        // {
+        //     $scope.logged = auth.isLoggedIn();
+        // })
+    };
 };
