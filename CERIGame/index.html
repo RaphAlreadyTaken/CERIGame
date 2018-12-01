@@ -10,6 +10,7 @@
         <script src="/services/localStorageService.js"></script>
         <script src="/services/sessionService.js"></script>
         <script src="/services/userService.js"></script>
+        <script src="/services/quizzService.js"></script>
         <script src="/controllers/loginController.js"></script>
         <script src="/controllers/userController.js"></script>
         <script src="/controllers/quizzController.js"></script>
@@ -92,6 +93,9 @@
             </div>
         </div>
 
-        <div ng-controller="quizzController"></div>
+        <div ng-controller="quizzController">
+            <button type="submit" ng-click="obtainQuestions()">test</button>
+            {{question}}
+        </div>
     </body>
 </html>

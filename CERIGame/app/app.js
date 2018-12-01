@@ -9,6 +9,7 @@ app.service('auth', authService);
 app.service('session', sessionService);
 app.service('localStorage', localStorageService);
 app.service('user', userService);
+app.service('quizz', quizzService);
 
 //Directives
 app.directive('ngEnter', function ()

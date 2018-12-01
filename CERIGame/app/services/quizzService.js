@@ -1,29 +1,17 @@
 /**
- * Service session
- * @param {?} $log - ?
- * @param {Object} localStorage - Objet stockage local
- * @return {Object|localService}
+ * Service quizz
+ * @param {?} 
+ * @return {?}
  */
-function sessionService($log, localStorage)
+function quizzService($http)
 {
-    this.user = JSON.parse(localStorage.getItem("sessionUser"));
-
-    /**
-     * Getter utilisateur
-     * @returns {Object} Utilisateur
-     */
-    this.getUser = function()
+    this.getQuestion = function()
     {
-        return this.user;
-    };
-
-    /**
-     * Setter utilisateur
-     * @returns {Object} Session
-     */
-    this.setUser = function(user)
-    {
-        this.user = user;
-        localStorage.setItem('sessionUser', user);
+        return $http
+        .post('http://localhost:3131/getQuestion')
+        .then(function(response)
+        {
+            return response.data;
+        });
     };
 }
