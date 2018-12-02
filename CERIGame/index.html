@@ -78,7 +78,7 @@
                         <a class="underlined linkInteract" ng-click="getUserProfile(user.id); toggleProfilDisplay()">{{user.identifiant}}</a>
                 </div>
             </div>
-            <div ng-show="showProfil" class=" bLGreen profil toRight xAlign">
+            <div class=" bLGreen profil toRight xAlign" ng-show="showProfil">
                 <table class="alignTxt">
                     <tr>
                         <td><img ng-src="{{user.avatar}}"></img></td>
@@ -104,33 +104,45 @@
             </div>
         </div>
 
-        <div ng-controller="quizzController">
-            Choix du thème:
-            <select ng-model="selectedTheme" ng-options="o as o for o in themes" ></select>
-            <br>
-            <br>
-            Nombre de questions: <select ng-model="selectedQuestionCount">
-                <option value="3">3</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-            </select>
-            <br>
-            <br>
-            <button type="submit" ng-click="obtainQuestions(selectedQuestionCount, selectedTheme)">Afficher questions</button>
-            {{question}}
-            
-            <div class="chronoBox">
-                <button type="text" ng-click="chrono()">Let's go</button>
-                <div class=" alignTxt chronoDisplay">
-                    {{chrn}}
-                </div>
+        <div ng-controller="histoController">
+            <button type="button" ng-click="topTen(); showTopTen = !showTopTen">10 meilleurs</button>
+            <div ng-controller="userController" ng-repeat="topUser in top10" ng-show="showTopTen">
+                {{topUser.identifiant}} : {{topUser.sum}}
             </div>
         </div>
 
-        <div ng-controller="histoController">
-            <button type="text" ng-click="topTen()">10 meilleurs</button>
-            <div ng-controller="userController" ng-repeat="topUser in top10">
-                {{topUser.identifiant}} : {{topUser.sum}}
+        <div ng-controller="quizzController">
+            <button ng-click="prepareQuizz = !prepareQuizz" type="button">Nouveau quizz</button>
+
+            <div class="quizzWindow" ng-show="prepareQuizz == true">
+                Choix du thème:
+                <select ng-model="selectedTheme" ng-options="o as o for o in themes" ></select>
+                <br>
+                <br>
+                Nombre de questions: <select ng-model="selectedQuestionCount">
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                </select>
+                <br>
+                <br>
+                <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme)" type="submit">Afficher questions</button>
+                {{question}}
+
+                <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme); chrono(); launchQuizz = true; prepareQuizz = false" type="button">Lancer quizz</button>
+            </div>
+            
+            <div class="bFGreen quizzActWindow" ng-show="launchQuizz == true">
+                <div ng-repeat="quest in question track by $index">
+                    <p id="question{{$index}}" ng-if="$index == 0" style="visibility: initial;">{{quest}}</p>
+                    <p id="question{{$index}}" ng-if="$index != 0" style="visibility: hidden;">{{quest}}</p>
+
+                    <button type="button" ng-click='document.getElementById("question{{$index}}").style.visibility = hidden'>Valider réponse</button>
+                </div>
+
+                <div class="chronoBox">
+                    {{chrn}}
+                </div>
             </div>
         </div>
     </body>

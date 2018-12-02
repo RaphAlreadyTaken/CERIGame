@@ -16,6 +16,8 @@ app.service('histo', histoService);
 //Directives
 app.directive('ngEnter', function ()
 {
+    console.log("Enter detected");
+
     return function (scope, element, attrs)
     {
         element.bind("keydown keypress", function (event)

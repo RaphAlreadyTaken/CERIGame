@@ -46,18 +46,18 @@ img
 {
     background-color: lightsalmon;
 }
+
+.bFGreen
+{
+    background-color: chartreuse;
+}
+
 .chronoBox
 {
     background-color: yellow;
-    height: 10%;
-    margin: auto;
-    margin-top: 30%;
-    width: 15%;
-}
-
-.chronoDisplay
-{
     font-size: 30px;
+    height: 10%;
+    width: 15%;
 }
 
 .disappear
@@ -92,6 +92,20 @@ img
 .profil
 {
     max-width: 20%;
+}
+
+.quizzActWindow
+{
+    position: absolute;
+        top: 30%;
+}
+
+.quizzWindow
+{
+    background-color: purple;
+    margin: auto;
+    position: absolute;
+        top: 20%;
 }
 
 .skipLineWithBSn
