@@ -119,24 +119,16 @@
                 <select ng-model="selectedTheme" ng-options="o as o for o in themes" ></select>
                 <br>
                 <br>
-                Nombre de questions: <select ng-model="selectedQuestionCount">
-                    <option value="3">3</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                </select>
+                Nombre de questions: <select ng-init="selectedQuestionCount = selectedQuestionCount || questionCount[0].value" ng-model="selectedQuestionCount" ng-options="option.value as option.name for option in questionCount" ></select>
                 <br>
                 <br>
-                Difficulté: <select ng-model="selectedDifficulty">
-                    <option value="2">Facile</option>
-                    <option value="3">Intermédiaire</option>
-                    <option value="4">Difficile</option>
-                </select>
+                Difficulté: <select ng-init="selectedDifficulty = selectedDifficulty || difficulte[0].value" ng-model="selectedDifficulty" ng-options="option.value as option.name for option in difficulte"> </select>
                 <br>
                 <br>
-                <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme, selectedDifficulty)" type="submit">Afficher questions</button>
+                <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme, selectedDifficulty)" type="submit" >Afficher questions</button>
                 {{question}}
 
-                <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme); chrono(); launchQuizz = true; prepareQuizz = false" type="button">Lancer quizz</button>
+                <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme, selectedDifficulty); chrono(); launchQuizz = true; prepareQuizz = false" type="button">Lancer quizz</button>
             </div>
             
             <div class="bFGreen quizzActWindow" ng-show="launchQuizz == true">
