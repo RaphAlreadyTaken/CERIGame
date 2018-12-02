@@ -126,7 +126,14 @@
                 </select>
                 <br>
                 <br>
-                <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme)" type="submit">Afficher questions</button>
+                Difficulté: <select ng-model="selectedDifficulty">
+                    <option value="2">Facile</option>
+                    <option value="3">Intermédiaire</option>
+                    <option value="4">Difficile</option>
+                </select>
+                <br>
+                <br>
+                <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme, selectedDifficulty)" type="submit">Afficher questions</button>
                 {{question}}
 
                 <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme); chrono(); launchQuizz = true; prepareQuizz = false" type="button">Lancer quizz</button>

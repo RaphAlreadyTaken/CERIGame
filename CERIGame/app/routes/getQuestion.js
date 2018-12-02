@@ -17,7 +17,8 @@ router.post('/', function(request, response)
     
     var nbQuestions = parseInt(request.body.nbQuestions, 10); //Récupèration du nombre de questions souhaitées
     var theme =  request.body.theme; //Récupération du thème souhaité
-
+    var difficulte = parseInt(request.body.difficulte, 10); //Récupération de la difficulté souhaitée
+    
     // Connexion MongoDB
     MongoClient.connect(dsnMongoDB, { useNewUrlParser: true }, function(err, mongoClient) 
     {
@@ -29,7 +30,7 @@ router.post('/', function(request, response)
         {
             // Exécution des requêtes
             var dbo = mongoClient.db("db"); //Base à utiliser
-            dbo.collection("quizz").find({thème: theme}/*, {projection: {quizz: {$elemMatch: {id: 10}}}}*/).toArray(function(err,arrayResult) //R2cupération de toutes les infos du thème donné
+            dbo.collection("quizz").find({thème: theme}/*, {projection: {quizz: {$elemMatch: {id: 10}}}}*/).toArray(function(err,arrayResult) //Récupération de toutes les infos du thème donné
             {
                 if(err)
                 {
@@ -45,6 +46,16 @@ router.post('/', function(request, response)
                         var rand = Math.floor(Math.random() * Math.floor(arrayQuestions.length)); //On en choisit au hasard parmi toutes celles disponibles
                         arrayReturn.push(arrayQuestions[rand]); //On l'ajoute au tableau de retour
                         arrayQuestions.splice(rand, 1); //On la supprime de l'ancien tableau pour éviter les doublons
+
+                        while(arrayReturn[i]['propositions'].length > difficulte) //On retire un certain nombre de proposition en fonction de la difficulté choisie
+                        {
+                            var randProp = Math.floor(Math.random() * Math.floor(arrayReturn[i]['propositions'].length)); //On choisit une proposition au hasard parmi la liste
+
+                            if(arrayReturn[i]['propositions'][randProp] != arrayReturn[i]['réponse']) //Si elle n'est pas la bonne réponse
+                            { 
+                                arrayReturn[i]['propositions'].splice(randProp, 1); //Alors on la supprime
+                            }
+                        }
                     } 
                     console.log(arrayReturn); 
                     mongoClient.close();
