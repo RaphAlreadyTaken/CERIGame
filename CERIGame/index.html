@@ -107,12 +107,30 @@
             <button type="submit" ng-click="obtainQuestions(test)">test</button>
             {{question}}
 
+            
+            <!-- <input></input> -->
+            <!-- <input></input> -->
+            Choix du thème:
+            <select ng-model="selectedTheme" ng-options="o as o for o in themes" ></select>
+            <br>
+            <br>
+            Nombre de questions: <select ng-model="selectedQuestionCount">
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+            </select>
+            <br>
+            <br>
+            <button type="submit" ng-click="obtainQuestions(selectedQuestionCount, selectedTheme)">Afficher questions</button>
+            {{question}}
+            
             <div class="chronoBox">
                 <button type="text" ng-click="chrono()">Let's go</button>
                 <div class="chronoDisplay">
                     {{chrn}}
                 </div>
             </div>
+
         </div>
     </body>
 </html>
