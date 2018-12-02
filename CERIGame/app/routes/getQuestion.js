@@ -27,16 +27,16 @@ router.post('/', function(request, response)
             {
                 // Exécution des requêtes
                 var dbo = mongoClient.db("db");
-                var result = {};
-                dbo.collection("quizz").find({thème: "Linux"}, {quizz: {$elemMatch: {id: 10}}}).toArray(function(err,result)
+
+                dbo.collection("quizz").findOne({thème: "Linux"}, {projection: {quizz: {$elemMatch: {id: 10}}}}, function(err,result)
                 {
                     if(err)
                     {
                         return console.log('Erreur conversion données mongo');                         
                     }
                     console.log(result);
+                    response.send(result);
                     mongoClient.close();
-                    return result;
                 });    
             }
         });        

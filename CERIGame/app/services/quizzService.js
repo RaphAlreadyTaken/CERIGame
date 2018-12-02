@@ -11,7 +11,8 @@ function quizzService($http)
         .post('http://localhost:3131/getQuestion', {'nbQuestions': param1, 'theme': param2})
         .then(function(response)
         {
-            return response.data;
+            console.log(response)
+            return response;
         });
     };
 }

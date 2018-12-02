@@ -104,9 +104,15 @@
 
         <div ng-controller="quizzController">
             <input></input>
-            <input></input>
             <button type="submit" ng-click="obtainQuestions(test)">test</button>
             {{question}}
+
+            <div class="chronoBox">
+                <button type="text" ng-click="chrono()">Let's go</button>
+                <div class="chronoDisplay">
+                    {{chrn}}
+                </div>
+            </div>
         </div>
     </body>
 </html>

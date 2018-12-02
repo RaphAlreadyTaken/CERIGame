@@ -29,7 +29,7 @@ img
     background-color: lightcoral;
     display: inline-block;
     position: absolute;
-    left: 50%;
+        left: 50%;
 }
 
 .bLBlue
@@ -42,18 +42,31 @@ img
     background-color:lightgreen;
 }
 
+.chronoBox
+{
+    background-color: yellow;
+    height: 10%;
+    margin: auto;
+    margin-top: 30%;
+    width: 15%;
+}
+.chronoDisplay
+{
+    font-size: 30px;
+}
+
 .disappear
 {
-    opacity: 0;
-    animation-name: invisib;
     animation-duration: 3s;
-    
+    animation-name: invisib;
+    opacity: 0;    
+    visibility: hidden;
 }
 
 .inputModifImg
 {
-    position: relative;
     bottom: 22px;
+    position: relative;
 }
 
 .linkInteract
@@ -114,7 +127,7 @@ img
 /* Animations */
 @keyframes invisib
 {
-    0% {opacity: 0;}
+    0% {opacity: 0; visibility: initial}
     33% {opacity: 1}
     66% {opacity: 1}
     100% {opacity: 0}
