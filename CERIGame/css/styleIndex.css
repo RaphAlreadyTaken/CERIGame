@@ -42,6 +42,10 @@ img
     background-color:lightgreen;
 }
 
+.bLOrange
+{
+    background-color: lightsalmon;
+}
 .chronoBox
 {
     background-color: yellow;
@@ -50,6 +54,7 @@ img
     margin-top: 30%;
     width: 15%;
 }
+
 .chronoDisplay
 {
     font-size: 30px;

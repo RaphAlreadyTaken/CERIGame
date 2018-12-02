@@ -5,11 +5,13 @@ var app = angular.module('app', ["ngRoute"]);
 app.controller('loginController', loginController);
 app.controller('userController', userController);
 app.controller('quizzController', quizzController);
+app.controller('histoController', histoController);
 app.service('auth', authService);
 app.service('session', sessionService);
 app.service('localStorage', localStorageService);
 app.service('user', userService);
 app.service('quizz', quizzService);
+app.service('histo', histoService);
 
 //Directives
 app.directive('ngEnter', function ()

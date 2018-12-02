@@ -11,9 +11,11 @@
         <script src="/services/sessionService.js"></script>
         <script src="/services/userService.js"></script>
         <script src="/services/quizzService.js"></script>
+        <script src="/services/histoService.js"></script>
         <script src="/controllers/loginController.js"></script>
         <script src="/controllers/userController.js"></script>
         <script src="/controllers/quizzController.js"></script>
+        <script src="/controllers/histoController.js"></script>
         <script src="/app.js"></script>
     </head>
     <body ng-app="app">
@@ -103,13 +105,6 @@
         </div>
 
         <div ng-controller="quizzController">
-            <input></input>
-            <button type="submit" ng-click="obtainQuestions(test)">test</button>
-            {{question}}
-
-            
-            <!-- <input></input> -->
-            <!-- <input></input> -->
             Choix du thème:
             <select ng-model="selectedTheme" ng-options="o as o for o in themes" ></select>
             <br>
@@ -126,11 +121,17 @@
             
             <div class="chronoBox">
                 <button type="text" ng-click="chrono()">Let's go</button>
-                <div class="chronoDisplay">
+                <div class=" alignTxt chronoDisplay">
                     {{chrn}}
                 </div>
             </div>
+        </div>
 
+        <div ng-controller="histoController">
+            <button type="text" ng-click="topTen()">10 meilleurs</button>
+            <div ng-controller="userController" ng-repeat="topUser in top10">
+                {{topUser.identifiant}} : {{topUser.sum}}
+            </div>
         </div>
     </body>
 </html>

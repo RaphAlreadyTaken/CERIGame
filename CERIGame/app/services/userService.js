@@ -17,7 +17,7 @@ function userService($http)
         {
             return response;
         });
-    }
+    };
 
     /**
 	 * Récupère tous les utilisateurs

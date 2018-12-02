@@ -3,7 +3,7 @@
  * @param {?} $scope - Variable de contexte
  * @param {*} quizz - Service quizz
  */
-function quizzController($scope, quizz, $interval)
+function quizzController($scope, $interval, quizz, user)
 {
     console.log("Checking quizz controller");
 
@@ -11,7 +11,6 @@ function quizzController($scope, quizz, $interval)
     {
         $scope.chrn = "00:00";    //Chronomètre
         sCpt = 0;  //Compteur de secondes
-    
 
         var mnome = $interval(function()
         {
