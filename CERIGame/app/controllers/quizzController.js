@@ -7,8 +7,23 @@ function quizzController($scope, quizz)
 {
     console.log("Checking quizz controller");
 
-    $scope.obtainQuestions = function()
+    $scope.obtainQuestions = function(nbQ, theme)
     {
-        $scope.question = quizz.getQuestion();
+        quizz.getQuestion(nbQ, theme)
+        .then(function(response)
+        {
+            $scope.question = response.data;
+            
+        });
     };
+
+    $scope.obtainThemes = function()
+    {
+        quizz.getThemes()
+        .then(function(response)
+        {
+            $scope.themes = response.data;
+        });
+    };
+    $scope.obtainThemes();
 };

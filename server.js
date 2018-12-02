@@ -22,7 +22,7 @@ var getUser = require('./CERIGame/app/routes/getUser');  //Import fichier getUse
 var getAllUsers = require('./CERIGame/app/routes/getAllUsers');  //Import fichier getAllUsers.js
 var updateProfil = require('./CERIGame/app/routes/updateProfil');  //Import fichier updateProfil.js
 var getQuestion = require('./CERIGame/app/routes/getQuestion');
-
+var getThemes = require('./CERIGame/app/routes/getThemes');
 
 /******** Trucs à utiliser
  *
@@ -52,6 +52,7 @@ app.use('/getUser', getUser)	//Utilise la variable getUser (importation getUser.
 app.use('/getAllUsers', getAllUsers)	//Utilise la variable getUser (importation getUser.js)
 app.use('/updateProfil', updateProfil)	//Utilise la variable updateProfil (importation updateProfil.js)
 app.use('/getQuestion', getQuestion)
+app.use('/getThemes', getThemes)
 
 //JE SAIS PAS Où EST CE QUE CA VA
 //A mettre dans chaque route qui demande une connexion à mongo (cf les cas pour postgresql)
