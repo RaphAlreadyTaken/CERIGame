@@ -1,5 +1,5 @@
 /**
- * Service user
+ * Service historique
  * @return {Object}
  */
 function histoService($http)
@@ -12,6 +12,16 @@ function histoService($http)
    {
        return $http
        .get('http://localhost:3131/getTop10')
+       .then(function(response)
+       {
+           return response;
+       });
+   };
+
+   this.saveResult = function(infoToSave)
+   {
+       return $http
+       .post('http://localhost:3131/saveResult', {'info': infoToSave})
        .then(function(response)
        {
            return response;

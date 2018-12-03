@@ -24,6 +24,7 @@ var updateProfil = require('./CERIGame/app/routes/updateProfil');  //Import fich
 var getQuestion = require('./CERIGame/app/routes/getQuestion'); //Import fichier getQuestion.js
 var getThemes = require('./CERIGame/app/routes/getThemes'); //Import fichier getThemes.js
 var getTop10 = require('./CERIGame/app/routes/getTop10'); //Import fichier getTop10.js
+var saveResult = require('./CERIGame/app/routes/saveResult'); //Import fichier saveResult.js
 
 /******** Trucs à utiliser
  *
@@ -55,30 +56,7 @@ app.use('/updateProfil', updateProfil);	//Utilise la variable updateProfil (impo
 app.use('/getQuestion', getQuestion); //Utilise la variable getQuestion (importation getQuestion.js)
 app.use('/getThemes', getThemes); //Utilise la variable getThemes (importation getThemes.js)
 app.use('/getTop10', getTop10); //Utilise la variable getTop10 (importation getTop10.js)
-
-//JE SAIS PAS Où EST CE QUE CA VA
-//A mettre dans chaque route qui demande une connexion à mongo (cf les cas pour postgresql)
-//Alternativement, déclarer une fonction au niveau de l'app qui peut être réutilisée directement dans les fichiers routes (on pourrait aussi le faire pour postegres, pas essayé)
-// app.get('/db/quizz/:p1/:p2', (request, response) => 
-// {
-// 	var p1 = request.params.p1;
-// 	var p2 = request.params.p2;
-// 	// Connexion MongoDB
-// 	MongoClient.connect(dsnMongoDB, { useNewUrlParser: true }, function(err, mongoClient) 
-// 	{
-// 		if(err) 
-// 		{
-// 			return console.log('erreur connexion base de données'); 
-// 		}
-// 		if(mongoClient) 
-// 		{
-// 			// Exécution des requêtes
-// db.quizz.find({thème: "Linux"}, {quizz: {$elemMatch: {id: 10}}});
-		
-// 		}
-// 	});
-// });
-
+app.use('/saveResult', saveResult); //Utilise la variable saveResult (importation saveResult.js)
 
 /******** Configuration du serveur NodeJS - Port : 3131
  *

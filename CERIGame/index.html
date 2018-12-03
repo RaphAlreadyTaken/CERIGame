@@ -112,7 +112,7 @@
         </div>
 
         <div ng-controller="quizzController">
-            <button ng-click="prepareQuizz = !prepareQuizz" type="button">Nouveau quizz</button>
+            <button ng-click="prepareQuizz = !prepareQuizz; recapQuizz = false" type="button">Nouveau quizz</button>
 
             <div class="quizzWindow" ng-show="prepareQuizz == true">
                 Choix du thème:
@@ -128,7 +128,7 @@
                 <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme, selectedDifficulty)" type="submit" >Afficher questions</button>
                 {{question}}
 
-                <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme, selectedDifficulty); chrono(); launchQuizz = true; prepareQuizz = false" type="button">Lancer quizz</button>
+                <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme, selectedDifficulty); chrono(); launchQuizz = true; prepareQuizz = false;" type="button">Lancer quizz</button>
             </div>
             
             <div class="bFGreen quizzActWindow" ng-show="launchQuizz == true">
@@ -138,8 +138,7 @@
                             <label ng-repeat="prop in quest.propositions track by $index">
                                 <input type="radio" name="propos" ng-model="$parent.propos" value="{{prop}}"> {{$index + 1}} : {{prop}}
                             </label>
-                            <button ng-click="checkQuizzStatus(propos, $index)" type="submit">Valider réponse</button>
-                        </form>
+                            <button ng-click="checkQuizzStatus(propos, $index, user.id)" type="submit">Valider réponse</button>
                     </label>
                 </div>
             </div>
@@ -152,6 +151,8 @@
                     Réponse attendue: {{elmt.expRep}}
                     <br>
                     {{elmt.givRep}}
+                    <br>
+                    Anecdote: {{elmt.anecdote}}
                     <br>
                 </label>
                 Score: {{bilan.score}}

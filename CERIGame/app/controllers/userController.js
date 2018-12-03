@@ -36,6 +36,11 @@ function userController($scope, user, localStorage)
         $scope.showProfil = !$scope.showProfil;
     }
 
+    this.getId = function()
+    {
+        return userId;
+    }
+
     $scope.modifProfil = function(id, avatar, identifiant, prenom, nom)
     {
         user.updateProfil(id, avatar, identifiant, prenom, nom)

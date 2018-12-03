@@ -3,7 +3,7 @@
  * @param {?} $scope - Variable de contexte
  * @param {*} quizz - Service quizz
  */
-function quizzController($scope, $interval, quizz, user)
+function quizzController($scope, $interval, quizz, histo, localStorage)
 {
     console.log("Checking quizz controller");
 
@@ -48,6 +48,7 @@ function quizzController($scope, $interval, quizz, user)
     
     $scope.chrono = function()
     {
+        $scope.stopChrono = false;
         $scope.chrn = "00:00";    //Chronomètre
         sCpt = 0;  //Compteur de secondes
 
@@ -81,16 +82,6 @@ function quizzController($scope, $interval, quizz, user)
         });
     };
 
-    $scope.obtainThemes = function()
-    {
-        quizz.getThemes()
-        .then(function(response)
-        {
-            $scope.themes = response.data;
-        });
-    };
-    $scope.obtainThemes();
-
     $scope.showNextQuestion = function($index)
     {
         document.getElementById("question" + $index).style.display = "none";
@@ -114,10 +105,14 @@ function quizzController($scope, $interval, quizz, user)
         {
             $scope.resultatQuizz();
             $scope.recapQuizz = true;
+            $scope.launchQuizz = false;
+            document.getElementById("question" + 0).style.display = "initial";
+            $scope.storeResult($scope.bilan);
             $scope.stopChrono = true;
-        } 
+            $scope.answerSet = [];
+        }
     }
-
+    
     $scope.answerSet = [];
 
     $scope.storeAnswer = function(prop)
@@ -126,7 +121,6 @@ function quizzController($scope, $interval, quizz, user)
         console.log("%o", $scope.answerSet);
     }
 
-    
     $scope.resultatQuizz = function()
     {
         nbOkRep = 0;
@@ -152,10 +146,29 @@ function quizzController($scope, $interval, quizz, user)
                 value['givRep'] = "Mauvaise réponse";
             }
 
+            value['anecdote'] = $scope.questions[i]['anecdote'];
+
             $scope.bilan.push(value);
         }
 
         score = Math.floor((nbOkRep * 1398.2) / sCpt);
         $scope.bilan['score'] = score;
+    }
+
+    $scope.storeResult = function(bilan)
+    {
+        var infoToSave = {};
+        var userTemp = JSON.parse(localStorage.getItem('sessionUser'));
+
+        infoToSave['id_users'] = userTemp['id'];
+        infoToSave['nbreponse'] = nbOkRep;
+        infoToSave['temps'] = sCpt;
+        infoToSave['score'] = $scope.bilan['score'];
+
+        histo.saveResult(infoToSave)
+        .then(function(response)
+        {
+            console.log("%o", response);
+        });
     }
 };
