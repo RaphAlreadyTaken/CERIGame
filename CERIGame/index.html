@@ -127,22 +127,38 @@
                 <br>
                 <br>
                 <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme)" type="submit">Afficher questions</button>
-                {{question}}
+                {{questions}}
 
                 <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme); chrono(); launchQuizz = true; prepareQuizz = false" type="button">Lancer quizz</button>
             </div>
             
             <div class="bFGreen quizzActWindow" ng-show="launchQuizz == true">
-                <div ng-repeat="quest in question track by $index">
-                    <p id="question{{$index}}" ng-if="$index == 0" style="visibility: initial;">{{quest}}</p>
-                    <p id="question{{$index}}" ng-if="$index != 0" style="visibility: hidden;">{{quest}}</p>
-
-                    <button type="button" ng-click='document.getElementById("question{{$index}}").style.visibility = hidden'>Valider réponse</button>
+                <div ng-repeat="quest in questions track by $index">
+                    <label id="question{{$index}}" ng-style="$index != 0 && {'display':'none'}">
+                        {{quest.question}}
+                            <label ng-repeat="prop in quest.propositions track by $index">
+                                <input type="radio" name="propos" ng-model="$parent.propos" value="{{prop}}"> {{$index + 1}} : {{prop}}
+                            </label>
+                            <button ng-click="checkQuizzStatus(propos, $index)" type="submit">Valider réponse</button>
+                        </form>
+                    </label>
                 </div>
-
-                <div class="chronoBox">
-                    {{chrn}}
-                </div>
+            </div>
+            <div ng-show="recapQuizz == true">
+                Bilan du quizz:
+                <br><br>
+                <label ng-repeat="elmt in bilan track by $index">
+                    Question {{$index + 1}}: {{elmt.question}}
+                    <br>
+                    Réponse attendue: {{elmt.expRep}}
+                    <br>
+                    {{elmt.givRep}}
+                    <br>
+                </label>
+                Score: {{bilan.score}}
+            </div>
+            <div class="chronoBox">
+                {{chrn}}
             </div>
         </div>
     </body>
