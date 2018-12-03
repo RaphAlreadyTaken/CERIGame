@@ -116,7 +116,7 @@
 
             <div class="quizzWindow" ng-show="prepareQuizz == true">
                 Choix du thème:
-                <select ng-model="selectedTheme" ng-options="o as o for o in themes" ></select>
+                <select ng-init="selectedTheme = selectedTheme || themes[0].value" ng-model="selectedTheme" ng-options="option.value as option.name for option in themes"></select>
                 <br>
                 <br>
                 Nombre de questions: <select ng-init="selectedQuestionCount = selectedQuestionCount || questionCount[0].value" ng-model="selectedQuestionCount" ng-options="option.value as option.name for option in questionCount" ></select>

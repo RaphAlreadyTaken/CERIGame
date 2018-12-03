@@ -32,7 +32,20 @@ function quizzController($scope, $interval, quizz, user)
         name: 'Difficile',
         value: '4'
     }]
+    
+    $scope.themes = [];
+    $scope.themes.push({name: 'Théme aléatoire', value: 'randomTheme'});
 
+    $scope.obtainThemes = function()
+    {
+        quizz.getThemes()
+        .then(function(response)
+        {
+            $scope.themes = $scope.themes.concat(response.data);
+        });
+    };
+    $scope.obtainThemes();
+    
     $scope.chrono = function()
     {
         $scope.chrn = "00:00";    //Chronomètre
@@ -62,14 +75,4 @@ function quizzController($scope, $interval, quizz, user)
             
         });
     };
-
-    $scope.obtainThemes = function()
-    {
-        quizz.getThemes()
-        .then(function(response)
-        {
-            $scope.themes = response.data;
-        });
-    };
-    $scope.obtainThemes();
 };

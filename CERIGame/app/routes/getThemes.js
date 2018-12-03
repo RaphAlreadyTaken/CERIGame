@@ -35,9 +35,9 @@ router.post('/', function(request, response)
                 {
                     var arrayReturn = [];
                     var i;
-                    for(i=0; i<arrayResult.length; ++i) //Pour garder le nombre de questions souhaitées
+                    for(i=0; i<arrayResult.length; ++i) //On ne conserve que les thèmes
                     {
-                        arrayReturn.push(arrayResult[i]['thème']);
+                        arrayReturn.push({name: arrayResult[i]['thème'], value: arrayResult[i]['thème']});
                     }
                     console.log(arrayReturn);
                     
