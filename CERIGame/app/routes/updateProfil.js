@@ -67,4 +67,4 @@ router.post('/', function (request, response, next)
 /******** Export
  *
  ********/
-module.exports = router;    //L'objet router est transmis lorsque le fichier index.js est importé
+module.exports = router;    //L'objet router est transmis lorsque le fichier updateProfil.js est importé

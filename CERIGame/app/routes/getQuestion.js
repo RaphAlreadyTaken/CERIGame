@@ -44,7 +44,6 @@ router.post('/', function(request, response)
                     {                        
                         var rand = Math.floor(Math.random() * Math.floor(arrayThemes.length)); //On choisit un thème au hasard parmis ceux disponible
                         theme = arrayThemes[rand]['thème'];
-                        console.log("théme aléatoire: ", theme);
                         
                         dbo.collection("quizz").find({thème: theme}).toArray(function(err,arrayResult) //Récupération de toutes les infos du thème donné
                         {
@@ -72,8 +71,8 @@ router.post('/', function(request, response)
                                             arrayReturn[i]['propositions'].splice(randProp, 1); //Alors on la supprime
                                         }
                                     }
-                                } 
-                                console.log(arrayReturn); 
+                                }
+
                                 mongoClient.close();
                                 response.send(arrayReturn);
                             }
@@ -111,8 +110,7 @@ router.post('/', function(request, response)
                                     arrayReturn[i]['propositions'].splice(randProp, 1); //Alors on la supprime
                                 }
                             }
-                        } 
-                        console.log(arrayReturn); 
+                        }
                         mongoClient.close();
                         response.send(arrayReturn);
                     }
@@ -125,4 +123,4 @@ router.post('/', function(request, response)
 /******** Export
  *
  ********/
-module.exports = router;    //L'objet router est transmis lorsque le fichier index.js est importé
+module.exports = router;    //L'objet router est transmis lorsque le fichier getQuestion.js est importé

@@ -40,8 +40,6 @@ router.post('/', function (request, response)
 
         sql = "insert into fredouil.historique (id_users, date, nbreponse, temps, score) values (" + request.body.info['id_users'] + ", now()::timestamp(0), " + request.body.info['nbreponse'] + ", " + request.body.info['temps'] + ", " + request.body.info['score'] + ");"
 
-        console.log(sql);
-
         client.query(sql, function(err, result)
         {
             if (err)

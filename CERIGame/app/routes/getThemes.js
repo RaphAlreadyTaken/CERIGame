@@ -51,4 +51,4 @@ router.post('/', function(request, response)
 /******** Export
  *
  ********/
-module.exports = router;    //L'objet router est transmis lorsque le fichier index.js est importé
+module.exports = router;    //L'objet router est transmis lorsque le fichier getThemes.js est importé

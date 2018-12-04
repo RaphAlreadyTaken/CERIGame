@@ -78,7 +78,6 @@ function quizzController($scope, $interval, quizz, histo, localStorage)
         .then(function(response)
         {
             $scope.questions = response.data; 
-            console.log($scope.questions);
         });
     };
 
@@ -86,7 +85,7 @@ function quizzController($scope, $interval, quizz, histo, localStorage)
     {
         document.getElementById("question" + $index).style.display = "none";
 
-        if (document.getElementById("question" + ($index + 1)) !== null)
+        if ($index < $scope.questions.length - 1)
         {
             document.getElementById("question" + ($index + 1)).style.display = "initial";
         }
@@ -118,7 +117,6 @@ function quizzController($scope, $interval, quizz, histo, localStorage)
     $scope.storeAnswer = function(prop)
     {
         $scope.answerSet.push(prop);
-        console.log("%o", $scope.answerSet);
     }
 
     $scope.resultatQuizz = function()
@@ -166,9 +164,9 @@ function quizzController($scope, $interval, quizz, histo, localStorage)
         infoToSave['score'] = $scope.bilan['score'];
 
         histo.saveResult(infoToSave)
-        .then(function(response)
+        .then(function()
         {
-            console.log("%o", response);
-        });
+            $interval.cancel(mnome);
+        })
     }
 };

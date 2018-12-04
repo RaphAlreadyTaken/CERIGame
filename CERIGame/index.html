@@ -30,7 +30,7 @@
             <table class="alignTxt">
                 <tr>
                     <td><img class="linkInteract" ng-blur="modAvatar = false" ng-click="modAvatar = true" ng-src="{{user.avatar}}"></img>
-                        <div ng-show="modAvatar == true">
+                        <div ng-show="modAvatar === true">
                             <input class="inputModifImg" ng-blur="modifProfil(user.id, newAvatar, null, null, null); modAvatar = false" ng-enter="modifProfil(user.id, newAvatar, null, null, null)" ng-model="newAvatar" placeholder="Lien vers nouvelle image..." type="text">
                         </div>
                     </td>
@@ -65,18 +65,21 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <td>{{user.statut}}</td>
-                </tr>
             </table>
         </div>
 
         <div ng-controller="userController">
             <div class="bLGreen toRight userList xAlign">
-                <p>Utilisateurs connectés</p>
-                <div ng-repeat="user in userList">
+                <p>
+                    Utilisateurs
+                    <br>
+                    <input ng-click="loggedOnly = !loggedOnly" ng-init="loggedOnly = false" type="checkbox">Connectés uniquement</select>
+                </p>
+                <label ng-repeat="user in userList">
+                    <div ng-if="user.statut === 1 || (user.statut != 1 && loggedOnly === false)">
                         <a class="underlined linkInteract" ng-click="getUserProfile(user.id); toggleProfilDisplay()">{{user.identifiant}}</a>
-                </div>
+                    </div>
+                </label>
             </div>
             <div class=" bLGreen profil toRight xAlign" ng-show="showProfil">
                 <table class="alignTxt">
@@ -93,7 +96,7 @@
                         <td>{{user.nom}}</td>
                     </tr>
                     <tr>
-                        <td>{{user.statut}}</td>
+                        <td><div class="alignTxt circle toCenter" ng-style="user.statut != 1 && {'background-color' : 'red'}"></div></td>
                     </tr>
                     <tr>
                         <td>
@@ -106,13 +109,13 @@
 
         <div ng-controller="histoController">
             <button type="button" ng-click="topTen(); showTopTen = !showTopTen">10 meilleurs</button>
-            <div ng-controller="userController" ng-repeat="topUser in top10" ng-show="showTopTen">
+            <label ng-controller="userController" ng-repeat="topUser in top10" ng-show="showTopTen">
                 {{topUser.identifiant}} : {{topUser.sum}}
-            </div>
+            </label>
         </div>
 
         <div ng-controller="quizzController">
-            <button ng-click="prepareQuizz = !prepareQuizz; recapQuizz = false" type="button">Nouveau quizz</button>
+            <button ng-click="prepareQuizz = !prepareQuizz; recapQuizz = false; endQuizz = false;" type="button">Nouveau quizz</button>
 
             <div class="quizzWindow" ng-show="prepareQuizz == true">
                 Choix du thème:
@@ -125,7 +128,7 @@
                 Difficulté: <select ng-init="selectedDifficulty = selectedDifficulty || difficulte[0].value" ng-model="selectedDifficulty" ng-options="option.value as option.name for option in difficulte"> </select>
                 <br>
                 <br>
-                <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme, selectedDifficulty)" type="submit" >Afficher questions</button>
+                <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme, selectedDifficulty)" type="submit">Afficher questions</button>
                 {{question}}
 
                 <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme, selectedDifficulty); chrono(); launchQuizz = true; prepareQuizz = false;" type="button">Lancer quizz</button>
@@ -157,7 +160,7 @@
                 </label>
                 Score: {{bilan.score}}
             </div>
-            <div class="chronoBox">
+            <div class="chronoBox" ng-show="launchQuizz == true">
                 {{chrn}}
             </div>
         </div>

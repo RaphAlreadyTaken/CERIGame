@@ -36,7 +36,7 @@ router.get('/', function (request, response, next)
                 console.log('Connection established with pg db server');
             }
             
-            sql = "select * from fredouil.users where statut = 1";
+            sql = "select * from fredouil.users";
             
             client.query(sql, function(err, result)
             {
@@ -58,4 +58,4 @@ router.get('/', function (request, response, next)
 /******** Export
  *
  ********/
-module.exports = router;    //L'objet router est transmis lorsque le fichier index.js est importé
+module.exports = router;    //L'objet router est transmis lorsque le fichier getAllUsers.js est importé

@@ -61,4 +61,4 @@ router.post('/', function (request, response, next)
 /******** Export
  *
  ********/
-module.exports = router;    //L'objet router est transmis lorsque le fichier login.js est importé
+module.exports = router;    //L'objet router est transmis lorsque le fichier logout.js est importé
