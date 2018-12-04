@@ -110,6 +110,7 @@
         <div ng-controller="histoController">
             <button type="button" ng-click="topTen(); showTopTen = !showTopTen">10 meilleurs</button>
             <label ng-controller="userController" ng-repeat="topUser in top10" ng-show="showTopTen">
+                <br>
                 {{topUser.identifiant}} : {{topUser.sum}}
             </label>
         </div>
