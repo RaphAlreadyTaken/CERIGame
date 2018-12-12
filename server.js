@@ -24,6 +24,7 @@ var updateProfil = require('./CERIGame/app/routes/updateProfil');  //Import fich
 var getQuestion = require('./CERIGame/app/routes/getQuestion'); //Import fichier getQuestion.js
 var getThemes = require('./CERIGame/app/routes/getThemes'); //Import fichier getThemes.js
 var getTop10 = require('./CERIGame/app/routes/getTop10'); //Import fichier getTop10.js
+var getHisto = require('./CERIGame/app/routes/getHisto'); //Import fichier getHisto.js
 var saveResult = require('./CERIGame/app/routes/saveResult'); //Import fichier saveResult.js
 
 /******** Trucs à utiliser
@@ -56,6 +57,7 @@ app.use('/updateProfil', updateProfil);	//Utilise la variable updateProfil (impo
 app.use('/getQuestion', getQuestion); //Utilise la variable getQuestion (importation getQuestion.js)
 app.use('/getThemes', getThemes); //Utilise la variable getThemes (importation getThemes.js)
 app.use('/getTop10', getTop10); //Utilise la variable getTop10 (importation getTop10.js)
+app.use('/getHisto', getHisto); //Utilise la variable getHisto (importation getHisto.js)
 app.use('/saveResult', saveResult); //Utilise la variable saveResult (importation saveResult.js)
 
 /******** Configuration du serveur NodeJS - Port : 3131

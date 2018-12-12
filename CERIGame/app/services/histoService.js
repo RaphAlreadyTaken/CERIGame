@@ -18,6 +18,16 @@ function histoService($http)
        });
    };
 
+   this.getHisto = function(id)
+   {
+        return $http
+        .post('http://localhost:3131/getHisto', {'id': id})
+        .then(function(response)
+        {
+            return response;
+        });
+   };
+
    this.saveResult = function(infoToSave)
    {
        return $http

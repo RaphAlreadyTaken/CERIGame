@@ -105,11 +105,25 @@
                     </tr>
                 </table>
             </div>
+
+            <div ng-controller="histoController">
+                <button type="button" ng-click="userHisto(user.id); showHistoUser = !showHistoUser">Historique des quizz</button>
+                <label class="bLOrange" ng-controller = "histoController" ng-repeat="hist in histoUser" ng-show="showHistoUser">
+                    Quizz du {{hist.date}}:
+                    <br>
+                    {{hist.nbreponse}} bonnes réponses
+                    <br>
+                    {{hist.temps}} secondes
+                    <br>
+                    {{hist.score}} points
+                    <br><br>
+                </label>
+            </div>
         </div>
 
         <div ng-controller="histoController">
             <button type="button" ng-click="topTen(); showTopTen = !showTopTen">10 meilleurs</button>
-            <label ng-controller="userController" ng-repeat="topUser in top10" ng-show="showTopTen">
+            <label  class= "bFPink" ng-controller="userController" ng-repeat="topUser in top10" ng-show="showTopTen">
                 <br>
                 {{topUser.identifiant}} : {{topUser.sum}}
             </label>
