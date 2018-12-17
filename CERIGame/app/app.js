@@ -3,15 +3,18 @@
  ********/
 var app = angular.module('app', ["ngRoute"]);
 app.controller('loginController', loginController);
-app.controller('userController', userController);
-app.controller('quizzController', quizzController);
 app.controller('histoController', histoController);
+app.controller('quizzController', quizzController);
+app.controller('socketController', socketController);
+app.controller('userController', userController);
+//app.factory('socket', treatSocket);
 app.service('auth', authService);
-app.service('session', sessionService);
-app.service('localStorage', localStorageService);
-app.service('user', userService);
-app.service('quizz', quizzService);
 app.service('histo', histoService);
+app.service('localStorage', localStorageService);
+app.service('quizz', quizzService);
+app.service('session', sessionService);
+app.service('socket', socketService);
+app.service('user', userService);
 
 //Directives
 app.directive('ngEnter', function ()
