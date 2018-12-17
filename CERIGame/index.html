@@ -108,7 +108,7 @@
 
             <div ng-controller="histoController">
                 <button type="button" ng-click="userHisto(user.id); showHistoUser = !showHistoUser">Historique des quizz</button>
-                <label class="bLOrange" ng-controller = "histoController" ng-repeat="hist in histoUser" ng-show="showHistoUser">
+                <label class="bLOrange" ng-controller = "histoController" ng-repeat="hist in histoUser | orderBy:'-date'" ng-show="showHistoUser">
                     Quizz du {{hist.date}}:
                     <br>
                     {{hist.nbreponse}} bonnes réponses
