@@ -27,8 +27,6 @@ router.post('/', function (request, response)
     // fonctionne également en promesse avec then et catch !
     pool.connect(function(err, client) 
     {
-        console.log("saveResult called: %o", request.body.info);
-
         if(err) 
         {
             console.log('Error connecting to pg server' + err.stack);

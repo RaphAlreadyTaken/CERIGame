@@ -9,6 +9,8 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const MongoClient = require('mongodb').MongoClient;
+var http = require('http');
+var fs = require('fs');
 
 /******** Declaration des variables
  *
@@ -60,11 +62,30 @@ app.use('/getTop10', getTop10); //Utilise la variable getTop10 (importation getT
 app.use('/getHisto', getHisto); //Utilise la variable getHisto (importation getHisto.js)
 app.use('/saveResult', saveResult); //Utilise la variable saveResult (importation saveResult.js)
 
+
 /******** Configuration du serveur NodeJS - Port : 3131
  *
  ********/
-var server = app.listen(3131, function()
+var server = http.createServer(app);
+
+server.listen(3131, function()
 {
 	console.log('The nodeJS server is listening on 3131');	//Message dans la console Node
 	console.log('Server home: ' + __dirname);			//Chemin absolu vers serveur
+});
+
+/******** Websocket
+ *
+ ********/
+var io = require('socket.io').listen(server);
+
+io.on('connection', function (socket)
+{
+	console.log('Un client est connecté !');
+	socket.emit('Un nouvel utilisateur se connecte');
+
+	socket.on("message", function(message)
+	{
+		console.log('Un client me dit: ' + message);
+	})
 });

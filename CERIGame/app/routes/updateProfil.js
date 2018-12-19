@@ -43,7 +43,6 @@ router.post('/', function (request, response, next)
             if (arg !== 'id' && request.body[arg] !== null)
             {
                 sql = "update fredouil.users set " + arg + " = '" + request.body[arg] + "' where id = " + request.body['id'] + ";";
-                console.log(sql);
             }
 
 

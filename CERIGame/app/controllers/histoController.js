@@ -5,15 +5,12 @@
  */
 function histoController($scope, histo)
 {
-    console.log("Checking histo controller");
-
     $scope.topTen = function()
     {
         histo.getTop10()
         .then(function(response)
         {
             $scope.top10 = response.data.rows;
-            console.log($scope.top10);
         });
     };
 
@@ -23,7 +20,6 @@ function histoController($scope, histo)
         .then(function(response)
         {
             $scope.histoUser = response.data.rows;
-            console.log($scope.histoUser);
         });
     };
 };

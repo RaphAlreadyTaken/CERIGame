@@ -27,8 +27,6 @@ router.get('/', function (request, response, next)
     // fonctionne également en promesse avec then et catch !
     pool.connect(function(err, client, done) 
     {
-        console.log("top10 called");
-
         if(err) 
         {
             console.log('Error connecting to pg server' + err.stack);

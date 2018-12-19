@@ -7,13 +7,12 @@ app.controller('histoController', histoController);
 app.controller('quizzController', quizzController);
 app.controller('socketController', socketController);
 app.controller('userController', userController);
-//app.factory('socket', treatSocket);
+app.factory('socket', socketService);
 app.service('auth', authService);
 app.service('histo', histoService);
 app.service('localStorage', localStorageService);
 app.service('quizz', quizzService);
 app.service('session', sessionService);
-app.service('socket', socketService);
 app.service('user', userService);
 
 //Directives

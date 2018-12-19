@@ -27,8 +27,6 @@ router.post('/', function (request, response, next)
     // fonctionne également en promesse avec then et catch !
     pool.connect(function(err, client, done) 
     {
-        console.log("histo called");
-
         if(err) 
         {
             console.log('Error connecting to pg server' + err.stack);
@@ -37,8 +35,6 @@ router.post('/', function (request, response, next)
         {
             console.log('Connection established with pg db server');
         }
-        
-        console.log("%o", request.body);
 
         sql = "select nbreponse, temps, score, date from fredouil.historique where id_users = " + request.body.id + ";";
         

@@ -5,8 +5,6 @@
  */
 function loginController($scope, auth)
 {
-    console.log("Checking login controller");
-
     $scope.login = null;
     $scope.password = null;
 

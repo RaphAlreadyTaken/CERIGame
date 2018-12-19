@@ -1,23 +1,20 @@
 /**
- * Service webSocket
+ * Service socket
  * @return {Object}
  */
-function socketService($rootscope)
+function socketService($rootScope)
 {
-    //Le code de Corinne, qui ne marche pas
-    // function treatSocket($rootscope)
-    // {
-    //     var socket = io.connect('http://localhost:3131');
+    var sock = io.connect("http://localhost:3131");
 
-    //     return
-    //         on: function(event1, callback)
-    //         {
-    //             socket.on(event1, callback);
-    //         },
-    //         emit: function(event1, data)
-    //         {
-    //             socket.emit(event1, data);
-    //         }
-    //     };
-    // };
+    return {
+    on: function(eventName, callback)
+    {
+        console.log("calling on: " + callback);
+        sock.on(eventName, callback);
+    },
+    emit: function(eventName, data)
+    {
+        console.log("calling emit: " + eventName + " with " + data);
+        sock.emit(eventName, data);
+    }};
 }

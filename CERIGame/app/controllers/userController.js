@@ -6,8 +6,6 @@
  */
 function userController($scope, user, localStorage)
 {
-    console.log("Checking user controller");
-
     var userData = JSON.parse(localStorage.getItem("sessionUser"));
     var userId = userData['id'];
 

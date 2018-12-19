@@ -5,8 +5,6 @@
  */
 function quizzController($scope, $interval, quizz, histo, localStorage)
 {
-    console.log("Checking quizz controller");
-
     $scope.questionCount = [{
         name: '3',
         value: '3'

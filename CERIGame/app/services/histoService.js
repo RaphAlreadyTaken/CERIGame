@@ -28,7 +28,6 @@ function histoService($http)
             for (var i = 0; i < response.data.rows.length; i++)
             {
                 response.data.rows[i].date = response.data.rows[i].date.substring(0, 10) + " (" + response.data.rows[i].date.substring(11, 19) + ")";
-                console.log(response.data.rows[i].date);
             }
 
             return response;

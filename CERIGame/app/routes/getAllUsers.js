@@ -46,7 +46,6 @@ router.get('/', function (request, response, next)
                 }
                 else
                 {
-                    console.log("Utilisateurs récupérés");
                     response.send(result.rows);
                 }
             });

@@ -39,7 +39,6 @@ router.post('/', function(request, response)
                     {
                         arrayReturn.push({name: arrayResult[i]['thème'], value: arrayResult[i]['thème']});
                     }
-                    console.log(arrayReturn);
                     
                     response.send(arrayReturn);
                 }
