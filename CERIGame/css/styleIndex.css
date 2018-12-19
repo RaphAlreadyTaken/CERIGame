@@ -73,12 +73,36 @@ img
     width: 15%;
 }
 
+.containerLogin
+{
+    /* border-color: grey;
+    border-radius: 10%;
+    border-style: solid;
+    border-width: 1px;    border-color: grey;
+    border-radius: 10%;
+    border-style: solid;
+    border-width: 1px; */
+    margin-top: 100%;
+    padding-top: 7%;
+    padding-bottom: 7%;
+    padding-left: 7%;
+    padding-right: 8%;
+    vertical-align: middle;
+}
+
 .disappear
 {
     animation-duration: 3s;
     animation-name: invisib;
     opacity: 0;    
     visibility: hidden;
+}
+
+.grandContainerLogin
+{
+    display:table;
+    height:100%; 
+    margin: 0 auto;
 }
 
 .inputModifImg
@@ -107,13 +131,13 @@ img
     max-width: 20%;
 }
 
-.quizzActWindow
+.ActWindow
 {
     position: absolute;
         top: 30%;
 }
 
-.quizzWindow
+.Window
 {
     background-color: purple;
     margin: auto;
