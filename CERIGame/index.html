@@ -25,19 +25,26 @@
         <script src="/socket.io/socket.io.js"></script>
     </head>
     <body ng-app="app">
+        <!-- Test websocket [A SUPPRIMER QUAND LOGIQUE OK] -->
         <div ng-controller="socketController">
-            <button type="button" ng-click="test()">test websocket</button>
+            <button ng-click="test()" type="button">test websocket</button>
             {{serverMessage}}
         </div>
 
-        <div ng-controller="loginController" class="skipLineWithBSn">
-            <div id="bandeau" class="disappear bandeau">
+        <!-- Bandeau accueil login -->
+        <div class="skipLineWithBSn" ng-controller="loginController">
+            <div class="disappear bandeau" id="bandeau" ng-style="{'animation-play-state' : 'running'}">
                 {{bandeau()}}
             </div>
-            <button ng-click="logOut()" class="toRight">Déconnexion</button>
+            <button class="toRight" ng-click="logOut()">Déconnexion</button>
         </div>
 
-        <div ng-controller="userController" class="toLeft profil bLBlue">
+        <!-- Bandeau défi lancé -->
+        <div class="bandeau disappear skipLineWithBSn" ng-controller="socketController" ng-show="confirmDefi !== undefined">
+            {{confirmDefi}}
+        </div>
+
+        <div class="toLeft profil bLBlue" ng-controller="userController">
             <table class="alignTxt">
                 <tr>
                     <td><img class="linkInteract" ng-blur="modAvatar = false" ng-click="modAvatar = true" ng-src="{{user.avatar}}"></img>
@@ -183,7 +190,7 @@
                     <button type="button" ng-click="getAllUsers(); displayChallengers = !displayChallengers">Défier utilisateur</button>
                     <label ng-repeat="user in userList">
                         <div ng-if="displayChallengers == true">
-                            <a class="underlined linkInteract" ng-click="lancerDefi(user.id, $parent.bilan)" ng-controller="defiController">{{user.identifiant}}</a>
+                            <a class="underlined linkInteract" ng-click="lancerDefi(user.id, $parent.questions, $parent.bilan.score); $parent.toggleUserList(); " ng-controller="defiController">{{user.identifiant}}</a>
                         </div>
                     </label>
                 </div>

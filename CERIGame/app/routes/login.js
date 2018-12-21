@@ -62,6 +62,7 @@ router.post('/', function (request, response, next)
                     responseData.data = {}; //Sous-array retour
                 
                     //Stockage données session (pour création ultérieure du localStorage)
+                    responseData.data['ident'] = result.rows[0].identifiant;
                     responseData.data['nom'] = result.rows[0].nom;
                     responseData.data['prenom'] = result.rows[0].prenom;
                     responseData.data['date'] = new Date();

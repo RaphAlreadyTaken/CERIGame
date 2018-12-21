@@ -2,9 +2,10 @@
  * Service d'authentification
  * @param {?} $http - requête http
  * @param {?} $window - navigateur
- * @param {Object} session - objet session
+ * @param {Object} session - service session
+ * @param {Object} socket - service socket
  */
-function authService($http, $window, session)
+function authService($http, $window, session, socket)
 {
 	session.connected = false;
 
@@ -25,7 +26,6 @@ function authService($http, $window, session)
 		});
 	};
 
-
 	/**
 	 * Connecte un utilisateur
 	 * @param {String} login - Identifiant
@@ -41,7 +41,7 @@ function authService($http, $window, session)
 			if (response.data.statusResp === true)
 			{
 				localStorage.setItem('sessionUser', JSON.stringify(response.data.data));
-				console.log('Utilisateur connecté: ' + response.data.statusResp + ', ' + response.data.statusMsg);
+				socket.emit('notifConnexion', 'Utilisateur connecté: ' + response.data.statusResp + ', ' + response.data.statusMsg)
 			}
 
 			$window.location.reload();

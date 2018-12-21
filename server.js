@@ -81,14 +81,24 @@ server.listen(3131, function()
  ********/
 var io = require('socket.io').listen(server);
 
+//Ouverture du duplex serveur <-> client
 io.on('connection', function (socket)
 {
 	//io.emit -> message envoyé à tous les clients
 	//socket.emit -> message envoyé au client à l'origine de l'événement
 	//socket.broadcast.emit -> message envoyé à tous les clients sauf le client à l'origine de l'événement
 
-	// console.log('Un client est connecté !');
-	// socket.broadcast.emit("notification", "Un nouvel utilisateur s'est connecté");
+	socket.on("notifConnexion", function(message)
+	{
+		console.log("connec");
+		socket.broadcast.emit("notifConnexion", message);
+	})
+
+	socket.on("confirmDefi", function(message)
+	{
+		console.log("defi");
+		socket.emit("confirmDefi", message);
+	})
 
 	socket.on("message", function(message)
 	{

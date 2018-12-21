@@ -4,9 +4,21 @@
  */
 function socketController($scope, socket)
 {
-    socket.on('notification', function(data)
+    socket.on('notifConnexion', function(data)
     {
-        alert("New user connected");
+        $scope.$apply(function()
+        {
+            $scope.serverMessage = data;
+        });
+    });
+
+    socket.on('confirmDefi', function(data)
+    {
+        $scope.$apply(function()
+        {
+            $scope.confirmDefi = data;
+            console.log(data);
+        });
     });
 
     $scope.test = function()

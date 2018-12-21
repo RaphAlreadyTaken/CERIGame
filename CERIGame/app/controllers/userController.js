@@ -34,6 +34,11 @@ function userController($scope, user, localStorage)
         $scope.showProfil = !$scope.showProfil;
     }
 
+    $scope.toggleUserList = function()
+    {
+        $scope.displayChallengers = !$scope.displayChallengers;
+    }
+
     this.getId = function()
     {
         return userId;

@@ -3,14 +3,15 @@
  * @param {?} $scope - Variable de contexte
  * @param {*} histo - Service historique
  */
-function defiController($scope, defi)
+function defiController($scope, defi, socket)
 {
-    $scope.lancerDefi = function(id, quizzInfo)
+    $scope.lancerDefi = function(id, quizzQuestions, quizzScore)
     {
-        defi.initDefi(id, quizzInfo)
-        .then(function(response)
-        {
-            console.log(response.data);
-        });
-    }
+        defi.initDefi(id, quizzQuestions, quizzScore)
+        .then(function()
+         {
+            $scope.confirmDefi = socket.confirmDefi;
+            $scope.displayConfirm = true;
+         });
+    };
 };

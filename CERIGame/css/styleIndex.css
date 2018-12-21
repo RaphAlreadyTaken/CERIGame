@@ -94,6 +94,7 @@ img
 {
     animation-duration: 3s;
     animation-name: invisib;
+    /* animation-play-state: paused; */
     opacity: 0;    
     visibility: hidden;
 }
