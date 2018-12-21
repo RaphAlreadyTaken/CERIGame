@@ -19,15 +19,15 @@ function userController($scope, user, localStorage)
     };
     $scope.getUserProfile(userId);
 
-    $scope.getAvailableUsers = function()
+    $scope.getAllUsers = function()
     {
-        user.getAvailableUsers()
+        user.getAllUsers()
         .then(function(response)
         {
             $scope.userList = response.data;
         });
     };
-    $scope.getAvailableUsers();
+    $scope.getAllUsers();
 
     $scope.toggleProfilDisplay = function()
     {

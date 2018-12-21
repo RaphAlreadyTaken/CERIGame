@@ -2,7 +2,7 @@
  * Service user
  * @return {Object}
  */
-function userService($http)
+function userService($http, localStorage)
 {
     /**
 	 * Récupère un utilisateur grâce à son ID
@@ -19,11 +19,16 @@ function userService($http)
         });
     };
 
+    this.getCurUser = function()
+    {
+        return JSON.parse(localStorage.getItem("sessionUser"));
+    }
+
     /**
 	 * Récupère tous les utilisateurs
 	 * @returns {Promise} Réponse serveur (utilisateurs)
 	 */
-    this.getAvailableUsers = function(id)
+    this.getAllUsers = function(id)
     {
         return $http
         .get('http://localhost:3131/getAllUsers')

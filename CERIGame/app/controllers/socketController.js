@@ -6,7 +6,7 @@ function socketController($scope, socket)
 {
     socket.on('notification', function(data)
     {
-        $scope.bandeauDisplay('Message du serveur' + data);
+        alert("New user connected");
     });
 
     $scope.test = function()

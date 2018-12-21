@@ -8,23 +8,26 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-route.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
         <script src="/services/authService.js"></script>
+        <script src="/services/defiService.js"></script>
         <script src="/services/histoService.js"></script>
         <script src="/services/localStorageService.js"></script>
         <script src="/services/quizzService.js"></script>
         <script src="/services/sessionService.js"></script>
         <script src="/services/socketService.js"></script>
         <script src="/services/userService.js"></script>
-        <script src="/controllers/loginController.js"></script>
-        <script src="/controllers/userController.js"></script>
-        <script src="/controllers/quizzController.js"></script>
+        <script src="/controllers/defiController.js"></script>
         <script src="/controllers/histoController.js"></script>
+        <script src="/controllers/loginController.js"></script>
+        <script src="/controllers/quizzController.js"></script>
         <script src="/controllers/socketController.js"></script>
+        <script src="/controllers/userController.js"></script>
         <script src="/app.js"></script>
         <script src="/socket.io/socket.io.js"></script>
     </head>
     <body ng-app="app">
         <div ng-controller="socketController">
             <button type="button" ng-click="test()">test websocket</button>
+            {{serverMessage}}
         </div>
 
         <div ng-controller="loginController" class="skipLineWithBSn">
@@ -106,11 +109,6 @@
                     <tr>
                         <td><div class="alignTxt circle toCenter" ng-style="user.statut != 1 && {'background-color' : 'red'}"></div></td>
                     </tr>
-                    <tr>
-                        <td>
-                            <button>Lancer un défi</button>
-                        </td>
-                    </tr>
                 </table>
             </div>
 
@@ -151,9 +149,6 @@
                 Difficulté: <select ng-init="selectedDifficulty = selectedDifficulty || difficulte[0].value" ng-model="selectedDifficulty" ng-options="option.value as option.name for option in difficulte"> </select>
                 <br>
                 <br>
-                <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme, selectedDifficulty)" type="submit">Afficher questions</button>
-                {{question}}
-
                 <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme, selectedDifficulty); chrono(); launchQuizz = true; prepareQuizz = false;" type="button">Lancer quizz</button>
             </div>
             
@@ -182,6 +177,16 @@
                     <br>
                 </label>
                 Score: {{bilan.score}}
+                <br>
+                <button type="button" ng-click="recapQuizz = false">Fermer fenêtre</button>
+                <div ng-controller="userController">
+                    <button type="button" ng-click="getAllUsers(); displayChallengers = !displayChallengers">Défier utilisateur</button>
+                    <label ng-repeat="user in userList">
+                        <div ng-if="displayChallengers == true">
+                            <a class="underlined linkInteract" ng-click="lancerDefi(user.id, $parent.bilan)" ng-controller="defiController">{{user.identifiant}}</a>
+                        </div>
+                    </label>
+                </div>
             </div>
             <div class="chronoBox" ng-show="launchQuizz == true">
                 {{chrn}}
