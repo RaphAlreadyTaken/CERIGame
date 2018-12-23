@@ -2,7 +2,7 @@
  * Contrôleur de webSocket
  * @param {?} $scope - Variable de contexte
  */
-function socketController($scope, socket, user)
+function socketController($scope, socket, user, defi)
 {
     socket.on('notifConnexion', function(data)
     {
@@ -32,7 +32,16 @@ function socketController($scope, socket, user)
     {
         $scope.$apply(function()
         {
-            $scope.confirmDefi = data;
+            $scope.notifDefi = data.message;
+            defi.idDefi = data.idDefi;
+        });
+    });
+
+    socket.on('confirmDelete' + user.getCurUser().id, function(data)
+    {
+        $scope.$apply(function()
+        {
+            $scope.notifDefi = data;
         });
     });
 

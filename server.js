@@ -22,7 +22,7 @@ var logout = require('./CERIGame/app/routes/logout');  //Import fichier logout.j
 var checkLog = require('./CERIGame/app/routes/checkLog');  //Import fichier checkLog.js
 var getUser = require('./CERIGame/app/routes/getUser');  //Import fichier getUser.js
 var getAllUsers = require('./CERIGame/app/routes/getAllUsers');  //Import fichier getAllUsers.js
-var initDefi = require('./CERIGame/app/routes/initDefi');  //Import fichier initDefi.js
+var defi = require('./CERIGame/app/routes/defi');  //Import fichier initDefi.js
 var updateProfil = require('./CERIGame/app/routes/updateProfil');  //Import fichier updateProfil.js
 var getQuestion = require('./CERIGame/app/routes/getQuestion'); //Import fichier getQuestion.js
 var getThemes = require('./CERIGame/app/routes/getThemes'); //Import fichier getThemes.js
@@ -56,7 +56,7 @@ app.use('/logout', logout);	//Utilise la variable logout (importation logout.js)
 app.use('/checkLog', checkLog);	//Utilise la variable checkLog (importation checkLog.js)
 app.use('/getUser', getUser);	//Utilise la variable getUser (importation getUser.js)
 app.use('/getAllUsers', getAllUsers);	//Utilise la variable getUser (importation getUser.js)
-app.use('/initDefi', initDefi); //Utilise la variable initDefi (importation initDefi.js)
+app.use('/defi', defi); //Utilise la variable initDefi (importation initDefi.js)
 app.use('/updateProfil', updateProfil);	//Utilise la variable updateProfil (importation updateProfil.js)
 app.use('/getQuestion', getQuestion); //Utilise la variable getQuestion (importation getQuestion.js)
 app.use('/getThemes', getThemes); //Utilise la variable getThemes (importation getThemes.js)
@@ -80,7 +80,6 @@ server.listen(3131, function()
  *
  ********/
 var io = require('socket.io').listen(server);
-var tabId = new Object();
 
 //Ouverture du duplex serveur <-> client
 io.on('connection', function (socket)
@@ -102,7 +101,12 @@ io.on('connection', function (socket)
 	socket.on("confirmDefi", function(data)
 	{
 		socket.emit("confirmDefi", data.message);
-		socket.broadcast.emit("notifDefi_" + data.id, "Vous avez été défié par " + data.auteur + "!");
+		socket.broadcast.emit("notifDefi_" + data.id, {'message': "Vous avez été défié par " + data.auteur + " !", 'idDefi': data.idDefi});
+	})
+
+	socket.on("confirmDelete", function(data)
+	{
+		socket.emit("confirmDelete", data.message);
 	})
 
 	socket.on("message", function(message)

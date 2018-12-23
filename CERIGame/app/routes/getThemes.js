@@ -42,9 +42,9 @@ router.post('/', function(request, response)
                     
                     response.send(arrayReturn);
                 }
-            });    
+            });
         }
-    });        
+    });
 });
 
 /******** Export

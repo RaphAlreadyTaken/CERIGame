@@ -14,4 +14,13 @@ function defiController($scope, defi, socket)
             $scope.displayConfirm = true;
          });
     };
+
+    $scope.supprDefi = function(idDefi)
+    {
+        defi.deleteDefi(idDefi)
+        .then(function()
+        {
+            console.log("Challenge removed");
+        });
+    };
 };

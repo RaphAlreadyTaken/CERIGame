@@ -4,7 +4,7 @@
  * @param {*} user - Service utilisateur
  * @param {*} localStorage - Service stockage local
  */
-function userController($scope, user, localStorage)
+function userController($scope, user, localStorage, defi)
 {
     var userData = JSON.parse(localStorage.getItem("sessionUser"));
     var userId = userData['id'];
@@ -48,4 +48,14 @@ function userController($scope, user, localStorage)
     {
         user.updateProfil(id, avatar, identifiant, prenom, nom)
     };
+
+    $scope.getAllDefis = function()
+    {
+        defi.getChallengeList(userId)
+        .then(function(response)
+        {
+            $scope.allDefis = response.data;
+        })
+    };
+    $scope.getAllDefis();
 };

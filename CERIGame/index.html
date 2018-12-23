@@ -33,7 +33,7 @@
 
         <!-- Accueil login -->
         <div class="skipLineWithBSn" ng-controller="loginController">
-            <div class="disappear bandeau" id="bandeau" ng-style="{'animation-play-state' : 'running'}">
+            <div class="disappear bandeau" id="bandeau">
                 {{bandeau()}}
             </div>
             <button class="toRight" ng-click="logOut()">Déconnexion</button>
@@ -42,6 +42,17 @@
         <!-- Défi -->
         <div class="bandeau disappear skipLineWithBSn" ng-controller="socketController" ng-show="confirmDefi !== undefined">
             {{confirmDefi}}
+        </div>
+
+        <!-- Notif défi -->
+        <div class="bandeau skipLineWithBSn" ng-controller="socketController" ng-show="notifDefi !== undefined && notifDefi !== false">
+        <!-- <div class="bandeau skipLineWithBSn" ng-controller="socketController" ng-hide="hideConfirm == true"> -->
+            {{notifDefi}}
+
+            <div ng-controller="defiController">
+                <button ng-click="$parent.deleteDefi(); $parent.$parent.notifDefi = false" ng-controller="quizzController" type="button">Accepter le défi</button>
+                <button ng-click="deleteDefi(); $parent.notifDefi = false" type="button">Refuser le défi</button>
+            </div>
         </div>
 
         <!-- Profil user -->
@@ -85,6 +96,14 @@
                     </td>
                 </tr>
             </table>
+        </div>
+
+        <div ng-controller="userController">
+            <button ng-click="showDefis = !showDefis" type="button">Afficher défis (warning: prend de la place)</button>
+            Nombre de défis en attente: {{allDefis.length}}
+            <div ng-show="showDefis == true">
+                {{allDefis}}
+            </div>
         </div>
 
         <!-- Liste tous users -->
