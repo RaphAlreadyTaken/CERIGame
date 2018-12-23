@@ -25,13 +25,13 @@
         <script src="/socket.io/socket.io.js"></script>
     </head>
     <body ng-app="app">
-        <!-- Test websocket [A SUPPRIMER QUAND LOGIQUE OK] -->
+        <!-- Test websocket [NE PAS SUPPRIMER, utilisé pour notifs connexion] -->
         <div ng-controller="socketController">
             <button ng-click="test()" type="button">test websocket</button>
             {{serverMessage}}
         </div>
 
-        <!-- Bandeau accueil login -->
+        <!-- Accueil login -->
         <div class="skipLineWithBSn" ng-controller="loginController">
             <div class="disappear bandeau" id="bandeau" ng-style="{'animation-play-state' : 'running'}">
                 {{bandeau()}}
@@ -39,11 +39,12 @@
             <button class="toRight" ng-click="logOut()">Déconnexion</button>
         </div>
 
-        <!-- Bandeau défi lancé -->
+        <!-- Défi -->
         <div class="bandeau disappear skipLineWithBSn" ng-controller="socketController" ng-show="confirmDefi !== undefined">
             {{confirmDefi}}
         </div>
 
+        <!-- Profil user -->
         <div class="toLeft profil bLBlue" ng-controller="userController">
             <table class="alignTxt">
                 <tr>
@@ -86,6 +87,7 @@
             </table>
         </div>
 
+        <!-- Liste tous users -->
         <div ng-controller="userController">
             <div class="bLGreen toRight userList xAlign">
                 <p>
@@ -118,7 +120,10 @@
                     </tr>
                 </table>
             </div>
+        </div>
 
+        <!-- Historique des quizz -->
+        <div ng-controller="userController">
             <div ng-controller="histoController">
                 <button type="button" ng-click="userHisto(user.id); showHistoUser = !showHistoUser">Historique des quizz</button>
                 <label class="bLOrange" ng-controller = "histoController" ng-repeat="hist in histoUser | orderBy:'-date'" ng-show="showHistoUser">
@@ -134,6 +139,7 @@
             </div>
         </div>
 
+        <!-- Top 10 scores quizz -->
         <div ng-controller="histoController">
             <button type="button" ng-click="topTen(); showTopTen = !showTopTen">10 meilleurs</button>
             <label  class= "bFPink" ng-controller="userController" ng-repeat="topUser in top10" ng-show="showTopTen">
@@ -142,9 +148,11 @@
             </label>
         </div>
 
+        <!-- Quizz -->
         <div ng-controller="quizzController">
             <button ng-click="prepareQuizz = !prepareQuizz; recapQuizz = false; endQuizz = false;" type="button">Nouveau quizz</button>
 
+            <!-- Paramétrage du quizz -->
             <div class="quizzWindow" ng-show="prepareQuizz == true">
                 Choix du thème:
                 <select ng-init="selectedTheme = selectedTheme || themes[0].value" ng-model="selectedTheme" ng-options="option.value as option.name for option in themes"></select>
@@ -159,6 +167,7 @@
                 <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme, selectedDifficulty); chrono(); launchQuizz = true; prepareQuizz = false;" type="button">Lancer quizz</button>
             </div>
             
+            <!-- Exécution du quizz -->
             <div class="bFGreen quizzActWindow" ng-show="launchQuizz == true">
                 <div ng-repeat="quest in questions track by $index">
                     <label id="question{{$index}}" ng-style="$index != 0 && {'display':'none'}">
@@ -170,6 +179,8 @@
                     </label>
                 </div>
             </div>
+
+            <!-- Bilan du quizz -->
             <div ng-show="recapQuizz == true">
                 Bilan du quizz:
                 <br><br>
@@ -186,6 +197,8 @@
                 Score: {{bilan.score}}
                 <br>
                 <button type="button" ng-click="recapQuizz = false">Fermer fenêtre</button>
+
+                <!-- Défi -->
                 <div ng-controller="userController">
                     <button type="button" ng-click="getAllUsers(); displayChallengers = !displayChallengers">Défier utilisateur</button>
                     <label ng-repeat="user in userList">
@@ -195,6 +208,8 @@
                     </label>
                 </div>
             </div>
+
+            <!-- Chrono -->
             <div class="chronoBox" ng-show="launchQuizz == true">
                 {{chrn}}
             </div>

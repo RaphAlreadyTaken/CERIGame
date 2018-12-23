@@ -26,7 +26,7 @@ router.post('/', function(request, response)
             // Exécution des requêtes
             var dbo = mongoClient.db("db"); //Base à utiliser
             dbo.collection("defi").insert(request.body); //Insertion dans base
-            response.send("Défi inséré dans base de données mongo");
+            response.send("Défi envoyé");
         }
     });        
 });

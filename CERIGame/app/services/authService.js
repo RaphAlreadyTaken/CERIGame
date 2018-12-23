@@ -41,7 +41,8 @@ function authService($http, $window, session, socket)
 			if (response.data.statusResp === true)
 			{
 				localStorage.setItem('sessionUser', JSON.stringify(response.data.data));
-				socket.emit('notifConnexion', 'Utilisateur connecté: ' + response.data.statusResp + ', ' + response.data.statusMsg)
+				var content = {'id': response.data.data['id'], 'ident': response.data.data['ident']};
+				socket.emit('notifConnexion', content);
 			}
 
 			$window.location.reload();
@@ -57,12 +58,13 @@ function authService($http, $window, session, socket)
 	this.logOut = function()
 	{
 		var userInfo = JSON.parse(localStorage.getItem("sessionUser"));
-		var userId = userInfo["id"];
 
 		return $http
-		.post('http://localhost:3131/logout', {'id': userId})
+		.post('http://localhost:3131/logout', {'id': userInfo["id"]})
 		.then(function()
 		{
+			var content = {'id': userInfo["id"], 'ident': userInfo['ident']};
+			socket.emit('notifDeconnexion', content);
 			$window.location.reload();
 		});
 	};

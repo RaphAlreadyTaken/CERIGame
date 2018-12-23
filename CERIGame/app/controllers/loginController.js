@@ -28,8 +28,7 @@ function loginController($scope, auth)
         var userInfo = JSON.parse(localStorage.getItem("sessionUser"));
         var lastConnect = new Date(userInfo["date"]);
         var lastConnectReadable = lastConnect.getDate() + "/" + (lastConnect.getMonth() + 1) + "/" + lastConnect.getFullYear() + " à " + lastConnect.getHours() + "h" + lastConnect.getMinutes();
-        
-        //document.getElementById("bandeau").innerHTML = "Utilisateur connecté. Bienvenue.\nDernière connexion: " + lastConnectReadable + "\n";   //Alternative
-        return "Utilisateur connecté. Bienvenue.\nDernière connexion: " + lastConnectReadable + "\n";
+
+        return "Utilisateur connecté. Bienvenue " + userInfo['ident'] + ".\nDernière connexion: " + lastConnectReadable + "\n";
     };
 };

@@ -12,12 +12,20 @@ function socketController($scope, socket)
         });
     });
 
+    socket.on('notifDeconnexion', function(data)
+    {
+        $scope.$apply(function()
+        {
+            $scope.serverMessage = data;
+        });
+    });
+
     socket.on('confirmDefi', function(data)
     {
         $scope.$apply(function()
         {
+            console.log("%o", data);
             $scope.confirmDefi = data;
-            console.log(data);
         });
     });
 
