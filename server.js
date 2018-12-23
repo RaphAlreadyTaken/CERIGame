@@ -85,32 +85,24 @@ var tabId = new Object();
 //Ouverture du duplex serveur <-> client
 io.on('connection', function (socket)
 {
-	console.log("opening duplex");
-	console.log(socket.id);
-	console.log(Object.keys(io.sockets.connected));
-
 	//io.emit -> message envoyé à tous les clients
 	//socket.emit -> message envoyé au client à l'origine de l'événement
 	//socket.broadcast.emit -> message envoyé à tous les clients sauf le client à l'origine de l'événement
 
 	socket.on("notifConnexion", function(data)
 	{
-		tabId[data.id] = socket.id;
-		console.log("%o", tabId);
 		socket.broadcast.emit("notifConnexion", data.ident + " s'est connecté");
 	})
 
 	socket.on("notifDeconnexion", function(data)
 	{
-		delete tabId[data.id];
-		console.log("%o", tabId);
 		socket.broadcast.emit("notifDeconnexion", data.ident + " s'est déconnecté");
 	})
 
 	socket.on("confirmDefi", function(data)
 	{
-		//socket.emit("confirmDefi", data.message);
-		io.to(`${socket.id}`).emit("confirmDefi", "Vous avez été défié par " + data.auteur + "!");
+		socket.emit("confirmDefi", data.message);
+		socket.broadcast.emit("notifDefi_" + data.id, "Vous avez été défié par " + data.auteur + "!");
 	})
 
 	socket.on("message", function(message)

@@ -5,9 +5,9 @@
  */
 function defiController($scope, defi, socket)
 {
-    $scope.lancerDefi = function(id, quizzQuestions, quizzScore)
+    $scope.lancerDefi = function(id, ident, quizzQuestions, quizzScore)
     {
-        defi.initDefi(id, quizzQuestions, quizzScore)
+        defi.initDefi(id, ident, quizzQuestions, quizzScore)
         .then(function()
          {
             $scope.confirmDefi = socket.confirmDefi;

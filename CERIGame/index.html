@@ -203,7 +203,7 @@
                     <button type="button" ng-click="getAllUsers(); displayChallengers = !displayChallengers">Défier utilisateur</button>
                     <label ng-repeat="user in userList">
                         <div ng-if="displayChallengers == true">
-                            <a class="underlined linkInteract" ng-click="lancerDefi(user.id, $parent.questions, $parent.bilan.score); $parent.toggleUserList(); " ng-controller="defiController">{{user.identifiant}}</a>
+                            <a class="underlined linkInteract" ng-click="lancerDefi(user.id, user.identifiant, $parent.questions, $parent.bilan.score); $parent.toggleUserList(); " ng-controller="defiController">{{user.identifiant}}</a>
                         </div>
                     </label>
                 </div>

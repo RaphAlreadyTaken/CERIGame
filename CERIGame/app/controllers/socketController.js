@@ -2,7 +2,7 @@
  * Contrôleur de webSocket
  * @param {?} $scope - Variable de contexte
  */
-function socketController($scope, socket)
+function socketController($scope, socket, user)
 {
     socket.on('notifConnexion', function(data)
     {
@@ -24,7 +24,14 @@ function socketController($scope, socket)
     {
         $scope.$apply(function()
         {
-            console.log("%o", data);
+            $scope.confirmDefi = data;
+        });
+    });
+
+    socket.on('notifDefi_' + user.getCurUser().id, function(data)
+    {
+        $scope.$apply(function()
+        {
             $scope.confirmDefi = data;
         });
     });
