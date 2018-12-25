@@ -2,6 +2,7 @@
 *
 ********/
 const MongoClient = require('mongodb').MongoClient; //Définition middleware mongodb et instance MongoClient
+const ObjectId = require('mongodb').ObjectID;   //ID des objets stockés dans les collections
 const express = require('express'); //Import Express
 
 /******** Declaration des variables
@@ -12,8 +13,6 @@ var dsnMongoDB = "mongodb://127.0.0.1:27017/";	//Connexion base mongodb
 
 router.post('/defiList', function(request, response)
 {
-    console.log("%o", request.body);
-
     // Connexion MongoDB
     MongoClient.connect(dsnMongoDB, { useNewUrlParser: true }, function(err, mongoClient) 
     {
@@ -79,20 +78,44 @@ router.post('/deleteDefi', function(request, response)
     console.log("%o", request.body);
 
     // Connexion MongoDB
-    MongoClient.connect(dsnMongoDB, { useNewUrlParser: true }, function(err, mongoClient) 
+    MongoClient.connect(dsnMongoDB, { useNewUrlParser: true }, function(err, mongoClient)
     {
-        if(err) 
+        if(err)
         {
             return console.log('Erreur connexion base de données mongo'); 
         }
 
-        if(mongoClient) 
+        if(mongoClient)
         {
             // Exécution des requêtes
             var dbo = mongoClient.db("db"); //Base à utiliser
             dbo.collection("defi").findOneAndDelete({'_id': ObjectId(request.body.idDefi)}); //Insertion dans base
 
-            response.send("Challenge deleted (id = " + request.body.idDefi + ")");
+            MongoClient.connect(dsnMongoDB, { useNewUrlParser: true }, function(err, mongoClient)
+            {
+                if(err)
+                {
+                    return console.log('Erreur connexion base de données mongo');
+                }
+
+                if(mongoClient)
+                {
+                    // Exécution des requêtes
+                    dbo.collection("defi").findOneAndDelete({'_id': ObjectId(request.body.idDefi)}); //Insertion dans base
+
+                    dbo.collection("defi").find({'id_user_defie': request.body.id}).toArray(function(err, arrayResult) //Récupération de tous les quizz lancés à l'user (selon son id)
+                    {
+                        if (err)
+                        {
+                            return console.log('Erreur conversion données mongo');
+                        }
+                        else
+                        {
+                            response.send(arrayResult);
+                        }
+                    });
+                }
+            });
         }
     });
 });

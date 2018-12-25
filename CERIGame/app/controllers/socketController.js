@@ -2,7 +2,7 @@
  * Contrôleur de webSocket
  * @param {?} $scope - Variable de contexte
  */
-function socketController($scope, socket, user, defi)
+function socketController($scope, $rootScope, socket, user, defi)
 {
     socket.on('notifConnexion', function(data)
     {
@@ -37,11 +37,12 @@ function socketController($scope, socket, user, defi)
         });
     });
 
-    socket.on('confirmDelete' + user.getCurUser().id, function(data)
+    socket.on('confirmDelete', function(data)
     {
-        $scope.$apply(function()
+        $rootScope.$apply(function()
         {
-            $scope.notifDefi = data;
+            console.log("rootscope apply");
+            $rootScope.allDefis = data;
         });
     });
 

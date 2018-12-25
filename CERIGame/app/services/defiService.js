@@ -27,7 +27,7 @@ function defiService($http, user, socket)
     this.deleteDefi = function(idDefi)
     {
         return $http
-        .post('http://localhost:3131/defi/deleteDefi', {'idDefi': idDefi})
+        .post('http://localhost:3131/defi/deleteDefi', {'idDefi': idDefi, 'id': user.getCurUser().id})
         .then(function(response)
         {
             console.log(response.data);

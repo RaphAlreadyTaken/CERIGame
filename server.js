@@ -106,7 +106,7 @@ io.on('connection', function (socket)
 
 	socket.on("confirmDelete", function(data)
 	{
-		socket.emit("confirmDelete", data.message);
+		socket.emit("confirmDelete", data);
 	})
 
 	socket.on("message", function(message)

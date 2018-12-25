@@ -17,10 +17,6 @@ function defiController($scope, defi, socket)
 
     $scope.supprDefi = function(idDefi)
     {
-        defi.deleteDefi(idDefi)
-        .then(function()
-        {
-            console.log("Challenge removed");
-        });
+        defi.deleteDefi(idDefi);
     };
 };

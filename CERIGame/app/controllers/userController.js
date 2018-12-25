@@ -4,7 +4,7 @@
  * @param {*} user - Service utilisateur
  * @param {*} localStorage - Service stockage local
  */
-function userController($scope, user, localStorage, defi)
+function userController($scope, $rootScope, user, localStorage, defi)
 {
     var userData = JSON.parse(localStorage.getItem("sessionUser"));
     var userId = userData['id'];
@@ -51,11 +51,23 @@ function userController($scope, user, localStorage, defi)
 
     $scope.getAllDefis = function()
     {
+        console.log("defi list call");
+
         defi.getChallengeList(userId)
         .then(function(response)
         {
-            $scope.allDefis = response.data;
+            $rootScope.allDefis = response.data;
         })
     };
     $scope.getAllDefis();
+
+    $scope.$watch($scope.allDefis, function()
+    {
+        console.log("challenge list has changed");
+    }, true);
+
+    $scope.hideInteract = function()
+    {
+        $scope.showInteract = false;
+    };
 };

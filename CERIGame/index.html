@@ -46,12 +46,27 @@
 
         <!-- Notif défi -->
         <div class="bandeau skipLineWithBSn" ng-controller="socketController" ng-show="notifDefi !== undefined && notifDefi !== false">
-        <!-- <div class="bandeau skipLineWithBSn" ng-controller="socketController" ng-hide="hideConfirm == true"> -->
             {{notifDefi}}
-
             <div ng-controller="defiController">
-                <button ng-click="$parent.deleteDefi(); $parent.$parent.notifDefi = false" ng-controller="quizzController" type="button">Accepter le défi</button>
-                <button ng-click="deleteDefi(); $parent.notifDefi = false" type="button">Refuser le défi</button>
+                <button ng-click="$parent.supprDefi(); $parent.$parent.notifDefi = false" ng-controller="quizzController" type="button">Accepter le défi</button>
+                <button ng-click="supprDefi(); $parent.notifDefi = false" type="button">Refuser le défi</button>
+            </div>
+        </div>
+
+        <div ng-controller="userController">
+            Nombre de défis en attente: {{allDefis.length}}
+            <br>
+            <button ng-click="showDefis = !showDefis" type="button">Afficher défis</button>
+            <div class="linkInteract" ng-repeat="defi in allDefis" ng-show="showDefis == true">
+                <div ng-click="showInteract = !showInteract" style="background-color: lightslategray;">
+                    Défi lancé par {{defi.ident_user_defiant}}. Score à battre: {{defi.score_user_defiant}}.
+                    <div ng-controller="defiController" ng-show="showInteract == true">
+                            <!-- $parent.supprDefi(defi._id);  -->
+                        <button ng-click="$parent.$parent.$parent.$parent.question = defi.quizz; $parent.$parent.$parent.$parent.launchQuizz = true; $parent.$parent.$parent.$parent.chrono(); $parent.$parent.$parent.showDefis = false" ng-controller="quizzController" type="button">Accepter le défi</button>
+                        <button ng-click="supprDefi(defi._id); hideInteract()" type="button">Refuser le défi</button>
+                    </div>
+                </div>
+                <br>
             </div>
         </div>
 
@@ -96,14 +111,6 @@
                     </td>
                 </tr>
             </table>
-        </div>
-
-        <div ng-controller="userController">
-            <button ng-click="showDefis = !showDefis" type="button">Afficher défis (warning: prend de la place)</button>
-            Nombre de défis en attente: {{allDefis.length}}
-            <div ng-show="showDefis == true">
-                {{allDefis}}
-            </div>
         </div>
 
         <!-- Liste tous users -->
