@@ -3,7 +3,7 @@
  * @param {?} $scope - Variable de contexte
  * @param {*} quizz - Service quizz
  */
-function quizzController($scope, $interval, quizz, histo, localStorage)
+function quizzController($scope, $rootScope, $interval, quizz, histo, localStorage)
 {
     $scope.questionCount = [{
         name: '3',
@@ -103,7 +103,7 @@ function quizzController($scope, $interval, quizz, histo, localStorage)
             $scope.resultatQuizz();
             $scope.recapQuizz = true;
             $scope.launchQuizz = false;
-            document.getElementById("question" + 0).style.display = "initial";
+            document.getElementById("question0").style.display = "initial";
             $scope.storeResult($scope.bilan);
             $scope.stopChrono = true;
             $scope.answerSet = [];
@@ -167,4 +167,14 @@ function quizzController($scope, $interval, quizz, histo, localStorage)
             $interval.cancel(mnome);
         })
     }
+
+    $scope.$on('quizzLaunch', function(event, quizz)
+    {
+        $scope.questions = quizz;
+        console.log("questions: %o", $scope.questions);
+        $scope.endQuizz = false;
+        $scope.recapQuizz = false;
+        $scope.launchQuizz = true;
+        $scope.chrono();
+    });
 };

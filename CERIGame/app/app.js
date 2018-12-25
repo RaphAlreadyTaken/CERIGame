@@ -17,7 +17,7 @@ app.service('quizz', quizzService);
 app.service('session', sessionService);
 app.service('user', userService);
 
-//Directives
+//Directives [USELESS FOR NOW]
 app.directive('ngEnter', function ()
 {
     console.log("Enter detected");

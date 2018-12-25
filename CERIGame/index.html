@@ -4,26 +4,8 @@
     <base href="/" />
     <head>
         <link rel='stylesheet' type='text/CSS' href='/styleIndex.css'>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-route.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
-        <script src="/services/authService.js"></script>
-        <script src="/services/defiService.js"></script>
-        <script src="/services/histoService.js"></script>
-        <script src="/services/localStorageService.js"></script>
-        <script src="/services/quizzService.js"></script>
-        <script src="/services/sessionService.js"></script>
-        <script src="/services/socketService.js"></script>
-        <script src="/services/userService.js"></script>
-        <script src="/controllers/defiController.js"></script>
-        <script src="/controllers/histoController.js"></script>
-        <script src="/controllers/loginController.js"></script>
-        <script src="/controllers/quizzController.js"></script>
-        <script src="/controllers/socketController.js"></script>
-        <script src="/controllers/userController.js"></script>
-        <script src="/app.js"></script>
-        <script src="/socket.io/socket.io.js"></script>
     </head>
+
     <body ng-app="app">
         <!-- Test websocket [NE PAS SUPPRIMER, utilisé pour notifs connexion] -->
         <div ng-controller="socketController">
@@ -48,11 +30,12 @@
         <div class="bandeau skipLineWithBSn" ng-controller="socketController" ng-show="notifDefi !== undefined && notifDefi !== false">
             {{notifDefi}}
             <div ng-controller="defiController">
-                <button ng-click="$parent.supprDefi(); $parent.$parent.notifDefi = false" ng-controller="quizzController" type="button">Accepter le défi</button>
+                <button ng-click="$parent.supprDefi(); $parent.$parent.notifDefi = false" type="button">Accepter le défi</button>
                 <button ng-click="supprDefi(); $parent.notifDefi = false" type="button">Refuser le défi</button>
             </div>
         </div>
 
+        <!-- Liste défis -->
         <div ng-controller="userController">
             Nombre de défis en attente: {{allDefis.length}}
             <br>
@@ -61,8 +44,7 @@
                 <div ng-click="showInteract = !showInteract" style="background-color: lightslategray;">
                     Défi lancé par {{defi.ident_user_defiant}}. Score à battre: {{defi.score_user_defiant}}.
                     <div ng-controller="defiController" ng-show="showInteract == true">
-                            <!-- $parent.supprDefi(defi._id);  -->
-                        <button ng-click="$parent.$parent.$parent.$parent.question = defi.quizz; $parent.$parent.$parent.$parent.launchQuizz = true; $parent.$parent.$parent.$parent.chrono(); $parent.$parent.$parent.showDefis = false" ng-controller="quizzController" type="button">Accepter le défi</button>
+                        <button ng-click="execDefi(defi.quizz); $parent.$parent.showDefis = false" type="button">Accepter le défi</button>
                         <button ng-click="supprDefi(defi._id); hideInteract()" type="button">Refuser le défi</button>
                     </div>
                 </div>
@@ -226,12 +208,12 @@
 
                 <!-- Défi -->
                 <div ng-controller="userController">
-                    <button type="button" ng-click="getAllUsers(); displayChallengers = !displayChallengers">Défier utilisateur</button>
-                    <label ng-repeat="user in userList">
+                    <button ng-click="getAllUsers(); displayChallengers = !displayChallengers" ng-hide="challengeSent == true" type="button">Défier utilisateur</button>
+                    <div ng-repeat="user in userList">
                         <div ng-if="displayChallengers == true">
-                            <a class="underlined linkInteract" ng-click="lancerDefi(user.id, user.identifiant, $parent.questions, $parent.bilan.score); $parent.toggleUserList(); " ng-controller="defiController">{{user.identifiant}}</a>
+                            <a class="underlined linkInteract" ng-click="lancerDefi(user.id, user.identifiant, $parent.questions, $parent.bilan.score); $parent.toggleDefiOpt()" ng-controller="defiController">{{user.identifiant}}</a>
                         </div>
-                    </label>
+                    </div>
                 </div>
             </div>
 
@@ -240,5 +222,27 @@
                 {{chrn}}
             </div>
         </div>
+
+        <!-- Scripts à charger (chargement plus rapide si positionnement en bas de page) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-route.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+        <script src="/services/authService.js"></script>
+        <script src="/services/defiService.js"></script>
+        <script src="/services/histoService.js"></script>
+        <script src="/services/localStorageService.js"></script>
+        <script src="/services/quizzService.js"></script>
+        <script src="/services/sessionService.js"></script>
+        <script src="/services/socketService.js"></script>
+        <script src="/services/userService.js"></script>
+        <script src="/controllers/defiController.js"></script>
+        <script src="/controllers/histoController.js"></script>
+        <script src="/controllers/loginController.js"></script>
+        <script src="/controllers/quizzController.js"></script>
+        <script src="/controllers/socketController.js"></script>
+        <script src="/controllers/userController.js"></script>
+        <script src="/app.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+
     </body>
 </html>

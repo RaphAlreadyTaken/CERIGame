@@ -34,9 +34,10 @@ function userController($scope, $rootScope, user, localStorage, defi)
         $scope.showProfil = !$scope.showProfil;
     }
 
-    $scope.toggleUserList = function()
+    $scope.toggleDefiOpt = function()
     {
         $scope.displayChallengers = !$scope.displayChallengers;
+        $scope.challengeSent = true;
     }
 
     this.getId = function()
@@ -51,8 +52,6 @@ function userController($scope, $rootScope, user, localStorage, defi)
 
     $scope.getAllDefis = function()
     {
-        console.log("defi list call");
-
         defi.getChallengeList(userId)
         .then(function(response)
         {
@@ -60,11 +59,6 @@ function userController($scope, $rootScope, user, localStorage, defi)
         })
     };
     $scope.getAllDefis();
-
-    $scope.$watch($scope.allDefis, function()
-    {
-        console.log("challenge list has changed");
-    }, true);
 
     $scope.hideInteract = function()
     {
