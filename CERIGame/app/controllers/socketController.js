@@ -33,7 +33,7 @@ function socketController($scope, $rootScope, socket, user, defi)
         $scope.$apply(function()
         {
             $scope.notifDefi = data.message;
-            defi.idDefi = data.idDefi;
+            $scope.idDefi = data.idDefi;
         });
     });
 

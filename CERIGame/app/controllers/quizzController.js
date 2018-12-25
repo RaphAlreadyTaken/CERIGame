@@ -111,12 +111,12 @@ function quizzController($scope, $rootScope, $interval, quizz, histo, localStora
     }
     
     $scope.answerSet = [];
-
+    
     $scope.storeAnswer = function(prop)
     {
         $scope.answerSet.push(prop);
     }
-
+    
     $scope.resultatQuizz = function()
     {
         nbOkRep = 0;
@@ -149,6 +149,12 @@ function quizzController($scope, $rootScope, $interval, quizz, histo, localStora
 
         score = Math.floor((nbOkRep * 1398.2) / sCpt);
         $scope.bilan['score'] = score;
+
+        if ($scope.contextDefi === true)
+        {
+            var content = {'id_defiant': $scope.id_defiant, 'ident_defiant': $scope.ident_defiant, 'score_defiant': $scope.score_defiant, 'score_defie': $scope.bilan['score']};
+            $rootScope.$broadcast('defiEval', content);
+        }
     }
 
     $scope.storeResult = function(bilan)
@@ -168,10 +174,13 @@ function quizzController($scope, $rootScope, $interval, quizz, histo, localStora
         })
     }
 
-    $scope.$on('quizzLaunch', function(event, quizz)
+    $scope.$on('quizzLaunch', function(event, defi)
     {
-        $scope.questions = quizz;
-        console.log("questions: %o", $scope.questions);
+        $scope.contextDefi = true;
+        $scope.questions = defi.quizz;
+        $scope.id_defiant = defi.id_user_defiant;
+        $scope.ident_defiant = defi.ident_user_defiant;
+        $scope.score_defiant = defi.score_user_defiant;
         $scope.endQuizz = false;
         $scope.recapQuizz = false;
         $scope.launchQuizz = true;

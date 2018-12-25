@@ -30,8 +30,9 @@
         <div class="bandeau skipLineWithBSn" ng-controller="socketController" ng-show="notifDefi !== undefined && notifDefi !== false">
             {{notifDefi}}
             <div ng-controller="defiController">
-                <button ng-click="$parent.supprDefi(); $parent.$parent.notifDefi = false" type="button">Accepter le défi</button>
+                <button ng-click="execDefiFromNotif($parent.idDefi); supprDefi(); $parent.notifDefi = false" type="button">Accepter le défi</button>
                 <button ng-click="supprDefi(); $parent.notifDefi = false" type="button">Refuser le défi</button>
+                {{curDefi}}
             </div>
         </div>
 
@@ -44,12 +45,22 @@
                 <div ng-click="showInteract = !showInteract" style="background-color: lightslategray;">
                     Défi lancé par {{defi.ident_user_defiant}}. Score à battre: {{defi.score_user_defiant}}.
                     <div ng-controller="defiController" ng-show="showInteract == true">
-                        <button ng-click="execDefi(defi.quizz); $parent.$parent.showDefis = false" type="button">Accepter le défi</button>
+                        <button ng-click="execDefi(defi); $parent.$parent.showDefis = false" type="button">Accepter le défi</button>
                         <button ng-click="supprDefi(defi._id); hideInteract()" type="button">Refuser le défi</button>
                     </div>
                 </div>
                 <br>
             </div>
+        </div>
+
+        <!-- Résultat défi -->
+        <div ng-show="defiResult !== undefined && hideResult !== true" ng-controller="defiController">
+            {{defiResult}}
+            <button ng-click="hideResult = true" type="button">OK</button>
+        </div>
+
+        <div ng-controller="defiController">
+            {{nbMedailles}}
         </div>
 
         <!-- Profil user -->
@@ -208,6 +219,7 @@
 
                 <!-- Défi -->
                 <div ng-controller="userController">
+                    <!-- A REVOIR: bouton défier ne réapparaît pas -->
                     <button ng-click="getAllUsers(); displayChallengers = !displayChallengers" ng-hide="challengeSent == true" type="button">Défier utilisateur</button>
                     <div ng-repeat="user in userList">
                         <div ng-if="displayChallengers == true">

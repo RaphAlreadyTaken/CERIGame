@@ -13,6 +13,17 @@ function defiService($http, user, socket)
         });
     };
 
+    this.getDefi = function(idDefi)
+    {
+        return $http
+        .post('http://localhost:3131/defi/getDefi', {'idDefi': idDefi})
+        .then(function(response)
+        {
+            console.log(response);
+            return response;
+        });
+    }
+
     this.initDefi = function(id, ident, quizzQuestions, quizzScore)
     {
         return $http
@@ -30,8 +41,29 @@ function defiService($http, user, socket)
         .post('http://localhost:3131/defi/deleteDefi', {'idDefi': idDefi, 'id': user.getCurUser().id})
         .then(function(response)
         {
-            console.log(response.data);
             socket.emit('confirmDelete', response.data);
         });
     };
+
+    this.saveResult = function(defiant, gagnant)
+    {
+        console.log(gagnant);
+
+        return $http
+        .post('http://localhost:3131/defi/saveResult', {'id_users_defiant': defiant, 'id_users_defie': user.getCurUser().id, 'id_users_gagnant': gagnant})
+        .then(function(response)
+        {
+            return response;
+        })
+    }
+
+    this.getMedailles = function(id)
+    {
+        return $http
+        .post('http://localhost:3131/defi/getMedailles', {'id': id})
+        .then(function(response)
+        {
+            return response;
+        })
+    }
 }
