@@ -40,6 +40,7 @@ router.post('/', function(request, response)
                         arrayReturn.push({name: arrayResult[i]['thème'], value: arrayResult[i]['thème']});
                     }
                     
+                    mongoClient.close();
                     response.send(arrayReturn);
                 }
             });

@@ -34,6 +34,7 @@ router.post('/defiList', function(request, response)
                 }
                 else
                 {
+                    mongoClient.close();
                     response.send(arrayResult);
                 }
             });
@@ -66,6 +67,7 @@ router.post('/initDefi', function(request, response)
                 {
                     var idDefi;
                     idDefi = request.body._id;
+                    mongoClient.close();
                     response.send({'message': "Défi envoyé", 'idDefi': idDefi});
                 }
             });
@@ -111,6 +113,7 @@ router.post('/deleteDefi', function(request, response)
                         }
                         else
                         {
+                            mongoClient.close();
                             response.send(arrayResult);
                         }
                     });
