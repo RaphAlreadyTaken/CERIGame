@@ -29,7 +29,7 @@ function userService($http, localStorage)
         .post('http://localhost:3131/getUser', {'id': id})
         .then(function(response)
         {
-            return response;
+            return response.data;
         });
     };
 
@@ -56,7 +56,7 @@ function userService($http, localStorage)
         });
     };
 
-    this.nbMedailles = 0;
+    this.medailles = [];
 
     this.getMedailles = function(id)
     {
@@ -66,7 +66,7 @@ function userService($http, localStorage)
         .post('http://localhost:3131/defi/getMedailles', {'id': id})
         .then(function(response)
         {
-            _this.nbMedailles = response.data;
+            angular.copy(response.data, _this.medailles);
         })
     };
 

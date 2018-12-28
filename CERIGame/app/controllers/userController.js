@@ -21,7 +21,8 @@ function userController($scope, user)
         user.getUser(id)
         .then(function(response)
         {
-            $scope.user = response.data;
+            $scope.user = response;
+            return response;
         });
     };
     $scope.getUserProfile($scope.getId());

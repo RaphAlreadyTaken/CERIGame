@@ -3,7 +3,7 @@
  * @param {?} $scope - Variable de contexte
  * @param {*} histo - Service historique
  */
-function defiController($scope, defi, socket)
+function defiController($scope, $rootScope, defi, socket)
 {
     $scope.defiS = defi;    //Référence à defiService
 
@@ -27,6 +27,16 @@ function defiController($scope, defi, socket)
          });
     };
 
+    $scope.execDefi = function(idDefi)
+    {
+        defi.getDefi(idDefi)
+        .then(function(defi)
+        {
+            $rootScope.$broadcast('quizzLaunch', defi);
+            $scope.defiS.deleteDefi(idDefi);
+        })
+    }
+
     $scope.recupDefi = function(idDefi)
     {
         defi.getDefi(idDefi)
@@ -41,5 +51,8 @@ function defiController($scope, defi, socket)
         defi.deleteDefi(idDefi);
     };
 
-    //$scope.defiResult = $scope.defiS.result;
+    $scope.saveRes = function(defiant)
+    {
+        defi.saveResult(defiant, defiant);
+    }
 };

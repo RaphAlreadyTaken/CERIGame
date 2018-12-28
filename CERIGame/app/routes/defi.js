@@ -179,9 +179,7 @@ router.post('/saveResult', function (request, response, next)
             console.log('Connection established with pg db server');
         }
         
-        //sql = "insert into fredouil.hist_defi (id_users_defiant, id_users_defie, id_users_gagnant, date) values (" + request.body.id_users_defiant + ", " + request.body.id_users_defie + ", " + request.body.id_users_gagnant + ", now()::timestamp(0))";
-
-        console.log(sql);
+        sql = "insert into fredouil.hist_defi (id_users_defiant, id_users_defie, id_users_gagnant, date) values (" + request.body.id_users_defiant + ", " + request.body.id_users_defie + ", " + request.body.id_users_gagnant + ", now()::timestamp(0))";
         
         client.query(sql, function(err, result)
         {
@@ -223,7 +221,7 @@ router.post('/getMedailles', function(request, response)
                 console.log('Connection established with pg db server');
             }
             
-            sql = "select count(id_users_gagnant) from fredouil.hist_defi where id_users_gagnant = " + request.body.id + " group by id_users_gagnant;";
+            sql = "select fredouil.users.identifiant as opponent from fredouil.hist_defi inner join fredouil.users on (case when id_users_defie != id_users_gagnant then id_users_defie else id_users_defiant end = fredouil.users.id) where id_users_gagnant = " + request.body.id + ";";
             
             client.query(sql, function(err, result)
             {
@@ -233,7 +231,7 @@ router.post('/getMedailles', function(request, response)
                 }
                 else
                 {
-                    response.send(result.rows[0].count);
+                    response.send(result.rows);
                 }
             });
     

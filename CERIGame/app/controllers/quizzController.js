@@ -3,7 +3,7 @@
  * @param {?} $scope - Variable de contexte
  * @param {*} quizz - Service quizz
  */
-function quizzController($scope, $interval, defi, histo, quizz, user)
+function quizzController($scope, $rootScope, $interval, defi, histo, quizz, user)
 {
     $scope.quizzS = quizz;    //Référence à quizzService
 
@@ -158,13 +158,14 @@ function quizzController($scope, $interval, defi, histo, quizz, user)
             
             if (content.score_defie > content.score_defiant)
             {
-                defi.result = "Defi remporté. Vous avez remporté la médaille!";
-                defi.saveResult(content.id_defiant, user.getCurUser().id);
+                defi.result = "Defi gagné. Vous avez remporté la médaille!";
+                defi.saveResult($scope.id_defiant, user.getCurUser().id);
+                user.getMedailles(user.getCurUser().id);
             }
             else
             {
                 defi.result = "Defi perdu. " + $scope.ident_defiant + " a remporté la médaille!";
-                defi.saveResult(content.id_defiant, content.id_defiant);
+                defi.saveResult($scope.id_defiant, $scope.id_defiant);
             }
         }
     }
@@ -193,19 +194,8 @@ function quizzController($scope, $interval, defi, histo, quizz, user)
         $scope.challengeSent = !$scope.challengeSent;
     }
 
-    $scope.execDefiQuizz = function(idDefi)
+    $rootScope.$on('quizzLaunch', function(event, defi)
     {
-
-        defi.getDefi(idDefi)
-        .then(function(defi)
-        {
-            $scope.quizzLaunch(defi);
-        })
-    }
-
-    $scope.quizzLaunch = function(defi)
-    {
-        console.log("%o", defi);
         $scope.contextDefi = true;
         $scope.questions = defi.quizz;
         $scope.id_defiant = defi.id_user_defiant;
@@ -215,5 +205,5 @@ function quizzController($scope, $interval, defi, histo, quizz, user)
         $scope.recapQuizz = false;
         $scope.launchQuizz = true;
         $scope.chrono();
-    };
+    })
 };
