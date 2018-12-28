@@ -5,21 +5,15 @@
  */
 function histoController($scope, histo)
 {
+    $scope.histoS = histo;    //Référence à histoService
+
     $scope.topTen = function()
     {
-        histo.getTop10()
-        .then(function(response)
-        {
-            $scope.top10 = response.data.rows;
-        });
+        histo.getTop10();
     };
 
     $scope.userHisto = function(id)
     {
-        histo.getHisto(id)
-        .then(function(response)
-        {
-            $scope.histoUser = response.data.rows;
-        });
+        histo.getHisto(id);
     };
 };

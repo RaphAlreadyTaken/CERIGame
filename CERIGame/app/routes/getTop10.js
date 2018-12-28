@@ -49,7 +49,7 @@ router.get('/', function (request, response, next)
             }
             else
             {
-                response.send(result);
+                response.send(result.rows);
             }
         });
         client.release();

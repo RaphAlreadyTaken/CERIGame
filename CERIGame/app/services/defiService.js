@@ -19,8 +19,7 @@ function defiService($http, user, socket)
         .post('http://localhost:3131/defi/getDefi', {'idDefi': idDefi})
         .then(function(response)
         {
-            console.log(response);
-            return response;
+            return response.data;
         });
     }
 
@@ -41,9 +40,11 @@ function defiService($http, user, socket)
         .post('http://localhost:3131/defi/deleteDefi', {'idDefi': idDefi, 'id': user.getCurUser().id})
         .then(function(response)
         {
-            socket.emit('confirmDelete', response.data);
+            user.allDefis = response.data;
         });
     };
+
+    this.result = "";
 
     this.saveResult = function(defiant, gagnant)
     {
@@ -54,16 +55,6 @@ function defiService($http, user, socket)
         .then(function(response)
         {
             return response;
-        })
-    }
-
-    this.getMedailles = function(id)
-    {
-        return $http
-        .post('http://localhost:3131/defi/getMedailles', {'id': id})
-        .then(function(response)
-        {
-            return response;
-        })
-    }
+        });
+    };
 }

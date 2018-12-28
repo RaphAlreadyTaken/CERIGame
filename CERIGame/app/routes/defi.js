@@ -124,7 +124,6 @@ router.post('/deleteDefi', function(request, response)
         {
             // Exécution des requêtes
             var dbo = mongoClient.db("db"); //Base à utiliser
-            dbo.collection("defi").findOneAndDelete({'_id': ObjectId(request.body.idDefi)}); //Insertion dans base
 
             MongoClient.connect(dsnMongoDB, { useNewUrlParser: true }, function(err, mongoClient)
             {
@@ -136,7 +135,7 @@ router.post('/deleteDefi', function(request, response)
                 if(mongoClient)
                 {
                     // Exécution des requêtes
-                    dbo.collection("defi").findOneAndDelete({'_id': ObjectId(request.body.idDefi)}); //Insertion dans base
+                    dbo.collection("defi").findOneAndDelete({'_id': ObjectId(request.body.idDefi)}); //Suppression dans base
 
                     dbo.collection("defi").find({'id_user_defie': request.body.id}).toArray(function(err, arrayResult) //Récupération de tous les quizz lancés à l'user (selon son id)
                     {
@@ -180,7 +179,7 @@ router.post('/saveResult', function (request, response, next)
             console.log('Connection established with pg db server');
         }
         
-        sql = "insert into fredouil.hist_defi (id_users_defiant, id_users_defie, id_users_gagnant, date) values (" + request.body.id_users_defiant + ", " + request.body.id_users_defie + ", " + request.body.id_users_gagnant + ", now()::timestamp(0))";
+        //sql = "insert into fredouil.hist_defi (id_users_defiant, id_users_defie, id_users_gagnant, date) values (" + request.body.id_users_defiant + ", " + request.body.id_users_defie + ", " + request.body.id_users_gagnant + ", now()::timestamp(0))";
 
         console.log(sql);
         
@@ -225,8 +224,6 @@ router.post('/getMedailles', function(request, response)
             }
             
             sql = "select count(id_users_gagnant) from fredouil.hist_defi where id_users_gagnant = " + request.body.id + " group by id_users_gagnant;";
-    
-            console.log(sql);
             
             client.query(sql, function(err, result)
             {

@@ -3,8 +3,10 @@
  * @param {?} $scope - Variable de contexte
  * @param {*} quizz - Service quizz
  */
-function quizzController($scope, $rootScope, $interval, quizz, histo, localStorage)
+function quizzController($scope, $interval, defi, histo, quizz, user)
 {
+    $scope.quizzS = quizz;    //Référence à quizzService
+
     $scope.questionCount = [{
         name: '3',
         value: '3'
@@ -152,17 +154,26 @@ function quizzController($scope, $rootScope, $interval, quizz, histo, localStora
 
         if ($scope.contextDefi === true)
         {
-            var content = {'id_defiant': $scope.id_defiant, 'ident_defiant': $scope.ident_defiant, 'score_defiant': $scope.score_defiant, 'score_defie': $scope.bilan['score']};
-            $rootScope.$broadcast('defiEval', content);
+            var content = {'score_defiant': $scope.score_defiant, 'score_defie': $scope.bilan['score']};
+            
+            if (content.score_defie > content.score_defiant)
+            {
+                defi.result = "Defi remporté. Vous avez remporté la médaille!";
+                defi.saveResult(content.id_defiant, user.getCurUser().id);
+            }
+            else
+            {
+                defi.result = "Defi perdu. " + $scope.ident_defiant + " a remporté la médaille!";
+                defi.saveResult(content.id_defiant, content.id_defiant);
+            }
         }
     }
 
-    $scope.storeResult = function(bilan)
+    $scope.storeResult = function()
     {
         var infoToSave = {};
-        var userTemp = JSON.parse(localStorage.getItem('sessionUser'));
 
-        infoToSave['id_users'] = userTemp['id'];
+        infoToSave['id_users'] = user.getCurUser().id;
         infoToSave['nbreponse'] = nbOkRep;
         infoToSave['temps'] = sCpt;
         infoToSave['score'] = $scope.bilan['score'];
@@ -170,12 +181,31 @@ function quizzController($scope, $rootScope, $interval, quizz, histo, localStora
         histo.saveResult(infoToSave)
         .then(function()
         {
+            histo.getHisto(infoToSave['id_users']);
+            histo.getTop10();
             $interval.cancel(mnome);
         })
     }
-
-    $scope.$on('quizzLaunch', function(event, defi)
+    
+    $scope.toggleDefiOpt = function()
     {
+        $scope.displayChallengers = !$scope.displayChallengers;
+        $scope.challengeSent = !$scope.challengeSent;
+    }
+
+    $scope.execDefiQuizz = function(idDefi)
+    {
+
+        defi.getDefi(idDefi)
+        .then(function(defi)
+        {
+            $scope.quizzLaunch(defi);
+        })
+    }
+
+    $scope.quizzLaunch = function(defi)
+    {
+        console.log("%o", defi);
         $scope.contextDefi = true;
         $scope.questions = defi.quizz;
         $scope.id_defiant = defi.id_user_defiant;
@@ -185,5 +215,5 @@ function quizzController($scope, $rootScope, $interval, quizz, histo, localStora
         $scope.recapQuizz = false;
         $scope.launchQuizz = true;
         $scope.chrono();
-    });
+    };
 };

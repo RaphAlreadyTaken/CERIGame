@@ -4,10 +4,17 @@
  * @param {*} user - Service utilisateur
  * @param {*} localStorage - Service stockage local
  */
-function userController($scope, $rootScope, user, localStorage, defi)
+function userController($scope, user)
 {
-    var userData = JSON.parse(localStorage.getItem("sessionUser"));
-    var userId = userData['id'];
+    $scope.userS = user;    //Référence à user (userService.js)
+
+    $scope.getId = function()
+    {
+        return user.getCurUser().id;
+    }
+
+    user.getChallengeList($scope.getId());
+    user.getMedailles($scope.getId());
 
     $scope.getUserProfile = function(id)
     {
@@ -17,48 +24,22 @@ function userController($scope, $rootScope, user, localStorage, defi)
             $scope.user = response.data;
         });
     };
-    $scope.getUserProfile(userId);
+    $scope.getUserProfile($scope.getId());
 
     $scope.getAllUsers = function()
     {
-        user.getAllUsers()
-        .then(function(response)
-        {
-            $scope.userList = response.data;
-        });
+        user.getUserList();
     };
-    $scope.getAllUsers();
 
     $scope.toggleProfilDisplay = function()
     {
         $scope.showProfil = !$scope.showProfil;
     }
 
-    $scope.toggleDefiOpt = function()
-    {
-        $scope.displayChallengers = !$scope.displayChallengers;
-        $scope.challengeSent = true;
-    }
-
-    this.getId = function()
-    {
-        return userId;
-    }
-
     $scope.modifProfil = function(id, avatar, identifiant, prenom, nom)
     {
         user.updateProfil(id, avatar, identifiant, prenom, nom)
     };
-
-    $scope.getAllDefis = function()
-    {
-        defi.getChallengeList(userId)
-        .then(function(response)
-        {
-            $rootScope.allDefis = response.data;
-        })
-    };
-    $scope.getAllDefis();
 
     $scope.hideInteract = function()
     {

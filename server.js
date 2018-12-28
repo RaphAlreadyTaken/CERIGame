@@ -104,11 +104,6 @@ io.on('connection', function (socket)
 		socket.broadcast.emit("notifDefi_" + data.id, {'message': "Vous avez été défié par " + data.auteur + " !", 'idDefi': data.idDefi});
 	})
 
-	socket.on("confirmDelete", function(data)
-	{
-		socket.emit("confirmDelete", data);
-	})
-
 	socket.on("message", function(message)
 	{
 		console.log('Un client me dit: ' + message);

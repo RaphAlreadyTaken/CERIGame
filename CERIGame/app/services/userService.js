@@ -4,6 +4,20 @@
  */
 function userService($http, localStorage)
 {
+    this.allDefis =[];
+
+    this.getChallengeList = function(id)
+    {
+        var _this = this;
+
+        return $http
+        .post('http://localhost:3131/defi/defiList', {'id': id})
+        .then(function(response)
+        {
+            angular.copy(response.data, _this.allDefis);
+        });
+    }
+    
     /**
 	 * Récupère un utilisateur grâce à son ID
      * @param {*} id - ID d'un utilisateur (PGSQL)
@@ -24,18 +38,36 @@ function userService($http, localStorage)
         return JSON.parse(localStorage.getItem("sessionUser"));
     }
 
+    this.allUsers = [];
+
     /**
-	 * Récupère tous les utilisateurs
-	 * @returns {Promise} Réponse serveur (utilisateurs)
+     * Récupère tous les utilisateurs
+     * @returns {Promise} Réponse serveur (utilisateurs)
 	 */
-    this.getAllUsers = function(id)
+    this.getUserList = function()
     {
+        var _this = this;
+
         return $http
         .get('http://localhost:3131/getAllUsers')
         .then(function(response)
         {
-            return response;
+            angular.copy(response.data, _this.allUsers);
         });
+    };
+
+    this.nbMedailles = 0;
+
+    this.getMedailles = function(id)
+    {
+        var _this = this;
+
+        return $http
+        .post('http://localhost:3131/defi/getMedailles', {'id': id})
+        .then(function(response)
+        {
+            _this.nbMedailles = response.data;
+        })
     };
 
     /**

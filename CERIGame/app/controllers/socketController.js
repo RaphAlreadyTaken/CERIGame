@@ -2,13 +2,14 @@
  * Contrôleur de webSocket
  * @param {?} $scope - Variable de contexte
  */
-function socketController($scope, $rootScope, socket, user, defi)
+function socketController($scope, socket, user)
 {
     socket.on('notifConnexion', function(data)
     {
         $scope.$apply(function()
         {
             $scope.serverMessage = data;
+            user.getUserList();
         });
     });
 
@@ -17,6 +18,7 @@ function socketController($scope, $rootScope, socket, user, defi)
         $scope.$apply(function()
         {
             $scope.serverMessage = data;
+            user.getUserList();
         });
     });
 
@@ -34,15 +36,7 @@ function socketController($scope, $rootScope, socket, user, defi)
         {
             $scope.notifDefi = data.message;
             $scope.idDefi = data.idDefi;
-        });
-    });
-
-    socket.on('confirmDelete', function(data)
-    {
-        $rootScope.$apply(function()
-        {
-            console.log("rootscope apply");
-            $rootScope.allDefis = data;
+            user.getChallengeList(user.getCurUser().id);
         });
     });
 
