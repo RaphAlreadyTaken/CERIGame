@@ -49,7 +49,7 @@ function defiService($http, user, socket)
     this.saveResult = function(defiant, gagnant)
     {
         return $http
-        .post('http://localhost:3131/defi/saveResult', {'id_users_defiant': defiant, 'id_users_defie': user.getCurUser().id, 'id_users_gagnant': gagnant})
+        .post('http://localhost:3131/defi/saveResultDefi', {'id_users_defiant': defiant, 'id_users_defie': user.getCurUser().id, 'id_users_gagnant': gagnant})
         .then(function()
         {
         });

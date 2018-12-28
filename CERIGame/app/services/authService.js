@@ -19,7 +19,7 @@ function authService($http, $window, session, socket)
 		var userId = userInfo["id"];
 
 		return $http
-		.post('http://localhost:3131/checkLog', {'id': userId})
+		.post('http://localhost:3131/log/checkLog', {'id': userId})
 		.then(function(response)
 		{
 			return response;
@@ -35,7 +35,7 @@ function authService($http, $window, session, socket)
 	this.logIn = function(login, password)
 	{
 		return $http
-		.post('http://localhost:3131/login', {'login': login, 'password': password})
+		.post('http://localhost:3131/log/login', {'login': login, 'password': password})
 		.then(function(response)
 		{
 			if (response.data.statusResp === true)
@@ -60,7 +60,7 @@ function authService($http, $window, session, socket)
 		var userInfo = JSON.parse(localStorage.getItem("sessionUser"));
 
 		return $http
-		.post('http://localhost:3131/logout', {'id': userInfo["id"]})
+		.post('http://localhost:3131/log/logout', {'id': userInfo["id"]})
 		.then(function()
 		{
 			var content = {'id': userInfo["id"], 'ident': userInfo['ident']};

@@ -16,7 +16,7 @@ function histoService($http)
        var _this = this;
 
        return $http
-       .get('http://localhost:3131/getTop10')
+       .get('http://localhost:3131/user/getTop10')
        .then(function(response)
        {
            _this.top10 = response.data;
@@ -30,7 +30,7 @@ function histoService($http)
         var _this = this;
 
         return $http
-        .post('http://localhost:3131/getHisto', {'id': id})
+        .post('http://localhost:3131/quizz/getHisto', {'id': id})
         .then(function(response)
         {
             for (var i = 0; i < response.data.length; i++)
@@ -45,7 +45,7 @@ function histoService($http)
    this.saveResult = function(infoToSave)
    {
        return $http
-       .post('http://localhost:3131/saveResult', {'info': infoToSave})
+       .post('http://localhost:3131/quizz/saveResultQuizz', {'info': infoToSave})
        .then(function(response)
        {
            return response.data;

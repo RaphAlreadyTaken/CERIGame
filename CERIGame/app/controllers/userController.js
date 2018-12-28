@@ -21,11 +21,15 @@ function userController($scope, user)
         user.getUser(id)
         .then(function(response)
         {
+            if (id === $scope.userS.getCurUser().id)
+            {
+                $scope.userS.avatar = response.avatar;
+            }
+
             $scope.user = response;
-            return response;
         });
     };
-    $scope.getUserProfile($scope.getId());
+    $scope.getUserProfile($scope.getId())
 
     $scope.getAllUsers = function()
     {
@@ -37,9 +41,9 @@ function userController($scope, user)
         $scope.showProfil = !$scope.showProfil;
     }
 
-    $scope.modifProfil = function(id, avatar, identifiant, prenom, nom)
+    $scope.modifAvatar = function(id, avatar)
     {
-        user.updateProfil(id, avatar, identifiant, prenom, nom)
+        user.updateAvatar(id, avatar)
     };
 
     $scope.hideInteract = function()

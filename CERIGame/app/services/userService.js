@@ -5,6 +5,9 @@
 function userService($http, localStorage)
 {
     this.allDefis =[];
+    this.allUsers = [];
+    this.avatar = "";
+    this.medailles = [];
 
     this.getChallengeList = function(id)
     {
@@ -18,6 +21,11 @@ function userService($http, localStorage)
         });
     }
     
+    this.getCurUser = function()
+    {
+        return JSON.parse(localStorage.getItem("sessionUser"));
+    }
+
     /**
 	 * Récupère un utilisateur grâce à son ID
      * @param {*} id - ID d'un utilisateur (PGSQL)
@@ -25,20 +33,15 @@ function userService($http, localStorage)
 	 */
     this.getUser = function(id)
     {
+        var _this = this;
+
         return $http
-        .post('http://localhost:3131/getUser', {'id': id})
+        .post('http://localhost:3131/user/getUser', {'id': id})
         .then(function(response)
         {
             return response.data;
         });
     };
-
-    this.getCurUser = function()
-    {
-        return JSON.parse(localStorage.getItem("sessionUser"));
-    }
-
-    this.allUsers = [];
 
     /**
      * Récupère tous les utilisateurs
@@ -49,14 +52,12 @@ function userService($http, localStorage)
         var _this = this;
 
         return $http
-        .get('http://localhost:3131/getAllUsers')
+        .get('http://localhost:3131/user/getAllUsers')
         .then(function(response)
         {
             angular.copy(response.data, _this.allUsers);
         });
     };
-
-    this.medailles = [];
 
     this.getMedailles = function(id)
     {
@@ -73,18 +74,17 @@ function userService($http, localStorage)
     /**
 	 * Modifie les informations non nulles passées
      * @param {*} avatar - Image de profil
-     * @param {*} identifiant - Nom utilisé dans l'app
-     * @param {*} prenom - Prénom de l'utilisateur
-     * @param {*} nom - Nom de l'utilisateur
 	 * @returns {Promise} Réponse serveur
 	 */
-    this.updateProfil = function(id, avatar, identifiant, prenom, nom)
+    this.updateAvatar = function(id, avatar)
     {
+        var _this = this;
+
         return $http
-        .post('http://localhost:3131/updateProfil', {'id': id, 'avatar': avatar, 'identifiant': identifiant, 'prenom': prenom, 'nom': nom})
+        .post('http://localhost:3131/user/updateAvatar', {'id': id, 'avatar': avatar})
         .then(function(response)
         {
-            return response;
+            _this.avatar = response.data;
         });
     };
 }
