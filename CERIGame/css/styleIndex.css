@@ -32,6 +32,11 @@ img
         left: 50%;
 }
 
+.bodyLogin
+{
+    background-color: lightblue;
+}
+
 .bLBlue
 {
     background-color:lightblue;
@@ -73,21 +78,16 @@ img
     width: 15%;
 }
 
-.containerLogin
+#containerLogin
 {
-    /* border-color: grey;
-    border-radius: 10%;
+    background-color: whitesmoke;
     border-style: solid;
-    border-width: 1px;    border-color: grey;
-    border-radius: 10%;
-    border-style: solid;
-    border-width: 1px; */
-    margin-top: 100%;
-    padding-top: 7%;
-    padding-bottom: 7%;
-    padding-left: 7%;
-    padding-right: 8%;
-    vertical-align: middle;
+    border-color: lightgray;
+    border-radius: 5%;
+    border-width: 1px;
+    padding: 15%;
+    margin-top: 150%;
+    width:100%;
 }
 
 .disappear
@@ -98,7 +98,7 @@ img
     visibility: hidden;
 }
 
-.grandContainerLogin
+#grandContainerLogin
 {
     display:table;
     height:100%; 
@@ -118,7 +118,7 @@ img
 
 .linkInteract:hover
 {
-    color: lightpink;
+    color: rgb(204, 182, 255);
 }
 
 .noBorder
