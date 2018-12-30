@@ -1,7 +1,87 @@
+#profileCard
+{
+    background-color: dodgerblue;
+}
+
+#bottomProfileCard
+{
+    padding-bottom: 5%;    
+}
+
+#modalNewQuizz
+{
+    color: black;
+    background-color: lightgrey;
+}
+
+#modalMedals
+{
+    color: black;
+    background-color: lightgrey;
+}
+
+#modalDefis
+{
+    color: black;
+    background-color: lightgrey;
+}
+
+#modalUsersList
+{
+    color: black;
+    background-color: lightgrey;
+}
+.quizzActWindow
+{
+    color:black;
+    padding: 0;
+}
+
+.defaultText
+{
+    color:black;
+    font-size: 12pt;
+}
+
+#chrono
+{
+    background-color: #ee6e73;
+}
+
+#contenu
+{
+    height:100%;
+}
+
+#contenuDroite
+{
+    height:100%;
+    background-color: #00897b;
+}
+
+#contenuGauche
+{
+    height:100%;
+    background-color: #616161;
+}
+
+#navbarLeftList
+{
+    padding-left: 10px;
+}
+
 /* Eléments DOM */
 body
 {
     text-align: center;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main
+{
+    flex: 1 0 auto;
 }
 
 form
@@ -26,10 +106,20 @@ img
 
 .bandeau
 {
-    background-color: lightcoral;
+    background-color:dodgerblue;
     display: inline-block;
     position: absolute;
-        left: 50%;
+        bottom:0;
+        right:0;
+    border-style: solid;
+    border-color:lightgray;
+    border-width: 1px;
+    border-top-left-radius: 10%;
+}
+
+#bodyApp
+{
+    background-color: lightblue;
 }
 
 .bodyLogin
@@ -92,7 +182,7 @@ img
 
 .disappear
 {
-    animation-duration: 3s;
+    animation-duration: 5s;
     animation-name: invisib;
     opacity: 0;    
     visibility: hidden;
@@ -121,6 +211,11 @@ img
     color: rgb(204, 182, 255);
 }
 
+#mainBandeau
+{
+    background-color: dodgerblue;
+}
+
 .noBorder
 {
     border: none;
@@ -131,7 +226,7 @@ img
     max-width: 20%;
 }
 
-.ActWindow
+.indow
 {
     position: absolute;
         top: 30%;
@@ -173,6 +268,12 @@ img
 .userList
 {
     background-color: lightgreen;
+}
+
+#userProfilePic
+{
+    width:200px;
+    height:200px;
 }
 
 .xAlign

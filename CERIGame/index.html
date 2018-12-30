@@ -1,222 +1,267 @@
 <!-- Navigateur -->
 
 <html>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() 
+        {
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems);           
+        });
+    </script>
+
     <base href="/" />
     <head>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
         <link rel='stylesheet' type='text/CSS' href='/styleIndex.css'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     </head>
+      
+    <body ng-app="app" id="bodyApp">
+    <main>
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-wrapper">
+            <!-- <a href="#!" class="brand-logo">Logo</a> -->
+            <ul class="left hide-on-med-and-down">
+                <li id="navbarLeftList"><button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="prepareQuizz = !prepareQuizz; recapQuizz = false; endQuizz = false; challengeSent = false;" type="button" >Nouveau Quizz</button></li>
+                <li id="navbarLeftList"><button data-target="modalMedals" class="btn modal-trigger" ng-click="showMedailles = !showMedailles;" type="button" >Voir les médailles</button></li>
+            </ul>
 
-    <body ng-app="app">
-        <!-- Test websocket [NE PAS SUPPRIMER, utilisé pour notifs connexion] -->
-        <div ng-controller="socketController">
-            <button ng-click="test()" type="button">test websocket</button>
-            {{serverMessage}}
-        </div>
-
-        <!-- Accueil login -->
-        <div class="skipLineWithBSn" ng-controller="loginController">
-            <div class="disappear bandeau" id="bandeau">
-                {{bandeau()}}
-            </div>
-            <button class="toRight" ng-click="logOut()">Déconnexion</button>
-        </div>
-
-        <!-- Notif envoi défi -->
-        <div class="bandeau disappear skipLineWithBSn" ng-controller="socketController" ng-show="confirmDefi !== undefined">
-            {{confirmDefi}}
-        </div>
-
-        <!-- Notif réception défi -->
-        <div class="bandeau skipLineWithBSn" ng-controller="socketController" ng-show="notifDefi !== undefined && notifDefi !== false">
-            {{notifDefi}}
-            <div ng-controller="defiController">
-                <button ng-click="execDefi($parent.idDefi); supprDefi($parent.idDefi); $parent.notifDefi = false" type="button">Accepter le défi</button>
-                <button ng-click="supprDefi($parent.idDefi); $parent.notifDefi = false" type="button">Refuser le défi</button>
-            </div>
-        </div>
-
-        <!-- Liste défis -->
-        <div ng-controller="userController">
-            Nombre de défis en attente: {{userS.allDefis.length}}
-            <br>
-            <button ng-click="showDefis = !showDefis" type="button">Afficher défis</button>
-            <div class="linkInteract" ng-repeat="defi in userS.allDefis" ng-show="showDefis == true">
-                <div ng-click="showInteract = !showInteract" style="background-color: lightslategray;">
-                    Défi lancé par {{defi.ident_user_defiant}}. Score à battre: {{defi.score_user_defiant}}.
-                    <div ng-controller="defiController" ng-show="showInteract == true">
-                        <button ng-click="execDefi(defi._id); $parent.$parent.showDefis = false" type="button">Accepter le défi</button>
-                        <button ng-click="saveRes(defi.id_user_defiant); supprDefi(defi._id)" type="button">Refuser le défi</button>
+            <div ng-controller="userController">
+            <ul class="hide-on-med-and-down right">
+                <li><a data-target="modalDefis" class="btn modal-trigger" ng-click="showMedailles = !showMedailles;" type="button" >Défis <span class="new badge">{{userS.allDefis.length}}</span></a></li>
+            </ul>   
+                <!-- Liste défis -->
+                <div id="modalDefis" class="modal">
+                    <div class="modal-content">
+                        Nombre de défis en attente: {{userS.allDefis.length}}
+                        <br>
+                        <div class="linkInteract" ng-repeat="defi in userS.allDefis" ng-show="showDefis == true">
+                            <div ng-click="showInteract = !showInteract" style="background-color: lightslategray;">
+                                    Défi lancé par {{defi.ident_user_defiant}}. Score à battre: {{defi.score_user_defiant}}.
+                                    <div ng-controller="defiController" ng-show="showInteract == true">
+                                        <button ng-click="execDefi(defi._id); $parent.$parent.showDefis = false" type="button">Accepter le défi</button>
+                                        <button ng-click="saveRes(defi.id_user_defiant); supprDefi(defi._id)" type="button">Refuser le défi</button>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        <div id="modalNewQuizz" class="modal-footer">
+                                <a href="#!" class="modal-close waves-effect waves-light btn" ng-click="prepareQuizz = !prepareQuizz; recapQuizz = false; endQuizz = false; challengeSent = false;">Fermer</a>
+                            </div>
                     </div>
                 </div>
-                <br>
-            </div>
-        </div>
-
-        <!-- Résultat défi -->
-        <div ng-controller="defiController" ng-show="defiS.result !== ''">
-            {{defiS.result}}
-            <button ng-click="defiS.result = ''" type="button">OK</button>
-        </div>
-
-        <!-- Médailles obtenues -->
-        <div ng-controller="userController">
-            Nombre de médailles obtenues: {{userS.medailles.length}}
-            <button ng-click="showMedailles = !showMedailles" type="button">Détail médailles</button>
-            <div ng-repeat="medaille in userS.medailles track by $index" ng-show="showMedailles === true">
-                    Médaille {{$index + 1}} gagnée contre {{medaille.opponent}}
+                    
+                <!-- Médailles obtenues -->
+                <div ng-controller="userController">
+                    <div id="modalMedals" class="modal">
+                        <div class="modal-content">
+                            <h3>Nombre de médailles obtenues: <b>{{userS.medailles.length}} </b></h3>
+                            <div ng-repeat="medaille in userS.medailles track by $index" ng-show="showMedailles === true">
+                                Médaille {{$index + 1}} gagnée contre {{medaille.opponent}}
+                            </div>
+                        </div>
+                        <div id="modalNewQuizz" class="modal-footer">
+                            <a href="#!" class="modal-close waves-effect waves-light btn" ng-click="prepareQuizz = !prepareQuizz; recapQuizz = false; endQuizz = false; challengeSent = false;">Fermer</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+                    
+                <div ng-controller="quizzController">
+                <div id="modalNewQuizz" class="modal">
+                    <div class="modal-content">
+                        
+                        <!-- Paramétrage du quizz -->
+                        <div class="container prepQuizz" ng-show="prepareQuizz == true">
+                            Choix du thème: <select class="browser-default" ng-init="selectedTheme = selectedTheme || themes[0].value" ng-model="selectedTheme" ng-options="option.value as option.name for option in themes"></select>
+                            Nombre de questions: <select class="browser-default" ng-init="selectedQuestionCount = selectedQuestionCount || questionCount[0].value" ng-model="selectedQuestionCount" ng-options="option.value as option.name for option in questionCount" ></select>
+                            Difficulté: <select class="browser-default"  ng-init="selectedDifficulty = selectedDifficulty || difficulte[0].value" ng-model="selectedDifficulty" ng-options="option.value as option.name for option in difficulte"> </select>
+                            <br>
+                            <button class="waves-effect waves-light btn" ng-click="obtainQuestions(selectedQuestionCount, selectedTheme, selectedDifficulty); chrono(); launchQuizz = true; prepareQuizz = false;" type="button">Lancer quizz</button>
+                        </div>
+                                                                        
+                        <!-- Chrono -->
+                        <div ng-show="launchQuizz === true">
+                            <a class="btn disabled pulse" id="chrono">{{chrn}}</a>
+                        </div>
 
-        <!-- Profil user -->
-        <div class="toLeft profil bLBlue" ng-controller="userController">
-            <table class="alignTxt">
-                <tr>
-                    <td>
-                        <img class="linkInteract" ng-blur="modAvatar = false" ng-click="modAvatar = true" ng-src="{{userS.avatar || '/default.png'}}">
-                        <input class="inputModifImg" ng-blur="modifAvatar(user.id, newAvatar); modAvatar = false" ng-model="newAvatar" ng-show="modAvatar === true" placeholder="Lien vers nouvelle image..." type="text">
-                    </td>
-                </tr>
-                <tr>
-                    <td>{{user.identifiant}}</td>
-                </tr>
-                <tr>
-                    <td>{{user.prenom}}</td>
-                </tr>
-                <tr>
-                    <td>{{user.nom}}</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- Liste tous users -->
-        <div ng-controller="userController">
-            <div class="bLGreen toRight userList xAlign">
-                <button ng-click="displayUserList === false && getAllUsers(); displayUserList = !displayUserList" ng-init="displayUserList = false" type="button">Afficher utilisateurs</button>
-                <div ng-show="displayUserList === true">
-                    Utilisateurs
-                    <br>
-                    <input ng-click="loggedOnly = !loggedOnly" ng-init="loggedOnly = false" type="checkbox">Connectés uniquement</select>
-                    <br>
-                    <div ng-repeat="user in userS.allUsers">
-                        <div ng-if="user.statut === 1 || (user.statut != 1 && loggedOnly === false)">
-                            <a class="underlined linkInteract" ng-click="getUserProfile(user.id); toggleProfilDisplay()">{{user.identifiant}}</a>
+                        <!-- Exécution du quizz -->
+                        <div class="container quizzActWindow" ng-show="launchQuizz === true">
+                            <div ng-repeat="quest in questions track by $index">
+                                <label class="defaultText" id="question{{$index}}" ng-style="$index != 0 && {'display':'none'}">
+                                    {{quest.question}}<br> 
+                                    <label class="defaultText" ng-repeat="prop in quest.propositions track by $index">
+                                        <input type="radio" name="propos" ng-model="$parent.propos" value="{{prop}}"> 
+                                        <span class="defaultText">{{$index + 1}} : {{prop}}</span> <br>                                       
+                                    </label>
+                                    <button class="waves-effect waves-light btn" ng-click="checkQuizzStatus(propos, $index, user.id)" type="submit">Valider réponse</button>
+                                </label>
+                            </div>
+                        </div>
+            
+                        <!-- Bilan du quizz -->
+                        <div class="container quizzActWindow" ng-show="recapQuizz === true">
+                            <h4>Bilan du quizz</h4>
+                            <br>
+                            <label class="defaultText" ng-repeat="elmt in bilan track by $index">
+                                <b>Question {{$index + 1}}:</b> {{elmt.question}}
+                                <br>
+                                <u>Réponse attendue:</u> {{elmt.expRep}}
+                                <br>
+                                {{elmt.givRep}}
+                                <br>
+                                 <i>Anecdote:</i> {{elmt.anecdote}}
+                                <br>
+                                <hr>
+                            </label>
+                            <h2>Score: {{bilan.score}}</h2>                                                 
+                            
+                            <!-- Défi -->
+                            <div ng-show="recapQuizz === true" ng-controller="userController">
+                                <button class="waves-effect waves-light btn-large pulse" ng-click="getAllUsers(); $parent.displayChallengers = !$parent.displayChallengers" ng-hide="$parent.challengeSent === true" type="button">Défier utilisateur</button>
+                                <div ng-repeat="user in userS.allUsers" ng-show="$parent.$parent.displayChallengers === true">
+                                    <a class="underlined linkInteract" ng-click="lancerDefi(user.id, user.identifiant, $parent.questions, $parent.bilan.score); $parent.$parent.$parent.toggleDefiOpt()" ng-controller="defiController">{{user.identifiant}}</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="modalNewQuizz" class="modal-footer">
+                            <a href="#!" class="modal-close waves-effect waves-light btn" ng-click="prepareQuizz = !prepareQuizz; recapQuizz = false; endQuizz = false; challengeSent = false;">Fermer</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class=" bLGreen profil toRight xAlign" ng-show="showProfil">
-                <table class="alignTxt">
-                    <tr>
-                        <td><img ng-src="{{user.avatar || '/default.png'}}"></img></td>
-                    </tr>
-                    <tr>
-                        <td>{{user.identifiant}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{user.prenom}}</td>
-                    </tr>
-                    <tr>
-                        <td>{{user.nom}}</td>
-                    </tr>
-                    <tr>
-                        <td><div class="alignTxt circle toCenter" ng-style="user.statut != 1 && {'background-color' : 'red'}"></div></td>
-                    </tr>
-                </table>
-            </div>
         </div>
+    </nav>
 
-        <!-- Historique des quizz -->
-        <div ng-controller="userController">
-            <div ng-controller="histoController">
-                <button type="button" ng-click="(showHistoUser === false || showHistoUser === undefined) && userHisto(getId()); showHistoUser = !showHistoUser">Historique des quizz</button>
-                <label class="bLOrange" ng-repeat="hist in histoS.histo | orderBy:'-date'" ng-show="showHistoUser">
-                    Quizz du {{hist.date}}:
-                    <br>
-                    {{hist.nbreponse}} bonnes réponses
-                    <br>
-                    {{hist.temps}} secondes
-                    <br>
-                    {{hist.score}} points
-                    <br><br>
-                </label>
-            </div>
-        </div>
-
-        <!-- Top 10 scores quizz -->
-        <div ng-controller="histoController">
-            <button type="button" ng-click="(showTopTen === false || showTopTen === undefined) && topTen(); showTopTen = !showTopTen">10 meilleurs</button>
-            <label class= "bFPink" ng-repeat="topUser in histoS.top10" ng-show="showTopTen">
-                <br>
-                {{topUser.identifiant}} : {{topUser.sum}}
-            </label>
-        </div>
-
-        <!-- Quizz -->
-        <div ng-controller="quizzController">
-            <button ng-click="prepareQuizz = !prepareQuizz; recapQuizz = false; endQuizz = false; challengeSent = false;" type="button">Nouveau quizz</button>
-
-            <!-- Paramétrage du quizz -->
-            <div class="quizzWindow" ng-show="prepareQuizz == true">
-                Choix du thème:
-                <select ng-init="selectedTheme = selectedTheme || themes[0].value" ng-model="selectedTheme" ng-options="option.value as option.name for option in themes"></select>
-                <br>
-                <br>
-                Nombre de questions: <select ng-init="selectedQuestionCount = selectedQuestionCount || questionCount[0].value" ng-model="selectedQuestionCount" ng-options="option.value as option.name for option in questionCount" ></select>
-                <br>
-                <br>
-                Difficulté: <select ng-init="selectedDifficulty = selectedDifficulty || difficulte[0].value" ng-model="selectedDifficulty" ng-options="option.value as option.name for option in difficulte"> </select>
-                <br>
-                <br>
-                <button ng-click="obtainQuestions(selectedQuestionCount, selectedTheme, selectedDifficulty); chrono(); launchQuizz = true; prepareQuizz = false;" type="button">Lancer quizz</button>
-            </div>
-
-            <!-- Exécution du quizz -->
-            <div class="bFGreen quizzActWindow" ng-show="launchQuizz === true">
-                <div ng-repeat="quest in questions track by $index">
-                    <label id="question{{$index}}" ng-style="$index != 0 && {'display':'none'}">
-                        {{quest.question}}
-                        <label ng-repeat="prop in quest.propositions track by $index">
-                            <input type="radio" name="propos" ng-model="$parent.propos" value="{{prop}}"> {{$index + 1}} : {{prop}}
-                        </label>
-                        <button ng-click="checkQuizzStatus(propos, $index, user.id)" type="submit">Valider réponse</button>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Chrono -->
-            <div class="chronoBox" ng-show="launchQuizz === true">
-                {{chrn}}
-            </div>
-            
-            <!-- Bilan du quizz -->
-            <div ng-show="recapQuizz === true">
-                Bilan du quizz:
-                <br><br>
-                <label ng-repeat="elmt in bilan track by $index">
-                    Question {{$index + 1}}: {{elmt.question}}
-                    <br>
-                    Réponse attendue: {{elmt.expRep}}
-                    <br>
-                    {{elmt.givRep}}
-                    <br>
-                    Anecdote: {{elmt.anecdote}}
-                    <br>
-                </label>
-                Score: {{bilan.score}}
-                <br>
-                <button type="button" ng-click="recapQuizz = false">Fermer fenêtre</button>
-
-                <!-- Défi -->
-                <div ng-controller="userController">
-                    <button ng-click="getAllUsers(); $parent.displayChallengers = !$parent.displayChallengers" ng-hide="$parent.challengeSent === true" type="button">Défier utilisateur</button>
-                    <div ng-repeat="user in userS.allUsers" ng-show="$parent.$parent.displayChallengers === true">
-                            <a class="underlined linkInteract" ng-click="lancerDefi(user.id, user.identifiant, $parent.questions, $parent.bilan.score); $parent.$parent.$parent.toggleDefiOpt()" ng-controller="defiController">{{user.identifiant}}</a>
+    <!-- Page Layout here -->
+    <div id="contenu" class="row">  
+        <!-- Profil user -->
+        <div id="contenuGauche" class="col s12 m4 l3"> <!-- Note that "m4 l3" was added -->
+            <div class="row">
+                <div class="col s12 m7">
+                    <div class="card" ng-controller="userController" id="profileCard">
+                        <div class="card-image">
+                            <img class="linkInteract" ng-blur="modAvatar = false" ng-click="modAvatar = true" ng-src="{{userS.avatar || '/default.png'}}">
+                            <!-- <input class="inputModifImg" ng-blur="modifAvatar(user.id, newAvatar); modAvatar = false" ng-model="newAvatar" ng-show="modAvatar === true" placeholder="Lien vers nouvelle image..." type="text"> -->
+                          <span class="card-title">{{user.identifiant}}</span>
+                        </div>
+                        <div class="card-content">
+                          <p>{{user.prenom}}
+                          {{user.nom}}</p>
+                        </div>
+                        <div class="card-action" id="bottomProfileCard">
+                            <input class="inputModifImg" ng-blur="modifAvatar(user.id, newAvatar); modAvatar = false" ng-model="newAvatar" ng-show="modAvatar === true" placeholder="Lien vers nouvelle image..." type="text">
+                            <button class="waves-effect waves-light btn red darken-3" ng-click="logOut()">Déconnexion</button>
+                        </div>
                     </div>
                 </div>
             </div>
-
+      
         </div>
+      
+        <div id="contenuDroite" class="col s12 m8 l9"> <!-- Note that "m8 l9" was added -->
+        
+            <div ng-controller="histoController">
+                <button type="button" ng-click="(showTopTen === false || showTopTen === undefined) && topTen(); showTopTen = !showTopTen">10 meilleurs</button>
+                <ul class="collection">
+                    <li class= "bFPink" ng-repeat="topUser in histoS.top10" >                    
+                        {{topUser.identifiant}} : {{topUser.sum}}
+                    </li>
+                </ul>
+            </div>
+            <!-- Top 10 scores quizz -->
+            <!-- Test websocket [NE PAS SUPPRIMER, utilisé pour notifs connexion] -->
+            <div ng-controller="socketController">
+                <button ng-click="test()" type="button">test websocket</button>
+                {{serverMessage}}
+            </div>
+        
+            <!-- Accueil login -->
+            <div class="skipLineWithBSn" ng-controller="loginController">
+                <div class="disappear bandeau">
+                    {{bandeau()}}
+                </div>
+            </div>
+        
+            <!-- Notif envoi défi -->
+            <div class="bandeau disappear skipLineWithBSn" ng-controller="socketController" ng-show="confirmDefi !== undefined">
+                {{confirmDefi}}
+            </div>
+        
+            <!-- Notif réception défi -->
+            <div class="bandeau skipLineWithBSn" ng-controller="socketController" ng-show="notifDefi !== undefined && notifDefi !== false">
+                {{notifDefi}}
+                <div ng-controller="defiController">
+                    <button ng-click="execDefi($parent.idDefi); supprDefi($parent.idDefi); $parent.notifDefi = false" type="button">Accepter le défi</button>
+                    <button ng-click="supprDefi($parent.idDefi); $parent.notifDefi = false" type="button">Refuser le défi</button>
+                </div>
+            </div>
+                
+            <!-- Résultat défi -->
+            <div ng-controller="defiController" ng-show="defiS.result !== ''">
+                {{defiS.result}}
+                <button ng-click="defiS.result = ''" type="button">OK</button>
+            </div>
+        
+            <!-- Liste tous users -->
+            <div ng-controller="userController">
+                <div class="bLGreen toRight userList xAlign">
+                    <button ng-click="displayUserList === false && getAllUsers(); displayUserList = !displayUserList" ng-init="displayUserList = false" type="button">Afficher utilisateurs</button>
+                    <div ng-show="displayUserList === true">
+                        Utilisateurs
+                        <br>
+                        <input ng-click="loggedOnly = !loggedOnly" ng-init="loggedOnly = false" type="checkbox">Connectés uniquement</select>
+                        <br>
+                        <div ng-repeat="user in userS.allUsers">
+                            <div ng-if="user.statut === 1 || (user.statut != 1 && loggedOnly === false)">
+                                <a class="underlined linkInteract" ng-click="getUserProfile(user.id); toggleProfilDisplay()">{{user.identifiant}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class=" bLGreen profil toRight xAlign" ng-show="showProfil">
+                    <table class="alignTxt">
+                        <tr>
+                            <td><img ng-src="{{user.avatar || '/default.png'}}"></img></td>
+                        </tr>
+                        <tr>
+                            <td>{{user.identifiant}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{user.prenom}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{user.nom}}</td>
+                        </tr>
+                        <tr>
+                            <td><div class="alignTxt circle toCenter" ng-style="user.statut != 1 && {'background-color' : 'red'}"></div></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+      
+        </div>
+      
+    </div>
+<footer class="page-footer">
+    <div class="container">
+        <button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="displayUserList === false && getAllUsers(); displayUserList = !displayUserList" ng-init="displayUserList = false" type="button" >Utilisateurs</button>
+
+    <!-- Modal Structure -->
+    <div id="modalUsersList" class="modal bottom-sheet">
+        <div class="modal-content">
+        <h4>Modal Header</h4>
+        <p>A bunch of text</p>
+        </div>
+        <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Fermere</a>
+        </div>
+    </div>
+        </div>
+</footer>
 
         <!-- Scripts à charger (chargement plus rapide si positionnement en bas de page) -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.js"></script>
@@ -238,5 +283,6 @@
         <script src="/controllers/userController.js"></script>
         <script src="/app.js"></script>
         <script src="/socket.io/socket.io.js"></script>
+    </main>
     </body>
 </html>
