@@ -168,7 +168,7 @@
                                 <p>{{user.prenom}}
                                     {{user.nom}}</p>
                             </div>
-                            <div class="card-action" id="bottomProfileCard">
+                            <div class="card-action" id="bottomProfileCard" ng-controller="loginController">
                                 <input class="inputModifImg" ng-blur="modifAvatar(user.id, newAvatar); modAvatar = false"
                                     ng-model="newAvatar" ng-show="modAvatar === true" placeholder="Lien vers nouvelle image..."
                                     type="text">
