@@ -74,7 +74,7 @@ function quizzController($scope, $rootScope, $interval, defi, histo, quizz, user
     
     $scope.obtainQuestions = function(nbQ, theme, difficulte)
     {
-        quizz.getQuestion(nbQ, theme, difficulte)
+        quizz.getQuestions(nbQ, theme, difficulte)
         .then(function(response)
         {
             $scope.questions = response.data; 
