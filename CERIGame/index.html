@@ -136,7 +136,7 @@
                                     Défi lancé par {{defi.ident_user_defiant}}. Score à battre:
                                     {{defi.score_user_defiant}}.
                                     <div ng-controller="defiController" >
-                                        <button class="waves-effect waves-light btn" ng-click="execDefi(defi._id); $parent.$parent.showDefis = false" type="button">Accepter le défi</button>
+                                        <button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="execDefi(defi._id); $parent.$parent.showDefis = false" type="button">Accepter le défi</button>
                                         <button class="waves-effect waves-light btn" ng-click="saveRes(defi.id_user_defiant); supprDefi(defi._id)" type="button">Refuser le défi</button>
                                     </div>
                                 </div>
@@ -218,9 +218,9 @@
                 <div class="bandeau skipLineWithBSn" ng-controller="socketController" ng-show="notifDefi !== undefined && notifDefi !== false">
                     {{notifDefi}}
                     <div ng-controller="defiController">
-                        <button ng-click="execDefi($parent.idDefi); supprDefi($parent.idDefi); $parent.notifDefi = false"
+                        <button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="execDefi($parent.idDefi); supprDefi($parent.idDefi); $parent.notifDefi = false"
                             type="button">Accepter le défi</button>
-                        <button ng-click="supprDefi($parent.idDefi); $parent.notifDefi = false" type="button">Refuser
+                        <button class="btn" ng-click="supprDefi($parent.idDefi); $parent.notifDefi = false" type="button">Refuser
                             le défi</button>
                     </div>
                 </div>
