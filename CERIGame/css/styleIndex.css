@@ -26,7 +26,7 @@
     background-color: lightgrey;
 }
 
-#modalUsersList
+#modalUsers
 {
     color: black;
     background-color: lightgrey;
@@ -41,6 +41,14 @@
 {
     color:black;
     font-size: 12pt;
+}
+
+.connectedOnlyInput
+{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 10px;
+    padding-top: 10px;
 }
 
 #chrono
@@ -223,7 +231,11 @@ img
 
 .profil
 {
-    max-width: 20%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 10px;
+    padding-top: 10px;
+    padding-left: 50px;
 }
 
 .indow

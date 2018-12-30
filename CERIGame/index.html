@@ -2,10 +2,17 @@
 
 <html>
 <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () 
+    {
         var elems = document.querySelectorAll('.modal');
         var instances = M.Modal.init(elems);
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.scrollspy');
+    var instances = M.ScrollSpy.init(elems);
+  });
+
 </script>
 
 <base href="/"/>
@@ -22,9 +29,10 @@
         <nav>
             <div class="nav-wrapper">
                 <!-- <a href="#!" class="brand-logo">Logo</a> -->
-                <ul class="left hide-on-med-and-down">
+                <ul class="left">
                     <li id="navbarLeftList"><button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="prepareQuizz = !prepareQuizz; recapQuizz = false; endQuizz = false; challengeSent = false;"
                             type="button">Nouveau Quizz</button></li>
+
                     <li id="navbarLeftList"><button data-target="modalMedals" class="btn modal-trigger" ng-click="showMedailles = !showMedailles;"
                             type="button">Voir les médailles</button></li>
                 </ul>
@@ -100,7 +108,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Médailles obtenues -->
                 <div ng-controller="userController">
                     <div id="modalMedals" class="modal">
@@ -149,11 +157,10 @@
         <!-- Page Layout here -->
         <div id="contenu" class="row">
             <!-- Profil user -->
-            <div id="contenuGauche" class="col s12 m4 l3">
-                <!-- Note that "m4 l3" was added -->
+            <div id="contenuGauche" class="col s12 m4 l2">
                 <div class="row">
-                    <div class="col s12 m7">
-                        <div class="card" ng-controller="userController" id="profileCard">
+                    <div class="col ">
+                        <div class="card large" ng-controller="userController" id="profileCard">
                             <div class="card-image">
                                 <img class="linkInteract" ng-blur="modAvatar = false" ng-click="modAvatar = true"
                                     ng-src="{{userS.avatar || '/default.png'}}">
@@ -175,19 +182,18 @@
                 </div>
             </div>
 
-            <div id="contenuDroite" class="col s12 m8 l9">
-                <!-- Note that "m8 l9" was added -->
-
+            <div id="contenuDroite" class="col s12 m4 l10">
+                <!-- Top 10 -->
                 <div ng-controller="histoController">
-                    <button type="button" ng-click="(showTopTen === false || showTopTen === undefined) && topTen(); showTopTen = !showTopTen">10
-                        meilleurs</button>
+                    <button type="button" ng-click="(showTopTen === false || showTopTen === undefined) && topTen(); showTopTen = !showTopTen">10 meilleurs</button>
+                        <!-- {{topTen()}} -->
                     <ul class="collection">
-                        <li class="bFPink" ng-repeat="topUser in histoS.top10">
+                        <li class="collection-item" ng-repeat="topUser in histoS.top10">
                             {{topUser.identifiant}} : {{topUser.sum}}
                         </li>
                     </ul>
                 </div>
-                <!-- Top 10 scores quizz -->
+
                 <!-- Test websocket [NE PAS SUPPRIMER, utilisé pour notifs connexion] -->
                 <div ng-controller="socketController">
                     <button ng-click="test()" type="button">test websocket</button>
@@ -225,42 +231,50 @@
 
                 <!-- Liste tous users -->
                 <div ng-controller="userController">
-                    <div class="bLGreen toRight userList xAlign">
-                        <button ng-click="displayUserList === false && getAllUsers(); displayUserList = !displayUserList"
-                            ng-init="displayUserList = false" type="button">Afficher utilisateurs</button>
-                        <div ng-show="displayUserList === true">
-                            Utilisateurs
-                            <br>
-                            <input ng-click="loggedOnly = !loggedOnly" ng-init="loggedOnly = false" type="checkbox">Connectés
-                            uniquement</select>
-                            <br>
-                            <div ng-repeat="user in userS.allUsers">
-                                <div ng-if="user.statut === 1 || (user.statut != 1 && loggedOnly === false)">
-                                    <a class="underlined linkInteract" ng-click="getUserProfile(user.id); toggleProfilDisplay()">{{user.identifiant}}</a>
+                <button data-target="modalUsers" class="btn modal-trigger" ng-click="displayUserList === false && getAllUsers(); displayUserList = !displayUserList" ng-init="displayUserList = false" type="button">Afficher utilisateurs</button>
+                
+                    <div id="modalUsers" class="modal bottom-sheet">
+                        <div class="modal-content">
+                            <h5>Utilisateurs</h5>
+                            <div class="row">
+                                <div class="col s2 connectedOnlyInput">
+                                    <p><label>
+                                        <input ng-click="loggedOnly = !loggedOnly" ng-init="loggedOnly = false" type="checkbox"><span id="defaultText">Connectés uniquement</span>
+                                    </label></p>
+                                </div>
+                                <div class="col s6">                    
+                                        <!-- <button ng-click="displayUserList === false && getAllUsers(); displayUserList = !displayUserList" ng-init="displayUserList = false" type="button">Afficher utilisateurs</button> -->
+                                        <div >                                                                                                                                  
+                                            <div class="collection">
+                                                <div ng-repeat="user in userS.allUsers">
+                                                    <div ng-if="user.statut === 1 || (user.statut != 1 && loggedOnly === false)">
+                                                        <a href="#!" class="collection-item" ng-click="getUserProfile(user.id); toggleProfilDisplay()">{{user.identifiant}}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+
+                                <div class="col s2 profil">
+                                    <div ng-show="showProfil">
+                                        <div class="card small" id="profileCard">
+                                            <div class="card-image">
+                                                    <img ng-src="{{user.avatar || '/default.png'}}"></img>
+                                                <span class="card-title">{{user.identifiant}}</span>
+                                            </div>
+                                            <div class="card-content">
+                                                <p>
+                                                    {{user.prenom}}
+                                                    {{user.nom}}
+                                                </p>
+                                                <br>
+                                                <div class="alignTxt circle toCenter" ng-style="user.statut != 1 && {'background-color' : 'red'}"></div>
+                                            </div>                                           
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class=" bLGreen profil toRight xAlign" ng-show="showProfil">
-                        <table class="alignTxt">
-                            <tr>
-                                <td><img ng-src="{{user.avatar || '/default.png'}}"></img></td>
-                            </tr>
-                            <tr>
-                                <td>{{user.identifiant}}</td>
-                            </tr>
-                            <tr>
-                                <td>{{user.prenom}}</td>
-                            </tr>
-                            <tr>
-                                <td>{{user.nom}}</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="alignTxt circle toCenter" ng-style="user.statut != 1 && {'background-color' : 'red'}"></div>
-                                </td>
-                            </tr>
-                        </table>
+                        </div>                            
                     </div>
                 </div>
             </div>
