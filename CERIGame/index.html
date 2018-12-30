@@ -7,12 +7,6 @@
         var elems = document.querySelectorAll('.modal');
         var instances = M.Modal.init(elems);
     });
-
-    document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.scrollspy');
-    var instances = M.ScrollSpy.init(elems);
-  });
-
 </script>
 
 <base href="/"/>
@@ -94,12 +88,15 @@
                                 <!-- Défi -->
                                 <div ng-show="recapQuizz === true" ng-controller="userController">
                                     <button class="waves-effect waves-light btn-large pulse" ng-click="getAllUsers(); $parent.displayChallengers = !$parent.displayChallengers"
-                                        ng-hide="$parent.challengeSent === true" type="button">Défier utilisateur</button>
-                                    <div ng-repeat="user in userS.allUsers" ng-show="$parent.$parent.displayChallengers === true">
-                                        <a class="underlined linkInteract" ng-click="lancerDefi(user.id, user.identifiant, $parent.questions, $parent.bilan.score); $parent.$parent.$parent.toggleDefiOpt()"
-                                            ng-controller="defiController">{{user.identifiant}}
-                                        </a>
+                                        ng-hide="$parent.challengeSent === true" type="button">Défier utilisateur
+                                    </button>
+                                    <div class="collection">
+                                        <div ng-repeat="user in userS.allUsers" ng-show="$parent.$parent.displayChallengers === true">
+                                            <a href="#!" class="collection-item" class="underlined linkInteract" ng-click="lancerDefi(user.id, user.identifiant, $parent.questions, $parent.bilan.score); $parent.$parent.$parent.toggleDefiOpt()"
+                                                ng-controller="defiController">{{user.identifiant}}
+                                            </a>
                                     </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -134,13 +131,13 @@
                     <div id="modalDefis" class="modal">
                         <div class="modal-content">
                             Nombre de défis en attente: {{userS.allDefis.length}} <br>
-                            <div class="linkInteract" ng-repeat="defi in userS.allDefis" ng-show="showDefis == true">
-                                <div ng-click="showInteract = !showInteract" style="background-color: lightslategray;">
+                            <div ng-repeat="defi in userS.allDefis" >
+                                <div style="background-color: lightslategray;">
                                     Défi lancé par {{defi.ident_user_defiant}}. Score à battre:
                                     {{defi.score_user_defiant}}.
-                                    <div ng-controller="defiController" ng-show="showInteract == true">
-                                        <button ng-click="execDefi(defi._id); $parent.$parent.showDefis = false" type="button">Accepter le défi</button>
-                                        <button ng-click="saveRes(defi.id_user_defiant); supprDefi(defi._id)" type="button">Refuser le défi</button>
+                                    <div ng-controller="defiController" >
+                                        <button class="waves-effect waves-light btn" ng-click="execDefi(defi._id); $parent.$parent.showDefis = false" type="button">Accepter le défi</button>
+                                        <button class="waves-effect waves-light btn" ng-click="saveRes(defi.id_user_defiant); supprDefi(defi._id)" type="button">Refuser le défi</button>
                                     </div>
                                 </div>
                                 <br>
@@ -185,13 +182,18 @@
             <div id="contenuDroite" class="col s12 m4 l10">
                 <!-- Top 10 -->
                 <div ng-controller="histoController">
-                    <button type="button" ng-click="(showTopTen === false || showTopTen === undefined) && topTen(); showTopTen = !showTopTen">10 meilleurs</button>
-                        <!-- {{topTen()}} -->
-                    <ul class="collection">
-                        <li class="collection-item" ng-repeat="topUser in histoS.top10">
-                            {{topUser.identifiant}} : {{topUser.sum}}
-                        </li>
-                    </ul>
+                    <button data-target="modalTopTen" class="btn modal-trigger" ng-click="(showTopTen === false || showTopTen === undefined) && topTen(); showTopTen = !showTopTen" ng-init="displayUserList = false" type="button">10 meilleurs</button>
+                    <div id="modalTopTen" class="modal">
+                        <h4>10 Meilleurs joueurs</h3>
+                        <div class="modal-content">    
+                            <ul class="collection">
+                                <li class="collection-item" ng-repeat="topUser in histoS.top10"> {{topUser.identifiant}} : {{topUser.sum}}</li>
+                            </ul>
+                        </div>
+                        <div id="modalNewQuizz" class="modal-footer">
+                            <a href="#!" class="modal-close waves-effect waves-light btn">Fermer</a>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Test websocket [NE PAS SUPPRIMER, utilisé pour notifs connexion] -->
