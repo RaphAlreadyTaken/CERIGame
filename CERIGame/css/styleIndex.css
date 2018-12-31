@@ -37,6 +37,13 @@
     color: black;
     background-color: lightgrey;
 }
+
+#modalHist
+{
+    color: black;
+    background-color: lightgrey;
+}
+
 .quizzActWindow
 {
     color:black;
@@ -250,6 +257,13 @@ img
     top: 10px;
     padding-top: 10px;
     padding-left: 50px;
+}
+
+.modFooter
+{
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0px;
 }
 
 .indow
