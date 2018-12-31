@@ -1,8 +1,3 @@
-#profileCard
-{
-    /* background-color: dodgerblue; */
-}
-
 #bottomProfileCard
 {
     padding-bottom: 5%;    
@@ -47,13 +42,26 @@
 .quizzActWindow
 {
     color:black;
-    padding: 0;
+    /* padding: 0; */
 }
 
 .defaultText
 {
     color:black;
     font-size: 12pt;
+}
+
+.elementList
+{
+    top:30%;
+    border:none !important;
+}
+
+#uniqueElement
+{
+    /* background-color: blue; */
+    background-color: #00897b;
+    border: none;
 }
 
 .connectedOnlyInput
@@ -99,18 +107,24 @@
         right:0;
 }
 
-/* Eléments DOM */
+/* Eléments  */
+html
+{
+    height: 100%;
+}
 body
 {
     text-align: center;
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    height: 100%;
 }
 
 main
 {
     flex: 1 0 auto;
+    max-height: 100%;
 }
 
 form
@@ -264,6 +278,12 @@ img
     position: -webkit-sticky;
     position: sticky;
     bottom: 0px;
+}
+
+#modFooter
+{
+    color: black;
+    background-color: lightgrey;
 }
 
 .indow

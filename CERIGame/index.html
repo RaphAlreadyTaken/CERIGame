@@ -22,19 +22,125 @@
         <!-- Navbar -->
         <nav>
             <div class="nav-wrapper">
-                <!-- <a href="#!" class="brand-logo">Logo</a> -->
-                <ul class="left">
-                    <li id="navbarLeftList"><button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="prepareQuizz = true; recapQuizz = false; endQuizz = false; challengeSent = false;"
-                            type="button">Nouveau Quizz</button></li>
+                
+                <!-- Historique des quizz -->
+                <div ng-controller="userController">
+                    <div ng-controller="histoController">
+                        <ul class="left">  
+                            <li id="navbarLeftList"><button data-target="modalHist" class="btn modal-trigger" type="button" ng-click="(showHistoUser === false || showHistoUser === undefined) && userHisto(getId()); showHistoUser = !showHistoUser">Historique des quizz</button></li>
+                        </ul>   
+                        <div id="modalHist" class="modal">
+                            <div class="modal-content">
+                                <ul class="collection">
+                                    <label ng-repeat="hist in histoS.histo | orderBy:'-date'">
+                                        <li class="collection-item defaultText">
+                                            Quizz du {{hist.date}}:
+                                            <br>
+                                            {{hist.nbreponse}} bonnes réponses
+                                            <br>
+                                            {{hist.temps}} secondes
+                                            <br>
+                                            {{hist.score}} points
+                                            <br><br>
+                                            <hr>
+                                        </li>
+                                    </label>
+                                </ul>
+                            </div>
+                            <div id="modFooter" class="modal-footer modFooter">
+                                <a href="#!" class="modal-close waves-effect waves-light btn">Fermer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Médailles obtenues -->
+                <ul class="left">                   
                     <li id="navbarLeftList"><button data-target="modalMedals" class="btn modal-trigger" ng-click="showMedailles = !showMedailles;"
                             type="button">Voir les médailles</button></li>
                 </ul>
+  
+                <div ng-controller="userController">
+                    <div id="modalMedals" class="modal">
+                        <div class="modal-content">
+                            <h3>Nombre de médailles obtenues: <b>{{userS.medailles.length}} </b></h3>
+                            <div ng-repeat="medaille in userS.medailles track by $index">
+                                Médaille {{$index + 1}} gagnée contre {{medaille.opponent}}
+                            </div>
+                        </div>
+                        <div id="modFooter" class="modal-footer modFooter">
+                            <a href="#!" class="modal-close waves-effect waves-light btn">Fermer</a>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Liste défis -->
+                <div ng-controller="userController">
+                    <ul class="hide-on-med-and-down right">
+                        <li>
+                            <a data-target="modalDefis" class="btn modal-trigger" ng-click="showMedailles = !showMedailles;" type="button">Défis <span class="new badge">{{userS.allDefis.length}}</span></a>
+                        </li>
+                    </ul>
+                    <div id="modalDefis" class="modal">
+                        <div class="modal-content">
+                            Nombre de défis en attente: {{userS.allDefis.length}} <br>
+                            <div ng-repeat="defi in userS.allDefis" >
+                                <div style="background-color: lightslategray;">
+                                    Défi lancé par {{defi.ident_user_defiant}}. Score à battre:
+                                    {{defi.score_user_defiant}}.
+                                    <div ng-controller="defiController" >
+                                        <button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="execDefi(defi._id); $parent.$parent.showDefis = false;" type="button">Accepter le défi</button>
+                                        <button class="waves-effect waves-light btn" ng-click="saveRes(defi.id_user_defiant); supprDefi(defi._id)" type="button">Refuser le défi</button>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        <div id="modFooter" class="modal-footer modFooter">
+                            <a href="#!" class="modal-close waves-effect waves-light btn">Fermer</a>
+                        </div>
+                    </div>
+                </div>                                
+            </div>
+        </nav>
+
+        <!-- Page Layout here -->
+        <div id="contenu" class="row">
+            <!-- Profil user -->
+            <div id="contenuGauche" class="col s12 m4 l2">
+                <div class="row">
+                    <div class="col ">
+                        <div class="card large light-blue darken-1" ng-controller="userController" id="profileCard">
+                            <div class="card-image">
+                                <img class="linkInteract" ng-blur="modAvatar = false" ng-click="modAvatar = true"
+                                    ng-src="{{userS.avatar || '/default.png'}}">
+                                <!-- <input class="inputModifImg" ng-blur="modifAvatar(user.id, newAvatar); modAvatar = false" ng-model="newAvatar" ng-show="modAvatar === true" placeholder="Lien vers nouvelle image..." type="text"> -->
+                                <span class="card-title">{{user.identifiant}}</span>
+                            </div>
+                            <div class="card-content">
+                                <p>{{user.prenom}}
+                                    {{user.nom}}</p>
+                            </div>
+                            <div class="card-action" id="bottomProfileCard" ng-controller="loginController">
+                                <input class="inputModifImg" ng-blur="modifAvatar(user.id, newAvatar); modAvatar = false"
+                                    ng-model="newAvatar" ng-show="modAvatar === true" placeholder="Lien vers nouvelle image..."
+                                    type="text">
+                                <button class="waves-effect waves-light btn-floating red darken-3" ng-click="logOut()"><i class="material-icons">power_settings_new</i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenu (partie droite de la page) -->
+            <div id="contenuDroite" class="col s12 m4 l10">            
+                <ul class="collection elementList">
+                <!-- Quizz -->
                 <div ng-controller="quizzController">
+                    <li id="uniqueElement" class="collection-item"><button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="prepareQuizz = true; recapQuizz = false; endQuizz = false; challengeSent = false;" type="button">Quizz</button>
+                    </li>
                     <div id="modalNewQuizz" class="modal">
                         <div class="modal-content">
-
                             <!-- Paramétrage du quizz -->
                             <div class="container prepQuizz" ng-show="prepareQuizz == true">
                                 Choix du thème: <select class="browser-default" ng-init="selectedTheme = selectedTheme || themes[0].value"
@@ -93,239 +199,136 @@
                                     <div class="collection">
                                         <div ng-repeat="user in userS.allUsers" ng-show="$parent.$parent.displayChallengers === true">
                                             <a href="#!" class="collection-item" class="underlined linkInteract" ng-click="lancerDefi(user.id, user.identifiant, $parent.questions, $parent.bilan.score); $parent.$parent.$parent.toggleDefiOpt()"
-                                             ng-controller="defiController">{{user.identifiant}}
+                                                ng-controller="defiController">{{user.identifiant}}
                                             </a>
                                         </div>
-                                     </div>
+                                    </div>
                                 </div>
                                 <button ng-click="prepareQuizz = true; recapQuizz = false; endQuizz = false; challengeSent = false;" class="modal-close waves-effect waves-light btn" type="button">Terminer quizz</button>
                             </div>
                         </div>
-                        <div id="modalNewQuizz" class="modal-footer modFooter">
+                        <div id="modFooter" class="modal-footer modFooter">
                             <a href="#!" class="modal-close waves-effect waves-light btn" >Fermer</a>
                         </div>
                     </div>
                 </div>
-
-                <!-- Médailles obtenues -->
-                <div ng-controller="userController">
-                    <div id="modalMedals" class="modal">
-                        <div class="modal-content">
-                            <h3>Nombre de médailles obtenues: <b>{{userS.medailles.length}} </b></h3>
-                            <div ng-repeat="medaille in userS.medailles track by $index">
-                                Médaille {{$index + 1}} gagnée contre {{medaille.opponent}}
-                            </div>
-                        </div>
-                        <div id="modalNewQuizz" class="modal-footer modFooter">
-                            <a href="#!" class="modal-close waves-effect waves-light btn">Fermer</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div ng-controller="userController">
-                    <ul class="hide-on-med-and-down right">
-                        <li>
-                            <a data-target="modalDefis" class="btn modal-trigger" ng-click="showMedailles = !showMedailles;" type="button">Défis <span class="new badge">{{userS.allDefis.length}}</span></a>
-                        </li>
-                    </ul>
-                    <!-- Liste défis -->
-                    <div id="modalDefis" class="modal">
-                        <div class="modal-content">
-                            Nombre de défis en attente: {{userS.allDefis.length}} <br>
-                            <div ng-repeat="defi in userS.allDefis" >
-                                <div style="background-color: lightslategray;">
-                                    Défi lancé par {{defi.ident_user_defiant}}. Score à battre:
-                                    {{defi.score_user_defiant}}.
-                                    <div ng-controller="defiController" >
-                                        <button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="execDefi(defi._id); $parent.$parent.showDefis = false;" type="button">Accepter le défi</button>
-                                        <button class="waves-effect waves-light btn" ng-click="saveRes(defi.id_user_defiant); supprDefi(defi._id)" type="button">Refuser le défi</button>
-                                    </div>
-                                </div>
-                                <br>
-                            </div>
-                        </div>
-                        <div id="modalNewQuizz" class="modal-footer modFooter">
-                            <a href="#!" class="modal-close waves-effect waves-light btn">Fermer</a>
-                        </div>
-                    </div>
-                </div>                                
-            </div>
-        </nav>
-
-        <!-- Page Layout here -->
-        <div id="contenu" class="row">
-            <!-- Profil user -->
-            <div id="contenuGauche" class="col s12 m4 l2">
-                <div class="row">
-                    <div class="col ">
-                        <div class="card large light-blue darken-1" ng-controller="userController" id="profileCard">
-                            <div class="card-image">
-                                <img class="linkInteract" ng-blur="modAvatar = false" ng-click="modAvatar = true"
-                                    ng-src="{{userS.avatar || '/default.png'}}">
-                                <!-- <input class="inputModifImg" ng-blur="modifAvatar(user.id, newAvatar); modAvatar = false" ng-model="newAvatar" ng-show="modAvatar === true" placeholder="Lien vers nouvelle image..." type="text"> -->
-                                <span class="card-title">{{user.identifiant}}</span>
-                            </div>
-                            <div class="card-content">
-                                <p>{{user.prenom}}
-                                    {{user.nom}}</p>
-                            </div>
-                            <div class="card-action" id="bottomProfileCard" ng-controller="loginController">
-                                <input class="inputModifImg" ng-blur="modifAvatar(user.id, newAvatar); modAvatar = false"
-                                    ng-model="newAvatar" ng-show="modAvatar === true" placeholder="Lien vers nouvelle image..."
-                                    type="text">
-                                <button class="waves-effect waves-light btn-floating red darken-3" ng-click="logOut()"><i class="material-icons">power_settings_new</i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contenu (partie droite de la page) -->
-            <div id="contenuDroite" class="col s12 m4 l10">
                 <!-- Top 10 -->
                 <div ng-controller="histoController">
-                    <button data-target="modalTopTen" class="btn modal-trigger" ng-click="(showTopTen === false || showTopTen === undefined) && topTen(); showTopTen = !showTopTen" ng-init="displayUserList = false" type="button">10 meilleurs</button>
+                    <li id="uniqueElement" class="collection-item"><button data-target="modalTopTen" class="btn modal-trigger" ng-click="(showTopTen === false || showTopTen === undefined) && topTen(); showTopTen = !showTopTen" ng-init="displayUserList = false" type="button">10 meilleurs</button></li>
                     <div id="modalTopTen" class="modal">
                         <h4>10 Meilleurs joueurs</h3>
-                        <div class="modal-content">    
-                            <ul class="collection">
-                                <li class="collection-item" ng-repeat="topUser in histoS.top10"> {{topUser.identifiant}} : {{topUser.sum}}</li>
-                            </ul>
-                        </div>
-                        <div id="modalNewQuizz" class="modal-footer modFooter">
-                            <a href="#!" class="modal-close waves-effect waves-light btn">Fermer</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Test websocket [NE PAS SUPPRIMER, utilisé pour notifs connexion] -->
-                <div ng-controller="socketController">
-                    <button ng-click="test()" type="button">test websocket</button>
-                    {{serverMessage}}
-                </div>
-
-                <!-- Historique des quizz -->
-                <div ng-controller="userController">
-                    <div ng-controller="histoController">
-                        <button data-target="modalHist" class="btn modal-trigger" type="button" ng-click="(showHistoUser === false || showHistoUser === undefined) && userHisto(getId()); showHistoUser = !showHistoUser">Historique des quizz</button>
-                        <div id="modalHist" class="modal">
-                            <div class="modal-content">
+                            <div class="modal-content">    
                                 <ul class="collection">
-                                    <label ng-repeat="hist in histoS.histo | orderBy:'-date'">
-                                        <li class="collection-item defaultText">
-                                            Quizz du {{hist.date}}:
-                                            <br>
-                                            {{hist.nbreponse}} bonnes réponses
-                                            <br>
-                                            {{hist.temps}} secondes
-                                            <br>
-                                            {{hist.score}} points
-                                            <br><br>
-                                            <hr>
-                                        </li>
-                                    </label>
+                                    <li class="collection-item" ng-repeat="topUser in histoS.top10"> {{topUser.identifiant}} : {{topUser.sum}}</li>
                                 </ul>
                             </div>
-                            <div id="modalNewQuizz" class="modal-footer modFooter">
+                            <div id="modFooter" class="modal-footer modFooter">
                                 <a href="#!" class="modal-close waves-effect waves-light btn">Fermer</a>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Accueil login -->
-                <div class="skipLineWithBSn" ng-controller="loginController">
-                    <div class="col s12 m4 l2" id="bandeau">
-                        <div class="disappear card-panel light-blue darken-1">
-                            {{bandeau()}}
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Notif envoi défi -->
-                <div class="skipLineWithBSn" ng-controller="socketController" ng-show="confirmDefi !== undefined">
-                    <div class="col s12 m4 l2" id="bandeau">
-                        <div class="disappear card-panel light-blue darken-1">
-                            {{confirmDefi}}
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Notif réception défi -->
-                <div class="skipLineWithBSn" ng-controller="socketController" ng-show="notifDefi !== undefined && notifDefi !== false">
-                    <div class="col s12 m4 l2" id="bandeau">
-                        <div class="disappear card-panel light-blue darken-1">
-                            {{notifDefi}}
-                            <div ng-controller="defiController">
-                                <button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="execDefi($parent.idDefi); supprDefi($parent.idDefi); $parent.notifDefi = false" type="button"><i class="material-icons">check</i></button>
-                                <br>
-                                <button class="btn" ng-click="supprDefi($parent.idDefi); $parent.notifDefi = false" type="button"><i class="material-icons">close</i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Résultat défi -->
-                <div ng-controller="defiController" ng-show="defiS.result !== ''">
-                    <div class="col s12 m4 l2" id="bandeau">
-                        <div class="disappear card-panel  light-blue darken-1">
-                            {{defiS.result}}
-                            <br>
-                            <button class="waves-effect waves-light btn" ng-click="defiS.result = ''" type="button">OK</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Liste tous users -->
-                <div ng-controller="userController">
-                    <button data-target="modalUsers" class="btn modal-trigger" ng-click="displayUserList === false && getAllUsers(); displayUserList = !displayUserList" ng-init="displayUserList = false" type="button">Afficher utilisateurs</button>    
-                    <div id="modalUsers" class="modal bottom-sheet">
-                        <div class="modal-content">
-                            <h5>Utilisateurs</h5>
-                            <div class="row">
-                                <div class="col s2 connectedOnlyInput">
-                                    <p><label>
-                                        <input ng-click="loggedOnly = !loggedOnly" ng-init="loggedOnly = false" type="checkbox"><span id="defaultText">Connectés uniquement</span>
-                                    </label></p>
-                                </div>
-                                <div class="col s6">                    
+                    
+                    <!-- Test websocket [NE PAS SUPPRIMER, utilisé pour notifs connexion] -->
+                    <div ng-controller="socketController">
+                        <li id="uniqueElement" class="collection-item"><button class="waves-effect waves-light btn" ng-click="test()" type="button">test websocket</button></li>
+                        {{serverMessage}}
+                    </div>          
+                    
+                    
+                    <!-- Liste tous users -->
+                    <div ng-controller="userController">
+                        <li id="uniqueElement" class="collection-item"><button data-target="modalUsers" class="btn modal-trigger" ng-click="displayUserList === false && getAllUsers(); displayUserList = !displayUserList" ng-init="displayUserList = false" type="button">Afficher utilisateurs</button>    </li>
+                        <div id="modalUsers" class="modal bottom-sheet">
+                            <div class="modal-content">
+                                <h5>Utilisateurs</h5>
+                                <div class="row">
+                                    <div class="col s2 connectedOnlyInput">
+                                        <p><label>
+                                            <input ng-click="loggedOnly = !loggedOnly" ng-init="loggedOnly = false" type="checkbox"><span id="defaultText">Connectés uniquement</span>
+                                        </label></p>
+                                    </div>
+                                    <div class="col s6">                    
                                         <!-- <button ng-click="displayUserList === false && getAllUsers(); displayUserList = !displayUserList" ng-init="displayUserList = false" type="button">Afficher utilisateurs</button> -->
-                                    <div >                                                                                                                                  
-                                        <div class="collection">
-                                            <div ng-repeat="user in userS.allUsers">
-                                                <div ng-if="user.statut === 1 || (user.statut != 1 && loggedOnly === false)">
-                                                    <a href="#!" class="collection-item" ng-click="getUserProfile(user.id); toggleProfilDisplay()">{{user.identifiant}}</a>
+                                        <div >                                                                                                                                  
+                                            <div class="collection">
+                                                <div ng-repeat="user in userS.allUsers">
+                                                    <div ng-if="user.statut === 1 || (user.statut != 1 && loggedOnly === false)">
+                                                        <a href="#!" class="collection-item" ng-click="getUserProfile(user.id); toggleProfilDisplay()">{{user.identifiant}}</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="col s2 profil">
-                                    <div ng-show="showProfil">
-                                        <div class="card small" id="profileCard">
-                                            <div class="card-image">
+                                    
+                                    <div class="col s2 profil">
+                                        <div ng-show="showProfil">
+                                            <div class="card small" id="profileCard">
+                                                <div class="card-image">
                                                     <img ng-src="{{user.avatar || '/default.png'}}"></img>
-                                                <span class="card-title">{{user.identifiant}}</span>
+                                                    <span class="card-title">{{user.identifiant}}</span>
+                                                </div>
+                                                <div class="card-content">
+                                                    <p>
+                                                        {{user.prenom}}
+                                                        {{user.nom}}
+                                                    </p>
+                                                    <br>
+                                                    <div class="alignTxt circle toCenter" ng-style="user.statut != 1 && {'background-color' : 'red'}"></div>
+                                                </div>                                           
                                             </div>
-                                            <div class="card-content">
-                                                <p>
-                                                    {{user.prenom}}
-                                                    {{user.nom}}
-                                                </p>
-                                                <br>
-                                                <div class="alignTxt circle toCenter" ng-style="user.statut != 1 && {'background-color' : 'red'}"></div>
-                                            </div>                                           
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>                            
+                            </div>                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Accueil login -->
+            <div class="skipLineWithBSn" ng-controller="loginController">
+                <div class="col s12 m4 l2" id="bandeau">
+                    <div class="disappear card-panel light-blue darken-1">
+                        {{bandeau()}}
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Notif envoi défi -->
+            <div class="skipLineWithBSn" ng-controller="socketController" ng-show="confirmDefi !== undefined">
+                <div class="col s12 m4 l2" id="bandeau">
+                    <div class="disappear card-panel light-blue darken-1">
+                        {{confirmDefi}}
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Notif réception défi -->
+            <div class="skipLineWithBSn" ng-controller="socketController" ng-show="notifDefi !== undefined && notifDefi !== false">
+                <div class="col s12 m4 l2" id="bandeau">
+                    <div class="disappear card-panel light-blue darken-1">
+                        {{notifDefi}}
+                        <div ng-controller="defiController">
+                            <button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="execDefi($parent.idDefi); supprDefi($parent.idDefi); $parent.notifDefi = false" type="button"><i class="material-icons">check</i></button>
+                            <br>
+                            <button class="btn" ng-click="supprDefi($parent.idDefi); $parent.notifDefi = false" type="button"><i class="material-icons">close</i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Résultat défi -->
+            <div ng-controller="defiController" ng-show="defiS.result !== ''">
+                <div class="col s12 m4 l2" id="bandeau">
+                    <div class="disappear card-panel  light-blue darken-1">
+                        {{defiS.result}}
+                        <br>
+                        <button class="waves-effect waves-light btn" ng-click="defiS.result = ''" type="button">OK</button>
                     </div>
                 </div>
             </div>
         </div>
-
+        
         <!-- Scripts à charger (chargement plus rapide si positionnement en bas de page) -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-route.js"></script>
