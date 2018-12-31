@@ -1,6 +1,6 @@
 #profileCard
 {
-    background-color: dodgerblue;
+    /* background-color: dodgerblue; */
 }
 
 #bottomProfileCard
@@ -82,6 +82,14 @@
 #navbarLeftList
 {
     padding-left: 10px;
+}
+
+#bandeau
+{
+    display: inline-block;
+    position: absolute;
+        bottom:0;
+        right:0;
 }
 
 /* Eléments DOM */

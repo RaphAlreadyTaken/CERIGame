@@ -157,7 +157,7 @@
             <div id="contenuGauche" class="col s12 m4 l2">
                 <div class="row">
                     <div class="col ">
-                        <div class="card large" ng-controller="userController" id="profileCard">
+                        <div class="card large light-blue darken-1" ng-controller="userController" id="profileCard">
                             <div class="card-image">
                                 <img class="linkInteract" ng-blur="modAvatar = false" ng-click="modAvatar = true"
                                     ng-src="{{userS.avatar || '/default.png'}}">
@@ -204,8 +204,10 @@
 
                 <!-- Accueil login -->
                 <div class="skipLineWithBSn" ng-controller="loginController">
-                    <div class="disappear bandeau">
-                        {{bandeau()}}
+                    <div class="col s12 m4 l2" id="bandeau">
+                        <div class="disappear card-panel  light-blue darken-1">
+                            {{bandeau()}}
+                        </div>
                     </div>
                 </div>
 
@@ -215,13 +217,15 @@
                 </div>
 
                 <!-- Notif réception défi -->
-                <div class="bandeau skipLineWithBSn" ng-controller="socketController" ng-show="notifDefi !== undefined && notifDefi !== false">
-                    {{notifDefi}}
-                    <div ng-controller="defiController">
-                        <button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="execDefi($parent.idDefi); supprDefi($parent.idDefi); $parent.notifDefi = false"
-                            type="button">Accepter le défi</button>
-                        <button class="btn" ng-click="supprDefi($parent.idDefi); $parent.notifDefi = false" type="button">Refuser
-                            le défi</button>
+                <div class="skipLineWithBSn" ng-controller="socketController" ng-show="notifDefi !== undefined && notifDefi !== false">
+                    <div class="col s12 m4 l2" id="bandeau">
+                        <div class="disappear card-panel  light-blue darken-1">
+                            {{notifDefi}}
+                            <div ng-controller="defiController">
+                                <button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="execDefi($parent.idDefi); supprDefi($parent.idDefi); $parent.notifDefi = false" type="button">Accepter le défi</button>
+                                <button class="btn" ng-click="supprDefi($parent.idDefi); $parent.notifDefi = false" type="button">Refuser le défi</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -281,21 +285,6 @@
                 </div>
             </div>
         </div>
-        <!-- <footer class="page-footer">
-    <div class="container">
-        <button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="displayUserList === false && getAllUsers(); displayUserList = !displayUserList" ng-init="displayUserList = false" type="button" >Utilisateurs</button>
-
-    <div id="modalUsersList" class="modal bottom-sheet">
-        <div class="modal-content">
-        <h4>Modal Header</h4>
-        <p>A bunch of text</p>
-        </div>
-        <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Fermere</a>
-        </div>
-    </div>
-        </div>
-</footer> -->
 
         <!-- Scripts à charger (chargement plus rapide si positionnement en bas de page) -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.js"></script>
