@@ -24,7 +24,7 @@
             <div class="nav-wrapper">
                 <!-- <a href="#!" class="brand-logo">Logo</a> -->
                 <ul class="left">
-                    <li id="navbarLeftList"><button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="prepareQuizz = !prepareQuizz; recapQuizz = false; endQuizz = false; challengeSent = false;"
+                    <li id="navbarLeftList"><button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="prepareQuizz = true; recapQuizz = false; endQuizz = false; challengeSent = false;"
                             type="button">Nouveau Quizz</button></li>
 
                     <li id="navbarLeftList"><button data-target="modalMedals" class="btn modal-trigger" ng-click="showMedailles = !showMedailles;"
@@ -88,20 +88,21 @@
                                 <!-- Défi -->
                                 <div ng-show="recapQuizz === true" ng-controller="userController">
                                     <button class="waves-effect waves-light btn-large pulse" ng-click="getAllUsers(); $parent.displayChallengers = !$parent.displayChallengers"
-                                        ng-hide="$parent.challengeSent === true" type="button">Défier utilisateur
+                                    ng-hide="$parent.challengeSent === true" type="button">Défier utilisateur
                                     </button>
                                     <div class="collection">
                                         <div ng-repeat="user in userS.allUsers" ng-show="$parent.$parent.displayChallengers === true">
                                             <a href="#!" class="collection-item" class="underlined linkInteract" ng-click="lancerDefi(user.id, user.identifiant, $parent.questions, $parent.bilan.score); $parent.$parent.$parent.toggleDefiOpt()"
-                                                ng-controller="defiController">{{user.identifiant}}
+                                             ng-controller="defiController">{{user.identifiant}}
                                             </a>
-                                    </div>
+                                        </div>
+                                     </div>
                                 </div>
-                                </div>
+                                <button ng-click="prepareQuizz = true; recapQuizz = false; endQuizz = false; challengeSent = false;" class="modal-close waves-effect waves-light btn" type="button">Terminer quizz</button>
                             </div>
                         </div>
                         <div id="modalNewQuizz" class="modal-footer">
-                            <a href="#!" class="modal-close waves-effect waves-light btn" ng-click="prepareQuizz = !prepareQuizz; recapQuizz = false; endQuizz = false; challengeSent = false;">Fermer</a>
+                            <a href="#!" class="modal-close waves-effect waves-light btn" >Fermer</a>
                         </div>
                     </div>
                 </div>
@@ -144,7 +145,7 @@
                             </div>
                         </div>
                         <div id="modalNewQuizz" class="modal-footer">
-                            <a href="#!" class="modal-close waves-effect waves-light btn" ng-click="prepareQuizz = !prepareQuizz; recapQuizz = false; endQuizz = false; challengeSent = false;">Fermer</a>
+                            <a href="#!" class="modal-close waves-effect waves-light btn">Fermer</a>
                         </div>
                     </div>
                 </div>                                
