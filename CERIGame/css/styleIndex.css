@@ -94,6 +94,11 @@
     background-color: #616161;
 }
 
+#collectionHist
+{
+    width:100%;
+}
+
 #navbarLeftList
 {
     padding-left: 10px;
@@ -112,6 +117,7 @@ html
 {
     height: 100%;
 }
+
 body
 {
     text-align: center;
@@ -167,7 +173,7 @@ img
 
 .bodyLogin
 {
-    background-color: lightblue;
+    background-color: #00897b;
 }
 
 .bLBlue
@@ -213,7 +219,7 @@ img
 
 #containerLogin
 {
-    background-color: whitesmoke;
+    background-color: #616161;
     border-style: solid;
     border-color: lightgray;
     border-radius: 5%;
@@ -221,6 +227,7 @@ img
     padding: 15%;
     margin-top: 150%;
     width:100%;
+    color:white;
 }
 
 .disappear

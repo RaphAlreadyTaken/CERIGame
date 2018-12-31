@@ -31,9 +31,9 @@
                         </ul>   
                         <div id="modalHist" class="modal">
                             <div class="modal-content">
-                                <ul class="collection">
+                                <ul id="collectionHist" class="collection">
                                     <label ng-repeat="hist in histoS.histo | orderBy:'-date'">
-                                        <li class="collection-item defaultText">
+                                        <li id="collectionHist" class="collection-item defaultText">
                                             Quizz du {{hist.date}}:
                                             <br>
                                             {{hist.nbreponse}} bonnes réponses
