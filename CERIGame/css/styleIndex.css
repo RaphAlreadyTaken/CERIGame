@@ -204,7 +204,7 @@ img
 
 .disappear
 {
-    animation-duration: 5s;
+    animation-duration: 7s;
     animation-name: invisib;
     opacity: 0;    
     visibility: hidden;

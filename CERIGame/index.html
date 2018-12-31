@@ -11,9 +11,9 @@
 
 <base href="/"/>
 <head>
-    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
     <link rel='stylesheet' type='text/CSS' href='/styleIndex.css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 
@@ -137,7 +137,7 @@
                                     Défi lancé par {{defi.ident_user_defiant}}. Score à battre:
                                     {{defi.score_user_defiant}}.
                                     <div ng-controller="defiController" >
-                                        <button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="execDefi(defi._id); $parent.$parent.showDefis = false" type="button">Accepter le défi</button>
+                                        <button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="execDefi(defi._id); $parent.$parent.showDefis = false;" type="button">Accepter le défi</button>
                                         <button class="waves-effect waves-light btn" ng-click="saveRes(defi.id_user_defiant); supprDefi(defi._id)" type="button">Refuser le défi</button>
                                     </div>
                                 </div>
@@ -173,7 +173,7 @@
                                 <input class="inputModifImg" ng-blur="modifAvatar(user.id, newAvatar); modAvatar = false"
                                     ng-model="newAvatar" ng-show="modAvatar === true" placeholder="Lien vers nouvelle image..."
                                     type="text">
-                                <button class="waves-effect waves-light btn red darken-3" ng-click="logOut()">Déconnexion</button>
+                                <button class="waves-effect waves-light btn-floating red darken-3" ng-click="logOut()"><i class="material-icons">power_settings_new</i></button>
                             </div>
                         </div>
                     </div>
@@ -206,34 +206,43 @@
                 <!-- Accueil login -->
                 <div class="skipLineWithBSn" ng-controller="loginController">
                     <div class="col s12 m4 l2" id="bandeau">
-                        <div class="disappear card-panel  light-blue darken-1">
+                        <div class="disappear card-panel light-blue darken-1">
                             {{bandeau()}}
                         </div>
                     </div>
                 </div>
 
                 <!-- Notif envoi défi -->
-                <div class="bandeau disappear skipLineWithBSn" ng-controller="socketController" ng-show="confirmDefi !== undefined">
-                    {{confirmDefi}}
+                <div class="skipLineWithBSn" ng-controller="socketController" ng-show="confirmDefi !== undefined">
+                    <div class="col s12 m4 l2" id="bandeau">
+                        <div class="disappear card-panel light-blue darken-1">
+                            {{confirmDefi}}
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Notif réception défi -->
                 <div class="skipLineWithBSn" ng-controller="socketController" ng-show="notifDefi !== undefined && notifDefi !== false">
                     <div class="col s12 m4 l2" id="bandeau">
-                        <div class="disappear card-panel  light-blue darken-1">
+                        <div class="disappear card-panel light-blue darken-1">
                             {{notifDefi}}
                             <div ng-controller="defiController">
-                                <button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="execDefi($parent.idDefi); supprDefi($parent.idDefi); $parent.notifDefi = false" type="button">Accepter le défi</button>
-                                <button class="btn" ng-click="supprDefi($parent.idDefi); $parent.notifDefi = false" type="button">Refuser le défi</button>
-                            </div>
+                                <button data-target="modalNewQuizz" class="btn modal-trigger" ng-click="execDefi($parent.idDefi); supprDefi($parent.idDefi); $parent.notifDefi = false" type="button"><i class="material-icons">check</i></button>
+                                <br>
+                                <button class="btn" ng-click="supprDefi($parent.idDefi); $parent.notifDefi = false" type="button"><i class="material-icons">close</i></button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Résultat défi -->
                 <div ng-controller="defiController" ng-show="defiS.result !== ''">
-                    {{defiS.result}}
-                    <button ng-click="defiS.result = ''" type="button">OK</button>
+                    <div class="col s12 m4 l2" id="bandeau">
+                        <div class="disappear card-panel  light-blue darken-1">
+                            {{defiS.result}}
+                            <br>
+                            <button class="waves-effect waves-light btn" ng-click="defiS.result = ''" type="button">OK</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Liste tous users -->
